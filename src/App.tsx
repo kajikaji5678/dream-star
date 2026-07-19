@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { discordSdk } from "./discord";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Gacha from "./pages/Gacha";
+import GachaOpening from "./pages/GachaOpening";
 
 export default function App() {
     useEffect(() => {
@@ -27,5 +30,13 @@ export default function App() {
         connect();
     }, []);
 
-    return <Home />
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/gacha" element={<Gacha />} />
+                <Route path="/gacha/opening" element={<GachaOpening />}/>
+            </Routes>
+        </BrowserRouter>
+    )
 }
