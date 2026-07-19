@@ -21,22 +21,22 @@ export default function Sidebar() {
     {
       icon: "📦",
       title: "インベントリ",
-      bgImage: "/public/menuCardImages/inventory.jpg"
+      bgImage: "/menuCardImages/inventory.jpg"
     },
     {
       icon: "✨",
       title: "ガチャ",
-      bgImage: "/public/menuCardImages/20260719090013.png"
+      bgImage: "/menuCardImages/20260719090013.png"
     },
     {
       icon: "🗡️",
       title: "CPU対戦",
-      bgImage: "/public/menuCardImages/cpu.png"
+      bgImage: "/menuCardImages/cpu.png"
     },
     {
       icon: "🌐",
       title: "ネット対戦",
-      bgImage: "/public/menuCardImages/vs.png"
+      bgImage: "/menuCardImages/vs.png"
     }
   ]
 
