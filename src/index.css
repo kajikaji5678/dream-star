@@ -1,3 +1,91 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.menu-card {
+    flex: 1;
+    background: #404249;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 6px solid transparent;
+}
+
+.menu-background {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    transition: 0.3s;
+}
+
+.menu-card:hover .menu-background {
+    opacity: 0.6;
+}
+
+.menu-icon,
+.menu-title,
+.menu-triangle {
+    position: relative;
+    z-index: 1;
+}
+
+.menu-card:hover {
+    border-color: #5865f2;
+}
+
+.menu-icon {
+    font-size: 2.5rem;
+    transition: transform 0.3s;
+}
+
+.menu-card:hover .menu-icon {
+    transform: scale(1.25);
+}
+
+.menu-title {
+    margin-top: 0.5rem;
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+.menu-card:hover .menu-title {
+    transform: scale(1.25);
+}
+
+.menu-triangle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    width: 24px;
+    height: 24px;
+
+    background: #5865f2;
+
+    clip-path: polygon(
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+
+    opacity: 0;
+    transform: translate(100%, 100%);
+
+    transition:
+        opacity 0.3s,
+        transform 0.3s;
+}
+
+.menu-card:hover .menu-triangle {
+    opacity: 1;
+    transform: translate(0, 0);
+}

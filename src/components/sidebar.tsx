@@ -1,13 +1,16 @@
 type MenuCardProps = {
   icon: string;
   title: string;
+  bgImage: string;
 };
 
-function MenuCard({ icon, title }: MenuCardProps) {
+function MenuCard({ icon, title, bgImage }: MenuCardProps) {
   return (
-    <div className="group flex-1 bg-[#404249] rounded-xl flex flex-col items-center justify-center hover:bg-[#5865f2] cursor-pointer">
-      <div className="text-4xl transition-transform duration-300 group-hover:scale-125">{icon}</div>
-      <span className="mt-2 font-bold group-hover:scale-125 transition-transform duration-300">{title}</span>
+    <div className="menu-card group">
+      <div className="menu-background" style={{backgroundImage: `url(${bgImage})`}}></div>
+      <div className="menu-icon">{icon}</div>
+      <span className="menu-title">{title}</span>
+      <div className="menu-triangle" />
     </div>
   )
 }
@@ -17,19 +20,23 @@ export default function Sidebar() {
   const menues: MenuCardProps[] = [
     {
       icon: "📦",
-      title: "インベントリ"
+      title: "インベントリ",
+      bgImage: "/public/menuCardImages/inventory.jpg"
     },
     {
       icon: "✨",
-      title: "ガチャ"
+      title: "ガチャ",
+      bgImage: "/public/menuCardImages/20260719090013.png"
     },
     {
       icon: "🗡️",
-      title: "CPU対戦"
+      title: "CPU対戦",
+      bgImage: "/public/menuCardImages/cpu.png"
     },
     {
       icon: "🌐",
-      title: "ネット対戦"
+      title: "ネット対戦",
+      bgImage: "/public/menuCardImages/vs.png"
     }
   ]
 
@@ -37,7 +44,7 @@ export default function Sidebar() {
   return (
     <aside className="w-1/3 bg-[#2b2d31] p-6 flex flex-col gap-4">
       {menues.map((menu) => (
-        <MenuCard key={menu.title} icon={menu.icon} title={menu.title}/>
+        <MenuCard key={menu.title} icon={menu.icon} title={menu.title} bgImage={menu.bgImage}/>
       ))}
     </aside>
   )
