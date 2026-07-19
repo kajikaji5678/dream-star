@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { discordSdk } from "./discord";
+import Home from "./pages/Home";
 
 export default function App() {
     useEffect(() => {
@@ -8,7 +9,7 @@ export default function App() {
             window.location.search
         ).has("frame_id");
 
-        if (isDiscordActivity) {
+        if (!isDiscordActivity) {
             console.log("Running outside Discord Activity");
             return;
         }
@@ -26,5 +27,5 @@ export default function App() {
         connect();
     }, []);
 
-    return <h1>Dream-Ster</h1>
+    return <Home />
 }
