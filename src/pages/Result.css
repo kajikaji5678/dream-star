@@ -1,0 +1,39 @@
+.result-screen {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-card {
+    width: 256px;
+    animation: cardResultAppear 0.8s ease-out forwards;
+}
+
+@keyframes cardResultAppear {
+    from {
+        opacity: 0;
+        transform: translateY(150px) rotateY(180deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateY(0deg);
+    }
+}
+
+.result-text {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: cardResultText 0.3s ease-out 0.5s forwards;
+}
+
+@keyframes cardResultText {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    } to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

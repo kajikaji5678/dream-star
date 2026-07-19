@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Gacha from "./pages/Gacha";
 import GachaOpening from "./pages/GachaOpening";
+import Result from "./pages/Result";
 
 export default function App() {
     useEffect(() => {
@@ -36,6 +37,7 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/gacha" element={<Gacha />} />
                 <Route path="/gacha/opening" element={<GachaOpening />}/>
+                <Route path="/result" element={<Result />} />
             </Routes>
         </BrowserRouter>
     )

@@ -1,0 +1,74 @@
+.pack-screen {
+    transform: translateY(0);
+}
+
+.pack-screen.slide {
+    transform: translateY(100%);
+    transition: transform 0.7s ease-in-out;
+}
+
+.card-cut {
+    animation: cardAppear 0.7s ease-out forwards;
+    position: relative;
+    width: 256px;
+    height: 455px;
+}
+
+.card-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    clip-path: inset(0 0 80% 0);
+}
+
+.card-bottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    clip-path: inset(20% 0 0 0);
+}
+
+.card-cut.cut .card-top {
+    animation: cutTop 0.5s ease forwards;
+}
+
+.card-cut.cut .card-bottom {
+    animation: cutButtom 0.5s ease forwards;
+}
+
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cutTop {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(200px);
+    }
+}
+
+@keyframes cutButtom {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-200px);
+    }
+}
