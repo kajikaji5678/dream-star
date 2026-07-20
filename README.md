@@ -1,75 +1,17 @@
-# React + TypeScript + Vite
+## 使用技術一覧
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### データベース
+<img src="https://img.shields.io/badge/-prisma-2D3748.svg?logo=prisma&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-sqlite-003B57.svg?logo=sqlite&style=for-the-badge&logoColor=white">
 
-Currently, two official plugins are available:
+### バックエンド
+<img src="https://img.shields.io/badge/-discordjs-5865F2.svg?logo=discorddotjs&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-typescript-3178C6.svg?logo=typescript&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-nodejs-5FA04E.svg?logo=nodedotjs&style=for-the-badge&logoColor=white"> 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### フロントエンド
+<img src="https://img.shields.io/badge/-react-61DAFB.svg?logo=react&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-tailwindcss-06B6D4.svg?logo=tailwindcss&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-vite-9135FF.svg?logo=vite&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-canvas-E72429.svg?logo=canvas&style=for-the-badge&logoColor=white">  <img src="https://img.shields.io/badge/-shadcnui-000000.svg?logo=shadcnui&style=for-the-badge&logoColor=white"> 
 
-## React Compiler
+### インフラ
+<img src="https://img.shields.io/badge/-pm2-2B037A.svg?logo=pm2&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-ubuntu-E95420.svg?logo=ubuntu&style=for-the-badge&logoColor=white"> 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## グラフ
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=kajikaji5678&show_icons=true&theme=tokyonight)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
