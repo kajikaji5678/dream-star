@@ -12,6 +12,4 @@
 ### インフラ
 <img src="https://img.shields.io/badge/-pm2-2B037A.svg?logo=pm2&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-ubuntu-E95420.svg?logo=ubuntu&style=for-the-badge&logoColor=white"> 
 
-## グラフ
-[![GitHub Streak](https://streak-stats.demolab.com?user=kajikaji5678&theme=tokyonight)](https://git.io/streak-stats)
 
