@@ -13,5 +13,5 @@
 <img src="https://img.shields.io/badge/-pm2-2B037A.svg?logo=pm2&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-ubuntu-E95420.svg?logo=ubuntu&style=for-the-badge&logoColor=white"> 
 
 ## グラフ
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=kajikaji5678&show_icons=true&theme=tokyonight)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=kajikaji5678&show_icons=true&theme=tokyonight&v=2)
 
