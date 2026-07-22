@@ -11,7 +11,7 @@ function MenuCard({ icon, title, bgImage, path }: MenuCardProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="menu-card rounded-xl
+    <div className="menu-card shrink-0 rounded-xl
     relative flex flex-col bg-[#53565e] items-center justify-center" 
     onClick={() => navigate(path)}>
       <div className="menu-background" style={{backgroundImage: `url(${bgImage})`}}></div>
@@ -53,7 +53,7 @@ export default function Sidebar() {
 
 
   return (
-    <aside className="w-1/3 bg-[#2b2d31] p-6 flex flex-col gap-4">
+    <aside className="w-1/3 h-full bg-[#2b2d31] p-6 flex flex-col gap-4 overflow-y-auto">
       {menues.map((menu) => (
         <MenuCard key={menu.title} icon={menu.icon} title={menu.title} bgImage={menu.bgImage} path={menu.path}/>
       ))}

@@ -22,7 +22,16 @@ export default function App() {
             try {
                 if (!discordSdk) return;
                 await discordSdk.ready();
+
+                const auth = await discordSdk.commands.authorize({
+                    client_id: import.meta.env.VITE_DISCORD_CLIENT_ID,
+                    response_type: "code",
+                    state: "",
+                    prompt: "none",
+                    scope: ["identify"],
+                })
                 console.log("Discord Activity Connected");
+                console.log("Auth Code", auth.code);
             } catch (e) {
                 console.log(e);
             }

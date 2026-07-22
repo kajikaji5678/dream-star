@@ -4,8 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -17,16 +18,14 @@ model votes {
 }
 
 model User {
-  id     String @id
-  points Int    @default(0)
-
-  cards UserCard[]
+  id     String     @id
+  points Int        @default(0)
+  cards  UserCard[]
 }
 
 model Card {
-  id   Int    @id @default(autoincrement())
-  name String
-
+  id    Int        @id @default(autoincrement())
+  name  String
   users UserCard[]
 }
 
@@ -35,12 +34,11 @@ model UserCard {
   userId String
   cardId Int
   amount Int    @default(1)
-
-  user User @relation(fields: [userId], references: [id])
-  card Card @relation(fields: [cardId], references: [id])
+  card   Card   @relation(fields: [cardId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model ProcessdMessage {
-  id String @id
+  id        String   @id
   createdAt DateTime @default(now())
 }
