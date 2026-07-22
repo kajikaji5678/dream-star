@@ -1,7 +1,7 @@
 ## 使用技術一覧
 
 ### データベース
-<img src="https://img.shields.io/badge/-prisma-2D3748.svg?logo=prisma&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-sqlite-003B57.svg?logo=sqlite&style=for-the-badge&logoColor=white">
+<img src="https://img.shields.io/badge/-prisma-2D3748.svg?logo=prisma&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-supabase-3FCF8E.svg?logo=supabase&style=for-the-badge&logoColor=white">
 
 ### バックエンド
 <img src="https://img.shields.io/badge/-discordjs-5865F2.svg?logo=discorddotjs&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-typescript-3178C6.svg?logo=typescript&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-nodejs-5FA04E.svg?logo=nodedotjs&style=for-the-badge&logoColor=white"> 
