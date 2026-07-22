@@ -66,6 +66,8 @@ export default function App() {
     <>
     <div className="text-4xl">
       TEST
+      <br />
+      {status}
     </div>
       <BrowserRouter>
         <Routes>
