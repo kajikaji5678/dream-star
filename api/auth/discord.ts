@@ -44,15 +44,15 @@ export default async function handler(
     },
   });
 
-  const userDate = await userResponse.json();
+  const userData = await userResponse.json();
 
   if (!userResponse.ok) {
-    return res.status(400).json(userDate);
+    return res.status(400).json(userData);
   }
 
   return res.status(200).json({
-    id: userDate.id,
-    username: userDate.username,
-    avatar: userDate.avatar
+    id: userData.id,
+    username: userData.username,
+    avatar: userData.avatar
   });
 }

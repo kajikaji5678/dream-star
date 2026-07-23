@@ -11,6 +11,11 @@ console.log("App.tsx Start");
 export default function App() {
 
   const [logs, setLogs] = useState<string[]>([]);
+  const [user, setUser] = useState<{
+    id: string;
+    username: string;
+    avatar: string | null;
+  } | null>(null);
 
   function addLog(msg: string) {
     setLogs((prevLogs) => {
@@ -56,7 +61,9 @@ export default function App() {
         addLog("fetch done");
 
         const data = await res.json();
+        setUser(data);
         addLog(`response ${JSON.stringify(data)}`);
+
       } catch (e) {
         console.log(e);
       }
@@ -72,7 +79,7 @@ export default function App() {
     </div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home user={user ?? undefined}/>} />
           <Route path="/gacha" element={<Gacha />} />
           <Route path="/gacha/opening" element={<GachaOpening />} />
           <Route path="/result" element={<Result />} />
