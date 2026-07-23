@@ -9,7 +9,14 @@ import Result from "./pages/Result";
 console.log("App.tsx Start");
 
 export default function App() {
-  const [status, setStatus] = useState("App start");
+
+  const [logs, setLogs] = useState<string[]>([]);
+
+  function addLog(msg: string) {
+    setLogs((prevLogs) => {
+      return [...prevLogs, msg]
+    });
+  }
 
   useEffect(() => {
 
@@ -18,17 +25,14 @@ export default function App() {
     ).has("frame_id");
 
     if (!isDiscordActivity) {
-      console.log("Running outside Discord Activity");
       return;
     }
 
     async function connect() {
       try {
         if (!discordSdk) return;
-        setStatus("before ready");
 
         await discordSdk.ready();
-        setStatus("ready done");
 
         const auth = await discordSdk.commands.authorize({
           client_id: import.meta.env.VITE_DISCORD_CLIENT_ID,
@@ -38,7 +42,6 @@ export default function App() {
           scope: ["identify"],
         })
 
-        setStatus(`auth done: ${auth.code}`);
 
         const res = await fetch("/api/auth/discord", {
           method: "POST",
@@ -50,10 +53,10 @@ export default function App() {
           }),
         });
 
-        console.log("4: fetch done");
+        addLog("fetch done");
 
         const data = await res.json();
-        console.log("5: response", data);
+        addLog(`response ${JSON.stringify(data)}`);
       } catch (e) {
         console.log(e);
       }
@@ -65,9 +68,7 @@ export default function App() {
   return (
     <>
     <div className="text-4xl">
-      TEST
-      <br />
-      {status}
+      {logs.map((log, index) => (<div key={index}>{log}</div>))}
     </div>
       <BrowserRouter>
         <Routes>
