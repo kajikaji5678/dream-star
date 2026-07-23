@@ -38,5 +38,21 @@ export default async function handler(
     return res.status(400).json(tokenData);
   }
 
-  return res.status(200).json(tokenData);
+  const userResponse = await fetch("https://discord.com/api/users/@me", {
+    headers: {
+      Authorization: `Bearer ${tokenData.access_token}`,
+    },
+  });
+
+  const userDate = await userResponse.json();
+
+  if (!userResponse.ok) {
+    return res.status(400).json(userDate);
+  }
+
+  return res.status(200).json({
+    id: userDate.id,
+    username: userDate.username,
+    avatar: userDate.avatar
+  });
 }
