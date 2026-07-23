@@ -7,12 +7,20 @@ export default function handler(
 ) {
   if (req.method !== "POST") {
     return res.status(405).json({
-      message: "Metho not allowed",
+      message: "Method not allowed",
     });
   }
 
-  console.log(req.body);
+  const {code} = req.body;
+
+  if(!code) {
+    return res.status(400).json({
+      message: "Code is required",
+    })
+  }
+
   return res.status(200).json({
-    message: "received",
-  });
+    message: "recived",
+    code
+  })
 }
