@@ -6,6 +6,7 @@ import Gacha from "./pages/Gacha";
 import GachaOpening from "./pages/GachaOpening";
 import Result from "./pages/Result";
 import Admin from "./pages/Admin";
+import CardEdit from "./pages/CardEdit";
 
 console.log("App.tsx Start");
 
@@ -73,16 +74,14 @@ export default function App() {
 
   return (
     <>
-    <div className="text-4xl">
-      {logs.map((log, index) => (<div key={index}>{log}</div>))}
-    </div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home user={user ?? undefined}/>} />
+          <Route path="/" element={<Home user={user ?? undefined} />} />
           <Route path="/gacha" element={<Gacha />} />
           <Route path="/gacha/opening" element={<GachaOpening />} />
           <Route path="/result" element={<Result />} />
-          <Route path="/admin" element={<Admin user={user ?? undefined}/>} />
+          <Route path="/admin" element={<Admin user={user ?? undefined} />} />
+          <Route path="/admin/cards/:id" element={<CardEdit user={user ?? undefined}/>} />
         </Routes>
       </BrowserRouter>
     </>

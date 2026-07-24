@@ -27,6 +27,8 @@ model User {
 model Card {
   id    Int        @id @default(autoincrement())
   name  String
+  imageUrl String?
+  rarity String?
   users UserCard[]
 }
 
