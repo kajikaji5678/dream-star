@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Gacha from "./pages/Gacha";
 import GachaOpening from "./pages/GachaOpening";
 import Result from "./pages/Result";
+import Admin from "./pages/Admin";
 
 console.log("App.tsx Start");
 
@@ -58,8 +59,6 @@ export default function App() {
           }),
         });
 
-        addLog("fetch done");
-
         const data = await res.json();
         setUser(data);
         addLog(`response ${JSON.stringify(data)}`);
@@ -83,6 +82,7 @@ export default function App() {
           <Route path="/gacha" element={<Gacha />} />
           <Route path="/gacha/opening" element={<GachaOpening />} />
           <Route path="/result" element={<Result />} />
+          <Route path="/admin" element={<Admin user={user ?? undefined}/>} />
         </Routes>
       </BrowserRouter>
     </>

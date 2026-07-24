@@ -2,7 +2,7 @@ import Header from "../components/Header"
 import Sidebar from "../components/sidebar"
 
 type Props = {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 export default function Layout({children}: Props) {

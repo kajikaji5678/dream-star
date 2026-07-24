@@ -17,6 +17,11 @@ export default function Header() {
             onClick={() => navigate("/")}>
             🏠 ホーム
           </button>
+          <button
+            className="px-4 py-2 rounded-lg bg-black/20 hover:bg-black/40 transition"
+            onClick={() => navigate("/admin")}>
+            👨🏼‍💼 管理画面
+          </button>
         </div>
       </header>
     </>

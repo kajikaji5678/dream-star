@@ -21,7 +21,7 @@ export default function Home({user}: Props) {
         </div>
       </section>
 
-      <section className="rounded-lg flex-1 px-6 py-4 bg-[#2b2d31]">
+      <section className="rounded-lg mt-6 flex-1 px-6 py-4 bg-[#2b2d31]">
         <h2 className="text-xl font-bold">お気に入りカード</h2>
       </section>
     </Layout>
