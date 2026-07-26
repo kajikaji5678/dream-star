@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
-import cardsRouter from "./routes/cards"
-import uploadRouter from "./routes/upload"
+import cardsRouter from "./routes/cards.js"
+import uploadRouter from "./routes/upload.js"
 import path from "path";
-import discordRouter from "./routes/discord";
+import discordRouter from "./routes/discord.js";
 
 const app = express();
 

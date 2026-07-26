@@ -77,7 +77,7 @@ export default function App() {
           <Route path="/gacha/opening" element={<GachaOpening />} />
           <Route path="/result" element={<Result />} />
           <Route path="/admin" element={<Admin user={user ?? undefined} />} />
-          <Route path="/admin/cards/:id" element={<CardEdit user={user ?? undefined}/>} />
+          <Route path="/admin/cards/:id" element={<CardEdit/>} />
           <Route path="/admin/cards/add" element={<CardAdd/>} />
         </Routes>
       </BrowserRouter>
