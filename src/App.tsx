@@ -7,6 +7,7 @@ import GachaOpening from "./pages/GachaOpening";
 import Result from "./pages/Result";
 import Admin from "./pages/Admin";
 import CardEdit from "./pages/CardEdit";
+import CardAdd from "./pages/admin/CardAdd";
 
 console.log("App.tsx Start");
 
@@ -82,6 +83,7 @@ export default function App() {
           <Route path="/result" element={<Result />} />
           <Route path="/admin" element={<Admin user={user ?? undefined} />} />
           <Route path="/admin/cards/:id" element={<CardEdit user={user ?? undefined}/>} />
+          <Route path="/admin/cards/add" element={<CardAdd user={user ?? undefined}/>} />
         </Routes>
       </BrowserRouter>
     </>

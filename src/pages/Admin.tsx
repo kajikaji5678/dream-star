@@ -1,6 +1,7 @@
 import Layout from "../layouts/Layout";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Button1 from "../components/button1";
 
 const Admin_id = [
   "1450733147867185215"
@@ -17,7 +18,7 @@ type Props = {
 type Card = {
   id: number;
   name: string;
-  imageUrl:string;
+  imageUrl: string;
 }
 
 export default function Admin({ user }: Props) {
@@ -25,10 +26,11 @@ export default function Admin({ user }: Props) {
   const [cards, setCards] = useState<Card[]>([]);
   const isAdmin = user && Admin_id.includes(user.id);
 
-  useEffect(() =>{
-    fetch("/api/auth/cards.ts")
+  useEffect(() => {
+    fetch("/api/cards/cards")
       .then((res) => res.json())
-      .then((data) => setCards(data))
+      .then((data) => { console.log("取得データ:", data); setCards(data) })
+      .catch((e) => console.log(e));
   }, []);
   return (
     <>
@@ -37,7 +39,7 @@ export default function Admin({ user }: Props) {
           <div className="self-start px-4 py-2 bg-gradient-to-r from-sky-900 to-sky-500 w-full rounded">
             <h1 className="font-bold">カード一覧</h1>
           </div>
-          <div className="mt-4 flex-1 overflow-y-auto rounded bg-[#5e626c]">
+          <div className="mt-4 flex-1 overflow-y-auto rounded">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 first:mt-0">
               {cards.map((card) => (
                 <div
@@ -60,12 +62,9 @@ export default function Admin({ user }: Props) {
                 </div>
               ))}
             </div>
-            <button
-              className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-              onClick={() => navigate(`/admin/cards/${card.id}`)}
-            >
-              追加する
-            </button>
+            <div className="mt-4 flex justify-center">
+              <Button1 to="/admin/cards/add">追加する</Button1>
+            </div>
           </div>
         </section>
       </Layout>
