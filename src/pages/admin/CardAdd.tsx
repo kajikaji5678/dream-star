@@ -50,13 +50,27 @@ export default function CardAdd() {
       return;
     }
 
+    const formData = new FormData();
+    formData.append("file", imageFile);
 
-    const res = await fetch("/api/cards/cards", {
+    const uploadRes = await fetch("http://localhost:3001/api/upload", {
+      method: "POST",
+      body: formData
+    });
+
+    const uploadData = await uploadRes.json();
+
+    if (!uploadRes.ok) {
+      setError(uploadData.error ?? "画像アップロードに失敗");
+      return;
+    }
+
+    const res = await fetch("http://localhost:3001/api/cards", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(card)
+      body: JSON.stringify({...card, imageUrl: uploadData.imageUrl})
     });
 
     const data = await res.json();

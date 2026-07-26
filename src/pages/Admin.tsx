@@ -27,9 +27,12 @@ export default function Admin({ user }: Props) {
   const isAdmin = user && Admin_id.includes(user.id);
 
   useEffect(() => {
-    fetch("/api/cards/cards")
+    fetch("http://localhost:3001/api/cards")
       .then((res) => res.json())
-      .then((data) => { console.log("取得データ:", data); setCards(data) })
+      .then((data) => {
+        console.log("取得データ:", data); setCards(data);
+        console.log("画像URL", data.map((card: Card) => card.imageUrl))
+      })
       .catch((e) => console.log(e));
   }, []);
   return (
@@ -47,7 +50,9 @@ export default function Admin({ user }: Props) {
                   className="rounded-lg bg-black/20 p-4 text-white"
                 >
                   <img
-                    src={card.imageUrl}
+                    src={`http://localhost:3001${card.imageUrl}`}
+                    onLoad={() => console.log(card.imageUrl)}
+                    onError={(e) => console.log(e.currentTarget.src)}
                     className="w-full aspect-square object-cover rounded-lg"
                   />
                   <p className="mt-3 text-center text-lg font-semibold">
@@ -62,9 +67,9 @@ export default function Admin({ user }: Props) {
                 </div>
               ))}
             </div>
-            <div className="mt-4 flex justify-center">
-              <Button1 to="/admin/cards/add">追加する</Button1>
-            </div>
+          </div>
+          <div className="mt-4 flex justify-center">
+            <Button1 to="/admin/cards/add">追加する</Button1>
           </div>
         </section>
       </Layout>

@@ -1,18 +1,27 @@
-import  express  from "express";
+import express from "express";
 import cors from "cors";
+import cardsRouter from "./routes/cards"
+import uploadRouter from "./routes/upload"
+import path from "path";
+import discordRouter from "./routes/discord";
 
 const app = express();
 
+console.log("デバック");
+
 app.use(cors());
 app.use(express.json());
+app.use("/api/cards", cardsRouter);
+app.use("/api/upload", uploadRouter);
+app.use("/api/auth", discordRouter);
 
-app.post("/auth/discord", (req, res) => {
-  console.log(req.body);
-  res.json({
-    message: "received"
-  });
-});
+app.use(
+  "/uploads",
+  express.static(path.join(process.cwd(), "uploads"))
+);
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
+
+
+app.listen(3001, () => {
+  console.log("API server running on port 3001");
+})
