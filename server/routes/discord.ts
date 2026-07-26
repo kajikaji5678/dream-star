@@ -12,7 +12,7 @@ type UserRes = {
 }
 
 
-router.get("/discord", async (req, res) => {
+router.post("/discord", async (req, res) => {
   try {
     const { code } = req.body;
     if (!code) return res.status(400);
