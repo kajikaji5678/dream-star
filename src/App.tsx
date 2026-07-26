@@ -13,18 +13,13 @@ console.log("App.tsx Start");
 
 export default function App() {
 
-  const [logs, setLogs] = useState<string[]>([]);
+
   const [user, setUser] = useState<{
     id: string;
     username: string;
     avatar: string | null;
   } | null>(null);
 
-  function addLog(msg: string) {
-    setLogs((prevLogs) => {
-      return [...prevLogs, msg]
-    });
-  }
 
   useEffect(() => {
 
@@ -63,7 +58,7 @@ export default function App() {
 
         const data = await res.json();
         setUser(data);
-        addLog(`response ${JSON.stringify(data)}`);
+
 
       } catch (e) {
         console.log(e);
@@ -83,7 +78,7 @@ export default function App() {
           <Route path="/result" element={<Result />} />
           <Route path="/admin" element={<Admin user={user ?? undefined} />} />
           <Route path="/admin/cards/:id" element={<CardEdit user={user ?? undefined}/>} />
-          <Route path="/admin/cards/add" element={<CardAdd user={user ?? undefined}/>} />
+          <Route path="/admin/cards/add" element={<CardAdd/>} />
         </Routes>
       </BrowserRouter>
     </>

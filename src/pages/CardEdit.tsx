@@ -1,14 +1,7 @@
 import Layout from "../layouts/Layout";
 
-type Props = {
-  user?: {
-    id: string;
-    username: string;
-    avatar: string | null;
-  };
-};
 
-export default function CardEdit({ user }: Props) {
+export default function CardEdit() {
   return (
     <>
       <Layout />
