@@ -2,6 +2,8 @@ import { useState } from "react";
 import Layout from "../../layouts/Layout";
 import AdminTitle from "./AdminTitle";
 
+const API_URL = import.meta.env.VITE_API_URL
+
 type CardInfo = {
   label: string;
   key: keyof CardForm;
@@ -53,7 +55,7 @@ export default function CardAdd() {
     const formData = new FormData();
     formData.append("file", imageFile);
 
-    const uploadRes = await fetch("http://localhost:3001/api/upload", {
+    const uploadRes = await fetch(`${API_URL}/api/upload`, {
       method: "POST",
       body: formData
     });
@@ -65,7 +67,7 @@ export default function CardAdd() {
       return;
     }
 
-    const res = await fetch("http://localhost:3001/api/cards", {
+    const res = await fetch(`${API_URL}/api/cards`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
