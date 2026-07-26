@@ -15,7 +15,11 @@ type UserRes = {
 router.post("/discord", async (req, res) => {
   try {
     const { code } = req.body;
-    if (!code) return res.status(400);
+    if (!code) {
+      return res.status(400).json({
+        error: "code is required"
+      });
+    }
 
     const tokenRes = await fetch(
       "https://discord.com/api/oauth2/token",
@@ -34,7 +38,12 @@ router.post("/discord", async (req, res) => {
     );
 
     const tokenData = await tokenRes.json() as TokenRes;
-    if (!tokenRes.ok) return res.status(400);
+    if (!tokenRes.ok) {
+      return res.status(400).json({
+        error: "discord token error",
+        detail: tokenData,
+      });
+    }
 
     const userRes = await fetch(
       "https://discord.com/api/users/@me",
@@ -46,7 +55,12 @@ router.post("/discord", async (req, res) => {
     );
 
     const userData = await userRes.json() as UserRes;
-    if (!userRes.ok) return res.status(400);
+    if (!userRes.ok) {
+      return res.status(400).json({
+        error: "discord user error",
+        detail: userData,
+      });
+    }
 
     return res.json({
       id: userData.id,
@@ -55,11 +69,12 @@ router.post("/discord", async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    return res.status(500);
+    return res.status(500).json({
+      error: "internal server error",
+      detail: String(e),
+    });
   }
 });
 
 console.log("discord routes registered");
 export default router;
-
-
