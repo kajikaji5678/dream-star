@@ -46,7 +46,7 @@ router.get("/callback", async (req, res) => {
           client_secret: process.env.DISCORD_CLIENT_SECRET!,
           grant_type: "authorization_code",
           code,
-          redirect_uri: process.env.DISCORD_REDIRECT_URL!,
+          redirect_uri: process.env.DISCORD_REDIRECT_URI!,
         })
       }
     );
