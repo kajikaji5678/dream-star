@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"vite\" \"tsx server/index.ts\"",
-    "build": "tsc -p tsconfig.server.json && mkdir -p dist/server/generated && cp -r server/generated/prisma dist/server/generated/ && vite build",
+    "build": "tsc -p tsconfig.server.json && mkdir -p dist/server/generated/prisma && cp -r server/generated/prisma/. dist/server/generated/prisma/ && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
