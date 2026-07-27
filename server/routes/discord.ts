@@ -11,16 +11,29 @@ type UserRes = {
   avatar: string | null;
 }
 
+router.get("/discord", (_req, res) => {
+  const params = new URLSearchParams({
+    client_id: process.env.DISCORD_CLIENT_ID!,
+    response_type: "code",
+    redirect_uri: process.env.DISCORD_REDIRECT_URI!,
+    scope: "identify"
+  });
 
-router.post("/discord", async (req, res) => {
+  res.redirect(
+    `https://discord.com/oauth2/authorize?${params}`
+  );
+})
+
+router.get("/callback", async (req, res) => {
+  const code = req.query.code;
+
+  if (!code || typeof code !== "string") {
+    return res.status(400).json({
+      error: "code is required"
+    });
+  }
+
   try {
-    const { code } = req.body;
-    if (!code) {
-      return res.status(400).json({
-        error: "code is required"
-      });
-    }
-
     const tokenRes = await fetch(
       "https://discord.com/api/oauth2/token",
       {
@@ -33,11 +46,13 @@ router.post("/discord", async (req, res) => {
           client_secret: process.env.DISCORD_CLIENT_SECRET!,
           grant_type: "authorization_code",
           code,
+          redirect_uri: process.env.DISCORD_REDIRECT_URL!,
         })
       }
     );
 
     const tokenData = await tokenRes.json() as TokenRes;
+
     if (!tokenRes.ok) {
       return res.status(400).json({
         error: "discord token error",
@@ -55,6 +70,7 @@ router.post("/discord", async (req, res) => {
     );
 
     const userData = await userRes.json() as UserRes;
+
     if (!userRes.ok) {
       return res.status(400).json({
         error: "discord user error",
@@ -75,6 +91,8 @@ router.post("/discord", async (req, res) => {
     });
   }
 });
+
+
 
 console.log("discord routes registered");
 export default router;
