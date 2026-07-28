@@ -1,15 +1,15 @@
 import { Router } from "express";
 const router = Router();
 
-type TokenRes = {
-  access_token: string;
-}
+// type TokenRes = {
+//   access_token: string;
+// }
 
-type UserRes = {
-  id: string;
-  username: string;
-  avatar: string | null;
-}
+// type UserRes = {
+//   id: string;
+//   username: string;
+//   avatar: string | null;
+// }
 
 router.get("/discord", (_req, res) => {
   const params = new URLSearchParams({
@@ -51,7 +51,6 @@ router.get("/discord/callback", async (req, res) => {
       }
     );
 
-    const tokenData = await tokenRes.json() as TokenRes;
     const text = await tokenRes.text();
 
     console.log("Status:", tokenRes.status);
@@ -59,36 +58,36 @@ router.get("/discord/callback", async (req, res) => {
 
     return res.status(tokenRes.status).send(text);
 
-    if (!tokenRes.ok) {
-      return res.status(400).json({
-        error: "discord token error",
-        detail: tokenData,
-      });
-    }
+    // if (!tokenRes.ok) {
+    //   return res.status(400).json({
+    //     error: "discord token error",
+    //     detail: tokenData,
+    //   });
+    // }
 
-    const userRes = await fetch(
-      "https://discord.com/api/users/@me",
-      {
-        headers: {
-          Authorization: `Bearer ${tokenData.access_token}`
-        }
-      }
-    );
+    // const userRes = await fetch(
+    //   "https://discord.com/api/users/@me",
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${tokenData.access_token}`
+    //     }
+    //   }
+    // );
 
-    const userData = await userRes.json() as UserRes;
+    // const userData = await userRes.json() as UserRes;
 
-    if (!userRes.ok) {
-      return res.status(400).json({
-        error: "discord user error",
-        detail: userData,
-      });
-    }
+    // if (!userRes.ok) {
+    //   return res.status(400).json({
+    //     error: "discord user error",
+    //     detail: userData,
+    //   });
+    // }
 
-    return res.json({
-      id: userData.id,
-      username: userData.username,
-      avatar: userData.avatar,
-    });
+    // return res.json({
+    //   id: userData.id,
+    //   username: userData.username,
+    //   avatar: userData.avatar,
+    // });
   } catch (e) {
     console.log(e);
     return res.status(500).json({
