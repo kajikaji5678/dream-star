@@ -24,7 +24,7 @@ router.get("/discord", (_req, res) => {
   );
 })
 
-router.get("/callback", async (req, res) => {
+router.get("/discord/callback", async (req, res) => {
   const code = req.query.code;
 
   if (!code || typeof code !== "string") {
