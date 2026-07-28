@@ -52,6 +52,12 @@ router.get("/discord/callback", async (req, res) => {
     );
 
     const tokenData = await tokenRes.json() as TokenRes;
+    const text = await tokenRes.text();
+
+    console.log("Status:", tokenRes.status);
+    console.log("Response:", text);
+
+    return res.status(tokenRes.status).send(text);
 
     if (!tokenRes.ok) {
       return res.status(400).json({
