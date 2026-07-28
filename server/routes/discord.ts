@@ -1,39 +1,45 @@
 import { Router } from "express";
+
 const router = Router();
 
-// type TokenRes = {
-//   access_token: string;
-// }
+type TokenRes = {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  refresh_token: string;
+  scope: string;
+};
 
-// type UserRes = {
-//   id: string;
-//   username: string;
-//   avatar: string | null;
-// }
+type UserRes = {
+  id: string;
+  username: string;
+  avatar: string | null;
+};
 
 router.get("/discord", (_req, res) => {
   const params = new URLSearchParams({
     client_id: process.env.DISCORD_CLIENT_ID!,
     response_type: "code",
     redirect_uri: process.env.DISCORD_REDIRECT_URI!,
-    scope: "identify"
+    scope: "identify",
   });
 
   res.redirect(
-    `https://discord.com/oauth2/authorize?${params}`
+    `https://discord.com/oauth2/authorize?${params.toString()}`
   );
-})
+});
 
 router.get("/discord/callback", async (req, res) => {
   const code = req.query.code;
 
   if (!code || typeof code !== "string") {
     return res.status(400).json({
-      error: "code is required"
+      error: "code is required",
     });
   }
 
   try {
+    // アクセストークン取得
     const tokenRes = await fetch(
       "https://discord.com/api/oauth2/token",
       {
@@ -47,57 +53,51 @@ router.get("/discord/callback", async (req, res) => {
           grant_type: "authorization_code",
           code,
           redirect_uri: process.env.DISCORD_REDIRECT_URI!,
-        })
+        }),
       }
     );
 
-    const text = await tokenRes.text();
+    const tokenData = (await tokenRes.json()) as TokenRes;
 
-    console.log("Status:", tokenRes.status);
-    console.log("Response:", text);
+    if (!tokenRes.ok) {
+      return res.status(tokenRes.status).json({
+        error: "discord token error",
+        detail: tokenData,
+      });
+    }
 
-    return res.status(tokenRes.status).send(text);
+    // ユーザー情報取得
+    const userRes = await fetch(
+      "https://discord.com/api/users/@me",
+      {
+        headers: {
+          Authorization: `Bearer ${tokenData.access_token}`,
+        },
+      }
+    );
 
-    // if (!tokenRes.ok) {
-    //   return res.status(400).json({
-    //     error: "discord token error",
-    //     detail: tokenData,
-    //   });
-    // }
+    const userData = (await userRes.json()) as UserRes;
 
-    // const userRes = await fetch(
-    //   "https://discord.com/api/users/@me",
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${tokenData.access_token}`
-    //     }
-    //   }
-    // );
+    if (!userRes.ok) {
+      return res.status(userRes.status).json({
+        error: "discord user error",
+        detail: userData,
+      });
+    }
 
-    // const userData = await userRes.json() as UserRes;
+    return res.json({
+      id: userData.id,
+      username: userData.username,
+      avatar: userData.avatar,
+    });
+  } catch (error) {
+    console.error(error);
 
-    // if (!userRes.ok) {
-    //   return res.status(400).json({
-    //     error: "discord user error",
-    //     detail: userData,
-    //   });
-    // }
-
-    // return res.json({
-    //   id: userData.id,
-    //   username: userData.username,
-    //   avatar: userData.avatar,
-    // });
-  } catch (e) {
-    console.log(e);
     return res.status(500).json({
       error: "internal server error",
-      detail: String(e),
+      detail: String(error),
     });
   }
 });
 
-
-
-console.log("discord routes registered");
 export default router;
