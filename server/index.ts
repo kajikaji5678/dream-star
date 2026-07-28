@@ -10,6 +10,9 @@ const app = express();
 
 console.log("デバック");
 
+console.log("CLIENT_ID:", process.env.DISCORD_CLIENT_ID);
+console.log("REDIRECT_URI:", process.env.DISCORD_REDIRECT_URI);
+
 app.use(cors());
 app.use(express.json());
 app.use("/api/cards", cardsRouter);
