@@ -56,8 +56,17 @@ export default function App() {
           }),
         });
 
+        if (!res.ok) {
+          throw new Error("Auth failed");
+        }
+
         const data = await res.json();
-        setUser(data);
+        
+        await discordSdk.commands.authenticate({
+          access_token: data.accessToken,
+        });
+
+        setUser(data.user);
 
 
       } catch (e) {
