@@ -56,6 +56,16 @@ export async function getDiscordUser(code: string) {
     throw new Error(`Discord user error: ${JSON.stringify(userData)}`);
   }
 
+  //! DB接続の状態を表示
+  const check = await prisma.$queryRaw`
+  SELECT 
+    current_database(),
+    current_user,
+    current_setting('transaction_read_only')
+`;
+
+  console.log(check);
+
   const user = await prisma.user.upsert({
     where: {
       id: userData.id,
