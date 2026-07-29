@@ -13,7 +13,7 @@ console.log("App.tsx Start");
 
 export default function App() {
   //* デバック用
-  const [debug, setDebug] = useState("");
+  const [debug, setDebug] = useState<string[]>([]);
 
 
   const [user, setUser] = useState<{
@@ -35,14 +35,12 @@ export default function App() {
     async function connect() {
       try {
         if (!discordSdk) {
-          setDebug("discordSdk is not");
           return
         };
 
-        setDebug("ready");
         await discordSdk.ready();
 
-        setDebug("auth");
+        setDebug(prev => [...prev, "auth"]);
         const auth = await discordSdk.commands.authorize({
           client_id: import.meta.env.VITE_DISCORD_CLIENT_ID,
           response_type: "code",
@@ -51,7 +49,7 @@ export default function App() {
           scope: ["identify"],
         })
 
-        setDebug("fetch");
+        setDebug(prev => [...prev, `code取得: ${auth.code ? "成功": "失敗"}`]);
         const res = await fetch("/api/auth/discord/activity", {
           method: "POST",
           headers: {
@@ -63,23 +61,26 @@ export default function App() {
         });
 
         if (!res.ok) {
-          throw new Error("Auth failed");
+          throw new Error("fetch Error");
         }
 
-        setDebug("data");
+        setDebug(prev => [...prev, "data"]);
         const data = await res.json();
+
+        setDebug(prev => [
+          ...prev,
+          `accessToken:${data.accessToken ? "あり" : "なし"}`
+        ]);
 
         await discordSdk.commands.authenticate({
           access_token: data.accessToken,
         });
 
-        setDebug("done");
         setUser(data.user);
-
 
       } catch (e) {
         console.log(e);
-        setDebug(`キャッチエラー${e}`);
+        setDebug(prev => [...prev, '${e}']);
       }
     }
 
