@@ -10,6 +10,10 @@ type Props = {
 }
 
 export default function Home({ user, debug }: Props) {
+
+  // デバック一時削除
+  void debug;
+
   return (
     <>
       <Layout>
@@ -25,9 +29,9 @@ export default function Home({ user, debug }: Props) {
           <h2 className="text-xl font-bold">お気に入りカード</h2>
         </section>
       </Layout>
-      {debug.map((log, index) => (
+      {/* {debug.map((log, index) => (
         <div key={index}>{log}</div>
-      ))}
+      ))} */}
     </>
   )
 }

@@ -55,7 +55,10 @@ export default function Admin({ user }: Props) {
                   <p className="mt-3 text-center text-lg font-semibold">{card.name}</p>
                   <button
                     className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-                    onClick={() => navigate(`/admin/cards/${card.id}`)}
+                    onClick={() => {
+                      console.log("click", card.id);
+                      navigate(`/admin/cards/${card.id}`);
+                    }}
                   >
                     編集する
                   </button>
