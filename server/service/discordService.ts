@@ -60,9 +60,14 @@ export async function getDiscordUser(code: string) {
     where: {
       id: userData.id,
     },
-    update: {},
+    update: {
+      username: userData.username,
+      avatar: userData.avatar
+    },
     create: {
       id: userData.id,
+      username: userData.username,
+      avatar: userData.avatar
     },
   });
 
