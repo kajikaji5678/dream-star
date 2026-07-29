@@ -61,7 +61,10 @@ export default function App() {
             code: auth.code,
           }),
         });
-        setDebug(prev => [...prev, `fetch終了 status:${res.status}`])
+        setDebug(prev => [...prev, `fetch終了 status:${res.status}`]);
+
+        const errorData = await res.json();
+        setDebug(prev => [...prev, `エラー内容: ${JSON.stringify(errorData)}`]);
 
         if (!res.ok) {
           throw new Error("fetch Error");
