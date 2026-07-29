@@ -19,7 +19,6 @@ type Card = {
   name: string;
   imageUrl: string;
 }
-const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Admin({ user }: Props) {
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ export default function Admin({ user }: Props) {
   const isAdmin = user && Admin_id.includes(user.id);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/cards`)
+    fetch(`/api/cards`)
       .then((res) => res.json())
       .then((data) => {
         console.log("取得データ:", data); setCards(data);
@@ -47,7 +46,7 @@ export default function Admin({ user }: Props) {
               {cards.map((card) => (
                 <div key={card.id} className="rounded-lg bg-black/20 p-4 text-white">
                   <img
-                    src={`${API_URL}${card.imageUrl}`}
+                    src={`${card.imageUrl}`}
                     onLoad={() => console.log(card.imageUrl)}
                     onError={(e) => console.log(e.currentTarget.src)}
                     className="w-full aspect-square object-cover rounded-lg"
