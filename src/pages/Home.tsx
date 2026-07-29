@@ -1,18 +1,18 @@
 import Layout from "../layouts/Layout"
 
-type User = {
-  id: string
-  username: string
-  avatar: string | null
-}
-
 type Props = {
-  user?: User
+  user?: {
+    id: string
+    username: string
+    avatar: string | null
+  };
+  debug: string
 }
 
-export default function Home({user}: Props) {
+export default function Home({ user, debug }: Props) {
   return (
     <Layout>
+      <h1>{debug || "テスト"}</h1>
       <section className="rounded-lg basis-1/5 px-6 py-4 bg-[#2b2d31]">
         <h2 className="text-xl font-bold">プレーヤー情報</h2>
         <div className="flex">

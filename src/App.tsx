@@ -88,10 +88,9 @@ export default function App() {
 
   return (
     <>
-    <h1>{debug || "テスト"}</h1>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home user={user ?? undefined} />} />
+          <Route path="/" element={<Home user={user ?? undefined} debug={debug}/>} />
           <Route path="/gacha" element={<Gacha />} />
           <Route path="/gacha/opening" element={<GachaOpening />} />
           <Route path="/result" element={<Result />} />
