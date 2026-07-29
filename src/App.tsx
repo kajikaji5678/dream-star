@@ -24,17 +24,20 @@ export default function App() {
 
   useEffect(() => {
 
-    const isDiscordActivity = new URLSearchParams(
-      window.location.search
-    ).has("frame_id");
+    // const isDiscordActivity = new URLSearchParams(
+    //   window.location.search
+    // ).has("frame_id");
 
-    if (!isDiscordActivity) {
-      return;
-    }
+    // if (!isDiscordActivity) {
+    //   return;
+    // }
 
     async function connect() {
       try {
-        if (!discordSdk) return;
+        if (!discordSdk) {
+          setDebug("discordSdk is not");
+          return
+        };
 
         setDebug("ready");
         await discordSdk.ready();
@@ -85,7 +88,7 @@ export default function App() {
 
   return (
     <>
-    <h1>{debug}</h1>
+    <h1>{debug || "テスト"}</h1>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home user={user ?? undefined} />} />
