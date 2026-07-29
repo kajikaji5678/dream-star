@@ -5,6 +5,6 @@ const router = Router();
 
 router.get("/discord", discordController.redirect);
 router.get("/discord/callback", discordController.callback);
-router.get("/discord/activity", discordController.activityLogin);
+router.post("/discord/activity", discordController.activityLogin);
 
 export default router;
