@@ -2,7 +2,6 @@ import "dotenv/config"
 import express from "express";
 import cors from "cors";
 import cardsRouter from "./routes/cards.js"
-import uploadRouter from "./routes/upload.js"
 import path from "path";
 import discordRouter from "./routes/discord.js";
 
@@ -16,7 +15,6 @@ console.log("REDIRECT_URI:", process.env.DISCORD_REDIRECT_URI);
 app.use(cors());
 app.use(express.json());
 app.use("/api/cards", cardsRouter);
-app.use("/api/upload", uploadRouter);
 app.use("/api/auth", discordRouter);
 
 app.use(

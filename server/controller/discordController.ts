@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import * as discordService from "../service/discordService.ts";
+import * as discordService from "../service/discordService.js";
 
 export function redirect(_req: Request, res: Response) {
   const params = new URLSearchParams({
@@ -32,6 +32,26 @@ export async function callback(req: Request, res: Response) {
     return res.status(500).json({
       error: "internal server error",
       detail: String(error),
+    });
+  }
+}
+
+export async function activityLogin(req: Request, res: Response) {
+  const {code} = req.body;
+
+  if (!code || typeof code !== "string") {
+    return res.status(400).json({
+      error: "code is required",
+    });
+  }
+
+  try {
+    const user = await discordService.getDiscordUser(code);
+    return res.json(user);
+  } catch (e) {
+    return res.status(500).json({
+      error: "server error",
+      detail: String(e),
     });
   }
 }
