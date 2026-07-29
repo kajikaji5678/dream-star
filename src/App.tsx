@@ -79,7 +79,7 @@ export default function App() {
 
       } catch (e) {
         console.log(e);
-        setDebug(String(e));
+        setDebug(`キャッチエラー${e}`);
       }
     }
 
