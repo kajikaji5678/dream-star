@@ -46,7 +46,7 @@ export default function App() {
         })
 
 
-        const res = await fetch("/api/auth/discord", {
+        const res = await fetch("/api/auth/discord/activity", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
