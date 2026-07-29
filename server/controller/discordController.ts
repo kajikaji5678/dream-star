@@ -49,6 +49,7 @@ export async function activityLogin(req: Request, res: Response) {
     const user = await discordService.getDiscordUser(code);
     return res.json(user);
   } catch (e) {
+    console.error(e);
     return res.status(500).json({
       error: "server error",
       detail: String(e),
