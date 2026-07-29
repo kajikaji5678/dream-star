@@ -40,7 +40,7 @@ export default function App() {
 
         await discordSdk.ready();
 
-        setDebug(prev => [...prev, "auth"]);
+        // setDebug(prev => [...prev, "auth"]);
         const auth = await discordSdk.commands.authorize({
           client_id: import.meta.env.VITE_DISCORD_CLIENT_ID,
           response_type: "code",
@@ -49,7 +49,9 @@ export default function App() {
           scope: ["identify"],
         })
 
-        setDebug(prev => [...prev, `code取得: ${auth.code ? "成功": "失敗"}`]);
+        // setDebug(prev => [...prev, `code取得: ${auth.code ? "成功": "失敗"}`]);
+
+        setDebug(prev => [...prev, "fetch開始"]);
         const res = await fetch("/api/auth/discord/activity", {
           method: "POST",
           headers: {
@@ -59,6 +61,7 @@ export default function App() {
             code: auth.code,
           }),
         });
+        setDebug(prev => [...prev, `fetch終了 status:${res.status}`])
 
         if (!res.ok) {
           throw new Error("fetch Error");
@@ -80,7 +83,7 @@ export default function App() {
 
       } catch (e) {
         console.log(e);
-        setDebug(prev => [...prev, '${e}']);
+        setDebug(prev => [...prev, `${e}`]);
       }
     }
 
