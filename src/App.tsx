@@ -12,6 +12,8 @@ import CardAdd from "./pages/admin/CardAdd";
 console.log("App.tsx Start");
 
 export default function App() {
+  //* デバック用
+  const [debug, setDebug] = useState("");
 
 
   const [user, setUser] = useState<{
@@ -19,7 +21,6 @@ export default function App() {
     username: string;
     avatar: string | null;
   } | null>(null);
-
 
   useEffect(() => {
 
@@ -35,8 +36,10 @@ export default function App() {
       try {
         if (!discordSdk) return;
 
+        setDebug("ready");
         await discordSdk.ready();
 
+        setDebug("auth");
         const auth = await discordSdk.commands.authorize({
           client_id: import.meta.env.VITE_DISCORD_CLIENT_ID,
           response_type: "code",
@@ -45,7 +48,7 @@ export default function App() {
           scope: ["identify"],
         })
 
-
+        setDebug("fetch");
         const res = await fetch("/api/auth/discord/activity", {
           method: "POST",
           headers: {
@@ -60,17 +63,20 @@ export default function App() {
           throw new Error("Auth failed");
         }
 
+        setDebug("data");
         const data = await res.json();
-        
+
         await discordSdk.commands.authenticate({
           access_token: data.accessToken,
         });
 
+        setDebug("done");
         setUser(data.user);
 
 
       } catch (e) {
         console.log(e);
+        setDebug(String(e));
       }
     }
 
@@ -79,6 +85,7 @@ export default function App() {
 
   return (
     <>
+    <h1>{debug}</h1>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home user={user ?? undefined} />} />
@@ -86,8 +93,8 @@ export default function App() {
           <Route path="/gacha/opening" element={<GachaOpening />} />
           <Route path="/result" element={<Result />} />
           <Route path="/admin" element={<Admin user={user ?? undefined} />} />
-          <Route path="/admin/cards/:id" element={<CardEdit/>} />
-          <Route path="/admin/cards/add" element={<CardAdd/>} />
+          <Route path="/admin/cards/:id" element={<CardEdit />} />
+          <Route path="/admin/cards/add" element={<CardAdd />} />
         </Routes>
       </BrowserRouter>
     </>
