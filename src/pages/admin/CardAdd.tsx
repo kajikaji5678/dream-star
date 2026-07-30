@@ -8,6 +8,8 @@ import CardForm from "../../components/CardForm";
 
 export default function CardAdd() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const [card, setCard] = useState<CardFormData>({
     imageUrl: "",
     name: "",
@@ -16,12 +18,11 @@ export default function CardAdd() {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
-
   const [error, setError] = useState("");
 
+  // カード登録処理
   const handleSubmit = async () => {
     setError("");
-
     try {
       await submitCard(card, imageFile);
       alert("カードを登録しました");

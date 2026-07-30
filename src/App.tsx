@@ -6,7 +6,7 @@ import Gacha from "./pages/Gacha";
 import GachaOpening from "./pages/GachaOpening";
 import Result from "./pages/Result";
 import Admin from "./pages/Admin";
-import CardEdit from "./pages/CardEdit";
+import CardEdit from "./pages/admin/CardEdit";
 import CardAdd from "./pages/admin/CardAdd";
 
 console.log("App.tsx Start");

@@ -51,4 +51,30 @@ router.post("/", async (req, res) => {
   }
 });
 
+// カード編集画面
+router.get("/:id", async (req, res) => {
+  const id = Number(req.params.id);
+
+  if (Number.isNaN(id)) {
+    return res.status(400).json({error: "不正ID"})
+  }
+
+  try {
+    const card = await prisma.card.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!card) {
+      return res.status(404).json({error: "カードがない"});
+    }
+
+    res.json(card);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({error: "サーバーエラー"});
+  }
+})
+
 export default router;

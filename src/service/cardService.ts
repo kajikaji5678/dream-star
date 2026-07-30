@@ -51,3 +51,14 @@ export async function submitCard(
 
   return data;
 }
+
+export async function getCard(id: string) {
+  const res = await fetch(`${API_URL}/api/cards/${id}`);
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+}
