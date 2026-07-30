@@ -3,7 +3,6 @@ import type { CardInfo, CardFormData } from "../types/card";
 type Props = {
   card: CardFormData;
   setCard: React.Dispatch<React.SetStateAction<CardFormData>>;
-  imageFile: File | null;
   setImageFile: React.Dispatch<React.SetStateAction<File | null>>;
   previewUrl: string;
   setPreviewUrl: React.Dispatch<React.SetStateAction<string>>;

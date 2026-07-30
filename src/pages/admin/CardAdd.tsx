@@ -7,8 +7,7 @@ import CardForm from "../../components/CardForm";
 
 
 export default function CardAdd() {
-
-  const API_URL = import.meta.env.VITE_API_URL;
+  
 
   const [card, setCard] = useState<CardFormData>({
     imageUrl: "",
@@ -42,7 +41,6 @@ export default function CardAdd() {
         <CardForm
           card={card}
           setCard={setCard}
-          imageFile={imageFile}
           setImageFile={setImageFile}
           previewUrl={previewUrl}
           setPreviewUrl={setPreviewUrl}

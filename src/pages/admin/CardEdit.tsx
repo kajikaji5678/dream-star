@@ -5,6 +5,7 @@ import AdminTitle from "./AdminTitle";
 import CardForm from "../../components/CardForm";
 import type { CardFormData } from "../../types/card";
 import { getCard } from "../../service/cardService";
+import { updateCard } from "../../service/cardService";
 
 export default function CardEdit() {
 
@@ -46,8 +47,16 @@ export default function CardEdit() {
   }, [id, API_URL]);
 
   const handleSubmit = async () => {
-    // TODO: PUT /api/cards/:id
-    alert("更新処理");
+    if (!id) return;
+    setError("");
+    try {
+      await updateCard(id, card, imageFile);
+      alert("更新しました");
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      }
+    }
   };
 
   return (

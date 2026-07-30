@@ -2,6 +2,7 @@ import type { CardFormData } from "../types/card";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+// カード登録
 export async function submitCard(
   card: CardFormData,
   imageFile: File | null
@@ -52,8 +53,55 @@ export async function submitCard(
   return data;
 }
 
+// 編集画面にてカード情報取得
 export async function getCard(id: string) {
   const res = await fetch(`${API_URL}/api/cards/${id}`);
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+}
+
+// カード情報更新
+export async function updateCard(
+  id: string,
+  card: CardFormData,
+  imageFile: File | null
+) {
+
+  let imageUrl = card.imageUrl;
+
+  if (imageFile) {
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    const uploadRes = await fetch(`${API_URL}/api/upload`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const uploadData = await uploadRes.json();
+
+    if (!uploadRes.ok) {
+      throw new Error(
+        uploadData.error ?? "画像アップロードに失敗しました"
+      );
+    }
+
+    imageUrl = uploadData.imageUrl;
+  }
+
+  const res = await fetch(`${API_URL}/api/cards/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({...card, imageUrl}),
+  });
+
   const data = await res.json();
 
   if (!res.ok) {
