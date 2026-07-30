@@ -55,7 +55,6 @@ export default function Admin({ user }: Props) {
                   <button
                     className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
                     onClick={() => {
-                      console.log("click", card.id);
                       navigate(`/admin/cards/${card.id}`);
                     }}
                   >
@@ -66,7 +65,10 @@ export default function Admin({ user }: Props) {
             </div>
           </div>
           <div className="mt-4 flex justify-center">
-            <button className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+            <button
+              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+              onClick={() => { navigate(`/admin/cards/add`) }}
+            >
               追加する
             </button>
           </div>
