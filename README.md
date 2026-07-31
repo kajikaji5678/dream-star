@@ -11,6 +11,9 @@
 <img src="https://img.shields.io/badge/-react-61DAFB.svg?logo=react&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-tailwindcss-06B6D4.svg?logo=tailwindcss&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-vite-9135FF.svg?logo=vite&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-canvas-E72429.svg?logo=canvas&style=for-the-badge&logoColor=white">  <img src="https://img.shields.io/badge/-shadcnui-000000.svg?logo=shadcnui&style=for-the-badge&logoColor=white"> 
 
 ### インフラ
-<img src="https://img.shields.io/badge/-pm2-2B037A.svg?logo=pm2&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-ubuntu-E95420.svg?logo=ubuntu&style=for-the-badge&logoColor=white"> 
+<img src="https://img.shields.io/badge/-pm2-2B037A.svg?logo=pm2&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-ubuntu-E95420.svg?logo=ubuntu&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-nginx-009639.svg?logo=nginx&style=for-the-badge&logoColor=white"> 
+
+### テストツール
+<img src="https://img.shields.io/badge/-vitest-00FF74.svg?logo=vitest&style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/-eslint-4B32C3.svg?logo=eslint&style=for-the-badge&logoColor=white"> 
 
 
