@@ -6,6 +6,7 @@ import CardForm from "../../components/CardForm";
 import type { CardFormData } from "../../types/card";
 import { getCard } from "../../service/cardService";
 import { updateCard } from "../../service/cardService";
+import { deleteCard } from "../../service/cardService";
 import { useNavigate } from "react-router-dom";
 
 export default function CardEdit() {
@@ -61,22 +62,18 @@ export default function CardEdit() {
     }
   };
 
-  // とりあえずエラー吐き出さないように
   const handleDelete = async () => {
+    if (!id) return;
     if (!confirm("本当に削除しますか？")) return;
 
-    const res = await fetch(`/api/cards/${id}`, {
-      method: "DELETE",
-    });
-
-    if (!res.ok) {
-      alert("消去失敗");
-      return
+    try {
+      await deleteCard(id);
+      navigate("/admin");
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      }
     }
-
-    alert("消去しました");
-
-    navigate("/admin");
   };
 
   return (

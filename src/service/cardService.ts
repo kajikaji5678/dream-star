@@ -110,3 +110,18 @@ export async function updateCard(
 
   return data;
 }
+
+// カード削除
+export async function deleteCard(id: string) {
+  const res = await fetch(`${API_URL}/api/cards/${id}`, {
+    method: "DELETE",
+  }) ;
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error);
+  }
+
+  return data;
+}
