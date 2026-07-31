@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../prisma.js";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import fs from "fs/promises";
 import path from "path";
 
@@ -58,7 +59,7 @@ router.get("/:id", async (req, res) => {
   const id = Number(req.params.id);
 
   if (Number.isNaN(id)) {
-    return res.status(400).json({error: "不正ID"})
+    return res.status(400).json({ error: "不正ID" })
   }
 
   try {
@@ -69,13 +70,13 @@ router.get("/:id", async (req, res) => {
     });
 
     if (!card) {
-      return res.status(404).json({error: "カードがない"});
+      return res.status(404).json({ error: "カードがない" });
     }
 
     res.json(card);
   } catch (e) {
     console.log(e);
-    res.status(500).json({error: "サーバーエラー"});
+    res.status(500).json({ error: "サーバーエラー" });
   }
 });
 
@@ -119,6 +120,13 @@ router.put("/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
 
+    if (error instanceof PrismaClientKnownRequestError) {
+      if (error.code === "P2025") {
+        return res.status(404).json({
+          error: "カードが存在しません",
+        });
+      }
+    }
     res.status(500).json({
       error: "カード更新に失敗しました",
     });
@@ -137,7 +145,7 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (!card) {
-      return res.status(404).json({message: "カードが見つからない"});
+      return res.status(404).json({ message: "カードが見つからない" });
     }
 
     if (card.imageUrl) {
@@ -156,12 +164,12 @@ router.delete("/:id", async (req, res) => {
     }
 
     await prisma.card.delete({
-      where: {id}
+      where: { id }
     });
-    res.json({message: "削除しました"});
+    res.json({ message: "削除しました" });
   } catch (e) {
     console.error(e);
-    res.status(500).json({message: "失敗しました"});
+    res.status(500).json({ message: "失敗しました" });
   }
 
 })
