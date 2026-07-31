@@ -1,8 +1,12 @@
 import request from "supertest";
 import app from "../app.ts";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterAll } from "vitest";
+import { prisma } from "../prisma.ts";
 
 describe("Cards API", () => {
+
+  let createdCardIds: number[] = [];
+
   it("GET /api/cards", async () => {
     const res = await request(app).get("/api/cards");
     expect(res.status).toBe(200);
@@ -28,6 +32,54 @@ describe("Cards API", () => {
     const res = await request(app).get("/api/cards/abc");
 
     expect(res.status).toBe(400);
+  });
+
+  it("POST /api/cards/", async () => {
+    const res = await request(app)
+      .post("/api/cards")
+      .send({
+        name: "test",
+        imageUrl: "test.png",
+        rarity: "1"
+      });
+
+    expect(res.status).toBe(201);
+    expect(res.body).toHaveProperty("id");
+    expect(res.body.name).toBe("test");
+    expect(res.body.rarity).toBe("1");
+    createdCardIds.push(res.body.id);
+  });
+
+  it("POST /api/cards/ 400", async () => {
+    const res = await request(app)
+      .post("/api/cards")
+      .send({
+        imageUrl: "test.png",
+        rarity: "1"
+      });
+
+    expect(res.status).toBe(400);
+  });
+
+  it("POST /api/cards/ 400", async () => {
+    const res = await request(app)
+      .post("/api/cards")
+      .send({
+        name: "test",
+      });
+
+    expect(res.status).toBe(400);
+  });
+
+  afterAll(async () => {
+    if (createdCardIds) {
+      for (const id of createdCardIds) {
+        await prisma.card.delete({
+          where: { id },
+        });
+      }
+    }
+    await prisma.$disconnect();
   })
 });
 
