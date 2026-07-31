@@ -71,6 +71,61 @@ describe("Cards API", () => {
     expect(res.status).toBe(400);
   });
 
+  it("PUT /api/cards/:id ", async () => {
+    const list = await request(app).get("/api/cards");
+    const id = list.body[0].id;
+    const res = await request(app)
+      .put(`/api/cards/${id}`)
+      .send({
+        name: "update",
+        imageUrl: "update.png",
+        rarity: "1",
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body.name).toBe("update");
+    expect(res.body.rarity).toBe("1");
+    createdCardIds.push(res.body.id);
+  });
+
+  it("PUT /api/cards/:id 404", async () => {
+    const res = await request(app)
+      .put(`/api/cards/999999`)
+      .send({
+        name: "update",
+        imageUrl: "update.png",
+        rarity: "1",
+      });
+
+    expect(res.status).toBe(404);
+  });
+
+  it("PUT /api/cards/:id 400", async () => {
+    const list = await request(app).get("/api/cards");
+    const id = list.body[0].id;
+    const res = await request(app)
+      .put(`/api/cards/${id}`)
+      .send({
+        imageUrl: "update.png",
+        rarity: "1",
+      });
+
+    expect(res.status).toBe(400);
+  });
+
+    it("PUT /api/cards/:id 400", async () => {
+    const list = await request(app).get("/api/cards");
+    const id = list.body[0].id;
+    const res = await request(app)
+      .put(`/api/cards/${id}`)
+      .send({
+        name: "test",
+        imageUrl: "update.png",
+      });
+
+    expect(res.status).toBe(400);
+  });
+
   afterAll(async () => {
     if (createdCardIds) {
       for (const id of createdCardIds) {

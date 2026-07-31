@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { prisma } from "../prisma.js";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import fs from "fs/promises";
 import path from "path";
 
@@ -119,13 +118,8 @@ router.put("/:id", async (req, res) => {
     res.json(card);
   } catch (error) {
     console.log(error);
-
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        return res.status(404).json({
-          error: "カードが存在しません",
-        });
-      }
+    if (typeof error === "object" && "code" in error! && error.code === "P2025") {
+      return res.status(404).json({error: "カードが存在しない"});
     }
     res.status(500).json({
       error: "カード更新に失敗しました",
