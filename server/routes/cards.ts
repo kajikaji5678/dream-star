@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { prisma } from "../prisma.js";
+import fs from "fs/promises";
+import path from "path";
 
 const router = Router();
 
@@ -122,5 +124,46 @@ router.put("/:id", async (req, res) => {
     });
   }
 });
+
+// カード削除
+router.delete("/:id", async (req, res) => {
+  const id = Number(req.params.id);
+
+  try {
+    const card = await prisma.card.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!card) {
+      return res.status(404).json({message: "カードが見つからない"});
+    }
+
+    if (card.imageUrl) {
+      const filePath = path.join(
+        process.cwd(),
+        "uploads",
+        "cards",
+        path.basename(card.imageUrl)
+      );
+
+      try {
+        await fs.unlink(filePath);
+      } catch (e) {
+        console.error("削除失敗", e);
+      }
+    }
+
+    await prisma.card.delete({
+      where: {id}
+    });
+    res.json({message: "削除しました"});
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({message: "失敗しました"});
+  }
+
+})
 
 export default router;

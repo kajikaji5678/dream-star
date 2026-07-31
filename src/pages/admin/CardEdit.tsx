@@ -6,11 +6,13 @@ import CardForm from "../../components/CardForm";
 import type { CardFormData } from "../../types/card";
 import { getCard } from "../../service/cardService";
 import { updateCard } from "../../service/cardService";
+import { useNavigate } from "react-router-dom";
 
 export default function CardEdit() {
 
   const API_URL = import.meta.env.VITE_API_URL;
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [card, setCard] = useState<CardFormData>({
     imageUrl: "",
@@ -60,8 +62,21 @@ export default function CardEdit() {
   };
 
   // とりあえずエラー吐き出さないように
-  const handleDelete = () => {
-    alert("削除テスト");
+  const handleDelete = async () => {
+    if (!confirm("本当に削除しますか？")) return;
+
+    const res = await fetch(`/api/cards/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      alert("消去失敗");
+      return
+    }
+
+    alert("消去しました");
+
+    navigate("/admin");
   };
 
   return (
