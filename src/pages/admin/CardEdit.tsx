@@ -59,6 +59,11 @@ export default function CardEdit() {
     }
   };
 
+  // とりあえずエラー吐き出さないように
+  const handleDelete = () => {
+    alert("削除テスト");
+  };
+
   return (
     <Layout>
       <section className="p-4 flex h-full flex-col rounded-lg bg-[#313338]">
@@ -72,8 +77,14 @@ export default function CardEdit() {
           setPreviewUrl={setPreviewUrl}
           error={error}
           buttonText="更新する"
-          onSubmit={handleSubmit}
-        />
+          onSubmit={handleSubmit}>
+          <button
+            className="mt-2 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
+            onClick={handleDelete}
+          >
+            削除する
+          </button>
+        </CardForm>
       </section>
     </Layout>
   );

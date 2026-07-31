@@ -1,4 +1,5 @@
 import type { CardInfo, CardFormData } from "../types/card";
+import {  type ReactNode } from "react";
 
 type Props = {
   card: CardFormData;
@@ -9,6 +10,7 @@ type Props = {
   error: string;
   buttonText: string;
   onSubmit: () => void;
+  children?: ReactNode;
 };
 
 const cardInfo: CardInfo[] = [
@@ -26,6 +28,7 @@ export default function CardForm({
   error,
   buttonText,
   onSubmit,
+  children,
 }: Props) {
   return (
     <div className="mt-4 flex-1 rounded-lg bg-black/20 p-6">
@@ -91,6 +94,7 @@ export default function CardForm({
             >
               {buttonText}
             </button>
+            {children}
           </div>
         </div>
       </div>
