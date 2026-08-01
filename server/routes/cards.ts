@@ -119,7 +119,7 @@ router.put("/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
     if (typeof error === "object" && "code" in error! && error.code === "P2025") {
-      return res.status(404).json({error: "カードが存在しない"});
+      return res.status(404).json({ error: "カードが存在しない" });
     }
     res.status(500).json({
       error: "カード更新に失敗しました",
@@ -130,6 +130,10 @@ router.put("/:id", async (req, res) => {
 // カード削除
 router.delete("/:id", async (req, res) => {
   const id = Number(req.params.id);
+
+  if (Number.isNaN(id)) {
+    return res.status(400).json({error: "不正なID"});
+  }
 
   try {
     const card = await prisma.card.findUnique({
@@ -161,8 +165,11 @@ router.delete("/:id", async (req, res) => {
       where: { id }
     });
     res.json({ message: "削除しました" });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "object" && "code" in error! && error.code === "P2025") {
+      return res.status(404).json({ error: "カードが存在しない" });
+    }
     res.status(500).json({ message: "失敗しました" });
   }
 

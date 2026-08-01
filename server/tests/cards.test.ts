@@ -14,13 +14,19 @@ describe("Cards API", () => {
   });
 
   it("GET /api/cards/:id", async () => {
-    const list = await request(app).get("/api/cards");
-    const id = list.body[0].id;
+    const created = await request(app)
+      .post("/api/cards")
+      .send({
+        name: "Test Card",
+        imageUrl: "test.png",
+        rarity: "SSR",
+      });
+    const id = created.body.id;
     const res = await request(app).get(`/api/cards/${id}`);
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("id");
-  })
+  });
 
   it("GET /api/cards/:id 404", async () => {
     const res = await request(app).get("/api/cards/99999");
@@ -113,7 +119,7 @@ describe("Cards API", () => {
     expect(res.status).toBe(400);
   });
 
-    it("PUT /api/cards/:id 400", async () => {
+  it("PUT /api/cards/:id 400", async () => {
     const list = await request(app).get("/api/cards");
     const id = list.body[0].id;
     const res = await request(app)
@@ -126,10 +132,37 @@ describe("Cards API", () => {
     expect(res.status).toBe(400);
   });
 
+  it("DELETE /api/cards/:id", async () => {
+    const create = await request(app)
+      .post("/api/cards")
+      .send({
+        name: "delete",
+        imageUrl: "delete.png",
+        rarity: "1"
+      });
+
+    const id = create.body.id;
+    const res = await request(app).delete(`/api/cards/${id}`);
+
+    expect(res.status).toBe(200);
+  });
+
+  it("DELETE /api/cards/:id 404", async () => {
+    const res = await request(app).delete(`/api/cards/999999`);
+
+    expect(res.status).toBe(404);
+  });
+
+  it("DELETE /api/cards/:id 400", async () => {
+    const res = await request(app).delete(`/api/cards/abc`);
+
+    expect(res.status).toBe(400);
+  });
+
   afterAll(async () => {
     if (createdCardIds) {
       for (const id of createdCardIds) {
-        await prisma.card.delete({
+        await prisma.card.deleteMany({
           where: { id },
         });
       }
