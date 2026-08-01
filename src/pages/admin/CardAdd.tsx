@@ -21,7 +21,7 @@ export default function CardAdd() {
 
   // カード登録処理
   const handleSubmit = async () => {
-    alert("handleSubmit");
+    
     setError("");
     try {
       await submitCard(card, imageFile);
@@ -32,6 +32,7 @@ export default function CardAdd() {
       // } else {
       //   setError("予期しないエラーが発生しました");
       // }
+      setError("最新かどうかのテスト");
       console.log(e);
     }
   }
