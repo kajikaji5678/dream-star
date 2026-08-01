@@ -21,10 +21,7 @@ router.get("/", async (_req, res) => {
 
 // カード登録
 router.post("/", async (req, res) => {
-
-  //リクエストデバック
-  console.log("headers:", req.headers["content-type"]);
-  console.log("body:", req.body);
+  console.log("POST /api/cards");
 
   try {
     const { name, imageUrl, rarity } = req.body;

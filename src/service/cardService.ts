@@ -7,6 +7,9 @@ export async function submitCard(
   card: CardFormData,
   imageFile: File | null
 ) {
+
+  console.log("uploadフロント開始");
+
   if (!card.name.trim()) {
     throw new Error("カード名を入力してください");
   }
@@ -26,6 +29,8 @@ export async function submitCard(
     method: "POST",
     body: formData,
   });
+
+  console.log("フロントからfetchによる画像の送信完了");
 
   const uploadData = await uploadRes.json();
 
