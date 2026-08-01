@@ -27,11 +27,12 @@ export default function CardAdd() {
       await submitCard(card, imageFile);
       alert("カードを登録しました");
     } catch (e) {
-      if (e instanceof Error) {
-        setError(e.message);
-      } else {
-        setError("予期しないエラーが発生しました");
-      }
+      // if (e instanceof Error) {
+      //   setError(e.message);
+      // } else {
+      //   setError("予期しないエラーが発生しました");
+      // }
+      console.log(e);
     }
   }
 
