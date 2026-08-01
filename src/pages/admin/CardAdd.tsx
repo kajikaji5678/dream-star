@@ -21,6 +21,7 @@ export default function CardAdd() {
 
   // カード登録処理
   const handleSubmit = async () => {
+    alert("handleSubmit");
     setError("");
     try {
       await submitCard(card, imageFile);
