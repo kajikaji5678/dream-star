@@ -1,7 +1,7 @@
 import request from "supertest";
-import app from "../app.ts";
+import app from "../app.js";
 import { describe, it, expect, afterAll } from "vitest";
-import { prisma } from "../prisma.ts";
+import { prisma } from "../prisma.js";
 
 describe("Cards API", () => {
 
