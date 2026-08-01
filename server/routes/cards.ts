@@ -58,7 +58,7 @@ router.get("/:id", async (req, res) => {
   const id = Number(req.params.id);
 
   if (Number.isNaN(id)) {
-    return res.status(400).json({error: "不正ID"})
+    return res.status(400).json({ error: "不正ID" })
   }
 
   try {
@@ -69,13 +69,13 @@ router.get("/:id", async (req, res) => {
     });
 
     if (!card) {
-      return res.status(404).json({error: "カードがない"});
+      return res.status(404).json({ error: "カードがない" });
     }
 
     res.json(card);
   } catch (e) {
     console.log(e);
-    res.status(500).json({error: "サーバーエラー"});
+    res.status(500).json({ error: "サーバーエラー" });
   }
 });
 
@@ -118,7 +118,9 @@ router.put("/:id", async (req, res) => {
     res.json(card);
   } catch (error) {
     console.log(error);
-
+    if (typeof error === "object" && "code" in error! && error.code === "P2025") {
+      return res.status(404).json({ error: "カードが存在しない" });
+    }
     res.status(500).json({
       error: "カード更新に失敗しました",
     });
@@ -129,6 +131,10 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const id = Number(req.params.id);
 
+  if (Number.isNaN(id)) {
+    return res.status(400).json({error: "不正なID"});
+  }
+
   try {
     const card = await prisma.card.findUnique({
       where: {
@@ -137,7 +143,7 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (!card) {
-      return res.status(404).json({message: "カードが見つからない"});
+      return res.status(404).json({ message: "カードが見つからない" });
     }
 
     if (card.imageUrl) {
@@ -156,12 +162,15 @@ router.delete("/:id", async (req, res) => {
     }
 
     await prisma.card.delete({
-      where: {id}
+      where: { id }
     });
-    res.json({message: "削除しました"});
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({message: "失敗しました"});
+    res.json({ message: "削除しました" });
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "object" && "code" in error! && error.code === "P2025") {
+      return res.status(404).json({ error: "カードが存在しない" });
+    }
+    res.status(500).json({ message: "失敗しました" });
   }
 
 })
