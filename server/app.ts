@@ -5,6 +5,7 @@ import path from "path";
 
 import cardsRouter from "./routes/cards.js";
 import discordRouter from "./routes/discord.js";
+import uploadRouter from "./routes/upload.ts"
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/api/cards", cardsRouter);
 app.use("/api/auth", discordRouter);
+app.use("/api/upload", uploadRouter);
 
 app.use(
   "/uploads",
