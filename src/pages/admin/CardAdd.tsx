@@ -29,7 +29,7 @@ export default function CardAdd() {
       await submitCard(card, imageFile);
       setSuccess("カードを登録しました");
       setTimeout(() => {
-        navigate("/admin/cards")
+        navigate("/admin/")
       }, 1000);
     } catch (e) {
       if (e instanceof Error) {
