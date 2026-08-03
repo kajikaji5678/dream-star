@@ -1,5 +1,5 @@
 import type { CardInfo, CardFormData } from "../types/card";
-import {  type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 type Props = {
   card: CardFormData;
@@ -7,10 +7,11 @@ type Props = {
   setImageFile: React.Dispatch<React.SetStateAction<File | null>>;
   previewUrl: string;
   setPreviewUrl: React.Dispatch<React.SetStateAction<string>>;
-  error: string;
+  error?: string;
   buttonText: string;
   onSubmit: () => void;
   children?: ReactNode;
+  success?: string;
 };
 
 const cardInfo: CardInfo[] = [
@@ -29,6 +30,7 @@ export default function CardForm({
   buttonText,
   onSubmit,
   children,
+  success
 }: Props) {
   return (
     <div className="mt-4 flex-1 rounded-lg bg-black/20 p-6">
@@ -85,6 +87,10 @@ export default function CardForm({
 
           {error && (
             <p className="mt-3 text-red-400">{error}</p>
+          )}
+
+          {success && (
+            <p className="mt-3 text-blue-400">{success}</p>
           )}
 
           <div className="mt-4 flex justify-center">

@@ -24,6 +24,7 @@ export default function CardEdit() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     async function fetchCard() {
@@ -54,7 +55,7 @@ export default function CardEdit() {
     setError("");
     try {
       await updateCard(id, card, imageFile);
-      alert("更新しました");
+      setSuccess("更新しました");
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
@@ -64,10 +65,10 @@ export default function CardEdit() {
 
   const handleDelete = async () => {
     if (!id) return;
-    if (!confirm("本当に削除しますか？")) return;
 
     try {
       await deleteCard(id);
+      setSuccess("削除しました");
       navigate("/admin");
     } catch (e) {
       if (e instanceof Error) {
@@ -88,6 +89,7 @@ export default function CardEdit() {
           previewUrl={previewUrl}
           setPreviewUrl={setPreviewUrl}
           error={error}
+          success={success}
           buttonText="更新する"
           onSubmit={handleSubmit}>
           <button

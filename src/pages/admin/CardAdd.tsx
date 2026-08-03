@@ -4,10 +4,11 @@ import AdminTitle from "./AdminTitle";
 import type { CardFormData } from "../../types/card";
 import { submitCard } from "../../service/cardService";
 import CardForm from "../../components/CardForm";
+import { useNavigate } from "react-router-dom";
 
 
 export default function CardAdd() {
-  
+  const navigate = useNavigate();
 
   const [card, setCard] = useState<CardFormData>({
     imageUrl: "",
@@ -18,6 +19,7 @@ export default function CardAdd() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   // カード登録処理
   const handleSubmit = async () => {
@@ -25,7 +27,10 @@ export default function CardAdd() {
     setError("");
     try {
       await submitCard(card, imageFile);
-      alert("カードを登録しました");
+      setSuccess("カードを登録しました");
+      setTimeout(() => {
+        navigate("/admin/cards")
+      }, 1000);
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
@@ -49,6 +54,7 @@ export default function CardAdd() {
           error={error}
           buttonText="追加する"
           onSubmit={handleSubmit}
+          success={success}
         />
       </section>
     </Layout>
