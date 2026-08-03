@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 
 const Admin_id = [
   "1450733147867185215",
-  "687875015227605016"
+  "687875015227605016",
+  "884440765332328468"
 ]
 
 type Props = {
