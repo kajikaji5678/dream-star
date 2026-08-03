@@ -10,9 +10,10 @@ export default function Gacha() {
     try {
       const res = await fetch("/api/gacha", {method: "POST"});
       const card = await res.json();
-      navigate("/gacha/opening", {state: card});
+      console.log(card);
+      navigate("/gacha/opening", {state: {card}});
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }
   

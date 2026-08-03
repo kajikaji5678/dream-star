@@ -38,9 +38,9 @@ export default function GachaOpening() {
 
     <>
     {/* デバック用 */}
-      <pre className="fixed top-0 left-0 z-50 bg-black text-white p-4">
+      {/* <pre className="fixed top-0 left-0 z-50 bg-black text-white p-4">
         {JSON.stringify(card, null, 2)}
-      </pre>
+      </pre> */}
       {(phase === "pack" || phase === "slide") && (
         <div className={`h-screen pack-screen ${phase === "slide" ? "slide" : ""}`}>
           <Layout>
