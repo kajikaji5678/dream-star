@@ -3,14 +3,27 @@ import { useNavigate } from "react-router-dom";
 
 export default function Gacha() {
   const bgImage1 = "menuCardImages/cardOne.png";
-  const bgImage2 = "menuCardImages/inventory.jpg"
+  const bgImage2 = "menuCardImages/inventory.jpg";
   const navigate = useNavigate();
+
+  const handleGacha = async () => {
+    try {
+      const res = await fetch("/api/gacha", {method: "POST"});
+      const card = await res.json();
+      navigate("/gacha/opening", {state: card});
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
   return (
 
     <>
       <Layout>
         <div className="h-full flex flex-col flex-1 gap-6">
-          <div className="rounded-xl p-4 menu-card h-1/2 w-4/5 mx-auto bg-red-300 relative" onClick={() => navigate("/gacha/opening")}>
+          <div
+            className="rounded-xl p-4 menu-card h-1/2 w-4/5 mx-auto bg-red-300 relative"
+            onClick={handleGacha}>
             <span className="menu-title font-bold text-2xl">1回ガチャ</span>
             <div className="menu-background" style={{ backgroundImage: `url(${bgImage1})` }} ></div>
             <div className="menu-background"></div>
