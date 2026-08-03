@@ -5,7 +5,8 @@ import path from "path";
 
 import cardsRouter from "./routes/cards.js";
 import discordRouter from "./routes/discord.js";
-import uploadRouter from "./routes/upload.js"
+import uploadRouter from "./routes/upload.js";
+import gachaRouter from "./routes/gacha.js";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/api/cards", cardsRouter);
 app.use("/api/auth", discordRouter);
 app.use("/api/upload", uploadRouter);
+app.use("/api/gacha", gachaRouter);
 
 app.use(
   "/uploads",

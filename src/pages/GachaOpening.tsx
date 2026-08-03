@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../layouts/Layout";
-import "./GachaOpening.css"
+import "./GachaOpening.css";
+import { useLocation } from "react-router-dom";
 
 export default function GachaOpening() {
   const [phase, setPhase] = useState<"pack" | "slide" | "card" | "cut">("pack");
   const navigate = useNavigate();
+  const location = useLocation();
+  const card = location.state?.card;
 
   useEffect(() => {
     const slideTimer = setTimeout(() => {
@@ -21,7 +24,7 @@ export default function GachaOpening() {
     }, 3000);
 
     const naviTimer = setTimeout(() => {
-      navigate("/result")
+      navigate("/result", { state: { card } })
     }, 4000);
 
     return () => {
@@ -30,10 +33,14 @@ export default function GachaOpening() {
       clearTimeout(cutTimer)
       clearTimeout(naviTimer);
     }
-  }, [navigate]);
+  }, [navigate, card]);
   return (
 
     <>
+    {/* デバック用 */}
+      {/* <pre className="fixed top-0 left-0 z-50 bg-black text-white p-4">
+        {JSON.stringify(card, null, 2)}
+      </pre> */}
       {(phase === "pack" || phase === "slide") && (
         <div className={`h-screen pack-screen ${phase === "slide" ? "slide" : ""}`}>
           <Layout>
