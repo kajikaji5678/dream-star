@@ -8,8 +8,6 @@ export async function submitCard(
   imageFile: File | null
 ) {
 
-  console.log("uploadフロント開始");
-
   if (!card.name.trim()) {
     throw new Error("カード名を入力してください");
   }
@@ -30,12 +28,11 @@ export async function submitCard(
     body: formData,
   });
 
-  console.log("フロントからfetchによる画像の送信完了");
 
   const uploadData = await uploadRes.json();
 
   if (!uploadRes.ok) {
-    throw new Error(uploadData.error ?? "画像アップロードに失敗");
+    throw new Error(`[upload] ${uploadData.error ?? "画像アップロードに失敗"}`);
   }
 
   const res = await fetch(`${API_URL}/api/cards`, {
@@ -52,7 +49,7 @@ export async function submitCard(
   const data = await res.json();
 
   if (!res.ok) {
-    throw new Error(data.error ?? "登録に失敗しました");
+    throw new Error(`[cards] ${data.error ?? "登録に失敗しました"}`);
   }
 
   return data;
