@@ -29,7 +29,13 @@ export async function submitCard(
   });
 
 
-  const uploadData = await uploadRes.json();
+  let uploadData;
+
+  try {
+    uploadData = await uploadRes.json()
+  } catch (e) {
+    throw new Error(`[upload/json] レスポンス解析失敗: ${uploadRes.status} ${uploadRes.statusText}`, {cause: e});
+  }
 
   if (!uploadRes.ok) {
     throw new Error(`[upload] ${uploadData.error ?? "画像アップロードに失敗"}`);
