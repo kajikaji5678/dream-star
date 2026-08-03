@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Admin_id = [
-  "1450733147867185215"
+  "1450733147867185215",
+  "687875015227605016"
 ]
 
 type Props = {

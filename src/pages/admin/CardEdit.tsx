@@ -56,6 +56,9 @@ export default function CardEdit() {
     try {
       await updateCard(id, card, imageFile);
       setSuccess("更新しました");
+      setTimeout(() => {
+        navigate("/admin");
+      }, 1000);
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
@@ -69,7 +72,9 @@ export default function CardEdit() {
     try {
       await deleteCard(id);
       setSuccess("削除しました");
-      navigate("/admin");
+      setTimeout(() => {
+        navigate("/admin");
+      }, 1000);
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
