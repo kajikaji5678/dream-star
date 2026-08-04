@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { drawCard } from "../service/gachaService.ts";
-import { saveUserCard } from "../service/gachaService.ts";
+import { drawCard } from "../service/gachaService.js";
+import { saveUserCard } from "../service/gachaService.js";
 
 const router = Router();
 
