@@ -1,22 +1,38 @@
 import Layout from "../layouts/Layout"
 import { useNavigate } from "react-router-dom";
 
-export default function Gacha() {
+type Props = {
+  user?: {
+    id: string
+    username: string
+    avatar: string | null
+  };
+}
+
+export default function Gacha({user}: Props) {
   const bgImage1 = "menuCardImages/cardOne.png";
   const bgImage2 = "menuCardImages/inventory.jpg";
   const navigate = useNavigate();
 
   const handleGacha = async () => {
     try {
-      const res = await fetch("/api/gacha", {method: "POST"});
+      const res = await fetch("/api/gacha", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user?.id
+        })
+      });
       const card = await res.json();
       console.log(card);
-      navigate("/gacha/opening", {state: {card}});
+      navigate("/gacha/opening", { state: { card } });
     } catch (error) {
       console.log(error);
     }
   }
-  
+
   return (
 
     <>

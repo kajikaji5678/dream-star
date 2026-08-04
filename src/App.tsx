@@ -98,7 +98,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home user={user ?? undefined} debug={debug}/>} />
-          <Route path="/gacha" element={<Gacha />} />
+          <Route path="/gacha" element={<Gacha user={user ?? undefined}/>} />
           <Route path="/gacha/opening" element={<GachaOpening />} />
           <Route path="/result" element={<Result />} />
           <Route path="/admin" element={<Admin user={user ?? undefined} />} />
