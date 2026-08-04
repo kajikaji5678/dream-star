@@ -80,3 +80,15 @@ export async function removeCard(id: number) {
   return card;
 }
 
+export async function findUserCards(userId: string) {
+  const userCards = await prisma.userCard.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      card: true
+    },
+  });
+
+  return userCards.map((userCard) => userCard.card);
+}

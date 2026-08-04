@@ -124,3 +124,17 @@ export async function deleteCard(
     res.status(500).json({ error: "500" });
   }
 }
+
+export async function getUserCards(
+  req: Request,
+  res: Response
+) {
+  try {
+    const userId = req.params.userId as string;
+    const cards = await cardService.findUserCards(userId);
+    res.json(cards);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({error: "500"});
+  }
+}

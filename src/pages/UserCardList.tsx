@@ -1,7 +1,15 @@
 import Layout from "../layouts/Layout";
 import CardList from "../components/CardList";
 
-export default function UserCardList() {
+type Props = {
+  user?: {
+    id: string;
+    username: string;
+    avatar: string | null;
+  };
+};
+
+export default function UserCardList({user}: Props) {
   return (
     <Layout>
       <section className="p-4 flex h-full flex-col rounded-lg bg-[#313338]">
@@ -10,7 +18,7 @@ export default function UserCardList() {
         </div>
 
         <div className="mt-4 flex-1 overflow-y-auto rounded">
-          <CardList endpoint="/api/cards/me" />
+          <CardList endpoint={`/api/cards/users/${user?.id}`} />
         </div>
       </section>
 
