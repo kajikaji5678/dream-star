@@ -159,6 +159,12 @@ describe("Cards API", () => {
     expect(res.status).toBe(400);
   });
 
+  it("GET /api/cards/user/:id 200", async () => {
+    const userId = "111";
+    const res = await request(app).get(`/api/cards/user/${userId}`);
+    expect(res.status).toBe(200);
+  })
+
   afterAll(async () => {
     if (createdCardIds) {
       for (const id of createdCardIds) {

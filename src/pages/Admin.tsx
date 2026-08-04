@@ -1,6 +1,6 @@
 import Layout from "../layouts/Layout";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import CardList from "../components/CardList";
 
 const Admin_id = [
   "1450733147867185215",
@@ -16,26 +16,10 @@ type Props = {
   };
 };
 
-type Card = {
-  id: number;
-  name: string;
-  imageUrl: string;
-}
 
 export default function Admin({ user }: Props) {
   const navigate = useNavigate();
-  const [cards, setCards] = useState<Card[]>([]);
   const isAdmin = user && Admin_id.includes(user.id);
-
-  useEffect(() => {
-    fetch(`/api/cards`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("取得データ:", data); setCards(data);
-        console.log("画像URL", data.map((card: Card) => card.imageUrl))
-      })
-      .catch((e) => console.log(e));
-  }, []);
   return (
     <Layout>
       {isAdmin ? (
@@ -45,25 +29,8 @@ export default function Admin({ user }: Props) {
           </div>
           <div className="mt-4 flex-1 overflow-y-auto rounded">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 first:mt-0">
-              {cards.map((card) => (
-                <div key={card.id} className="rounded-lg bg-black/20 p-4 text-white">
-                  <img
-                    src={`${card.imageUrl}`}
-                    onLoad={() => console.log(card.imageUrl)}
-                    onError={(e) => console.log(e.currentTarget.src)}
-                    className="w-full aspect-square object-cover rounded-lg"
-                  />
-                  <p className="mt-3 text-center text-lg font-semibold">{card.name}</p>
-                  <button
-                    className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-                    onClick={() => {
-                      navigate(`/admin/cards/${card.id}`);
-                    }}
-                  >
-                    編集する
-                  </button>
-                </div>
-              ))}
+              {/* コンポーネントに改良、trueを持たせる */}
+              <CardList editable={true} endpoint="/api/cards"></CardList>
             </div>
           </div>
           <div className="mt-4 flex justify-center">
