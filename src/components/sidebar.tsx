@@ -29,7 +29,7 @@ export default function Sidebar() {
       icon: "📦",
       title: "インベントリ",
       bgImage: "/menuCardImages/inventory.jpg",
-      path: "#"
+      path: "/cardlist"
     },
     {
       icon: "✨",

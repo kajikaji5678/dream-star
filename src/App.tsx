@@ -8,6 +8,7 @@ import Result from "./pages/Result";
 import Admin from "./pages/Admin";
 import CardEdit from "./pages/admin/CardEdit";
 import CardAdd from "./pages/admin/CardAdd";
+import UserCardList from "./pages/UserCardList";
 
 console.log("App.tsx Start");
 
@@ -104,6 +105,7 @@ export default function App() {
           <Route path="/admin" element={<Admin user={user ?? undefined} />} />
           <Route path="/admin/cards/:id" element={<CardEdit />} />
           <Route path="/admin/cards/add" element={<CardAdd />} />
+          <Route path="/cardlist" element={<UserCardList/>} />
         </Routes>
       </BrowserRouter>
     </>
