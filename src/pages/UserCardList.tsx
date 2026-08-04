@@ -10,7 +10,7 @@ export default function UserCardList() {
         </div>
 
         <div className="mt-4 flex-1 overflow-y-auto rounded">
-          <CardList />
+          <CardList endpoint="/api/me/cards" />
         </div>
       </section>
 

@@ -30,7 +30,7 @@ export default function Admin({ user }: Props) {
           <div className="mt-4 flex-1 overflow-y-auto rounded">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 first:mt-0">
               {/* コンポーネントに改良、trueを持たせる */}
-              <CardList editable={true}></CardList>
+              <CardList editable={true} endpoint="/api/cards"></CardList>
             </div>
           </div>
           <div className="mt-4 flex justify-center">

@@ -6,23 +6,22 @@ import type { Card } from "../types/card";
 // 初期値falseで管理者ページでtrueにさせる
 type Props = {
   editable?: boolean;
+  endpoint: string;
 }
 
 
-export default function CardList({ editable = false }: Props) {
+export default function CardList({ editable = false, endpoint }: Props) {
   const navigate = useNavigate();
   const [cards, setCards] = useState<Card[]>([]);
 
   useEffect(() => {
-    fetch(`/api/cards`)
+    fetch(endpoint)
       .then((res) => res.json())
       .then((data) => {
-        console.log("取得データ:", data);
         setCards(data);
-        console.log("画像URL", data.map((card: Card) => card.imageUrl));
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [endpoint]);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 first:mt-0">
