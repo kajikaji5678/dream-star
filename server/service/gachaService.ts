@@ -17,9 +17,12 @@ export async function drawCard() {
 function getRandomRarity() {
   const random = Math.random() * 100;
 
-  if (random <= 75) return "C";
-  if (75 < random && random < 95) return "R";
-  if (95 <= random) return "DREAM" ;
+  if (random <= 65) return "C";
+  if (65 < random && random < 85) return "SP";
+  if (85 <= random && random < 96.32) return "R" ;
+  if (96.32 <= random && random < 99.32) return "DREAM";
+  if (99.32 <= random && random < 99.92) return "DR";
+  if (99.92 <= random) return "GXR";
 }
 
 export async function saveUserCard(userId: string, cardId: number) {
