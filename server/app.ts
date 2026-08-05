@@ -18,7 +18,7 @@ app.use("/api/cards", cardsRouter);
 app.use("/api/auth", discordRouter);
 app.use("/api/upload", uploadRouter);
 app.use("/api/gacha", gachaRouter);
-app.use("/api/user", userRouter);
+app.use("/api/users", userRouter);
 
 app.use(
   "/uploads",

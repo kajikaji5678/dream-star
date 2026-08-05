@@ -21,7 +21,7 @@ export default function Home({ user, debug }: Props) {
     if (!user) return;
     const fetchUser = async () => {
       try {
-        const res = await fetch(`/api/user/${user.id}`);
+        const res = await fetch(`/api/users/${user.id}`);
         const data = await res.json();
         setPoints(data.points);
       } catch (e) {
