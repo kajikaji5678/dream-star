@@ -1,5 +1,6 @@
 import Layout from "../layouts/Layout"
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type Props = {
   user?: {
@@ -13,6 +14,7 @@ export default function Gacha({user}: Props) {
   const bgImage1 = "menuCardImages/cardOne.png";
   const bgImage2 = "menuCardImages/inventory.jpg";
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const handleGacha = async () => {
     try {
@@ -29,7 +31,11 @@ export default function Gacha({user}: Props) {
       console.log(card);
       navigate("/gacha/opening", { state: { card } });
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("予期せぬエラーが発生しました");
+      }
     }
   }
 
@@ -38,6 +44,9 @@ export default function Gacha({user}: Props) {
     <>
       <Layout>
         <div className="h-full flex flex-col flex-1 gap-6">
+          {error && (
+            <p className="text-red-500 text-center font-bold">{error}</p>
+          )}
           <div
             className="rounded-xl p-4 menu-card h-1/2 w-4/5 mx-auto bg-red-300 relative"
             onClick={handleGacha}>

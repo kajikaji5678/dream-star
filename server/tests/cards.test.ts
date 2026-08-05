@@ -5,6 +5,8 @@ import { prisma } from "../prisma.js";
 
 describe("Cards API", () => {
 
+  const userId = "1450733147867185215" 
+
   let createdCardIds: number[] = [];
 
   it("GET /api/cards", async () => {
@@ -162,6 +164,11 @@ describe("Cards API", () => {
   it("GET /api/cards/user/:id 200", async () => {
     const userId = "111";
     const res = await request(app).get(`/api/cards/user/${userId}`);
+    expect(res.status).toBe(200);
+  })
+
+  it("GET /api/users/:id 200", async() => {
+    const res = await request(app).get(`/api/users/${userId}`);
     expect(res.status).toBe(200);
   })
 
