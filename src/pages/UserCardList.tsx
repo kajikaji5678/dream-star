@@ -18,7 +18,7 @@ export default function UserCardList({user}: Props) {
         </div>
 
         <div className="mt-4 flex-1 overflow-y-auto rounded">
-          <CardList endpoint={`/api/cards/users/${user?.id}`} />
+          <CardList endpoint={`/api/cards/user/${user?.id}`} />
         </div>
       </section>
 
