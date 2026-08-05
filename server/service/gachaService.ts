@@ -52,3 +52,20 @@ export async function saveUserCard(userId: string, cardId: number) {
     },
   });
 }
+
+export async function consumePoint(userId: string, cost: number) {
+  const user = await prisma.user.findUnique({where: {id: userId}});
+  if (!user) throw new Error("ユーザーが存在しません");
+  if (user.points < cost) throw new Error ("ポイントが不足しています");
+
+  await prisma.user.update({
+    where: {
+      id: userId
+    },
+    data: {
+      points: {
+        decrement: cost,
+      },
+    }
+  });
+}
