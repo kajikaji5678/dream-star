@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Layout from "../layouts/Layout"
 
 type Props = {
@@ -14,6 +15,23 @@ export default function Home({ user, debug }: Props) {
   // 
   // void debug;
 
+  const [points, setPoints] = useState(0);
+
+  useEffect(() => {
+    if (!user) return;
+    const fetchUser = async () => {
+      try {
+        const res = await fetch(`/api/user/${user.id}`);
+        const data = await res.json();
+        setPoints(data.points);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchUser();
+  }, [user])
+
   return (
     <>
       <Layout>
@@ -21,7 +39,7 @@ export default function Home({ user, debug }: Props) {
           <h2 className="text-xl font-bold">プレーヤー情報</h2>
           <div className="flex">
             <div className="mt-4 font-bold">ユーザーネーム: {user?.username ?? "未ログイン"}</div>
-            <div className="ml-4 py-4 px-8 font-bold">DP: 100</div>
+            <div className="ml-4 py-4 px-8 font-bold">DP: {points}</div>
           </div>
         </section>
 

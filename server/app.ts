@@ -7,6 +7,7 @@ import cardsRouter from "./routes/cards.js";
 import discordRouter from "./routes/discord.js";
 import uploadRouter from "./routes/upload.js";
 import gachaRouter from "./routes/gacha.js";
+import userRouter from "./routes/user.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use("/api/cards", cardsRouter);
 app.use("/api/auth", discordRouter);
 app.use("/api/upload", uploadRouter);
 app.use("/api/gacha", gachaRouter);
+app.use("/api/user", userRouter);
 
 app.use(
   "/uploads",
