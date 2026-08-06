@@ -9,6 +9,7 @@ import Admin from "./pages/Admin";
 import CardEdit from "./pages/admin/CardEdit";
 import CardAdd from "./pages/admin/CardAdd";
 import UserCardList from "./pages/UserCardList";
+import Loading from "./pages/Loading";
 
 console.log("App.tsx Start");
 
@@ -99,6 +100,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home user={user ?? undefined} debug={debug}/>} />
+          <Route path="/loading" element={<Loading />} />
           <Route path="/gacha" element={<Gacha user={user ?? undefined}/>} />
           <Route path="/gacha/opening" element={<GachaOpening />} />
           <Route path="/result" element={<Result />} />
