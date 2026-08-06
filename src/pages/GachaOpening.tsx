@@ -53,8 +53,8 @@ export default function GachaOpening() {
       {(phase === "card" || phase === "cut") && (
         <div className="fixed inset-0 flex items-center justify-center">
           <div className={`card-cut ${phase === "cut" ? "cut" : ""}`}>
-            <img className="card-top" src="/menuCardImages/densetu-rieki.png"></img>
-            <img className="card-bottom" src="/menuCardImages/densetu-rieki.png"></img>
+            <img className="card-top" src="/menuCardImages/startar-card.png"></img>
+            <img className="card-bottom" src="/menuCardImages/startar-card.png"></img>
           </div>
         </div>
       )}
