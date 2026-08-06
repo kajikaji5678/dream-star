@@ -28,7 +28,7 @@ export default function Sidebar() {
     {
       icon: "📦",
       title: "インベントリ",
-      bgImage: "/menuCardImages/inventory.jpg",
+      bgImage: "/menuCardImages/inventory2.png",
       path: "/cardlist"
     },
     {

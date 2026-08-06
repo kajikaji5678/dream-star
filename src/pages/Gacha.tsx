@@ -48,15 +48,15 @@ export default function Gacha({user}: Props) {
             <p className="text-red-500 text-center font-bold">{error}</p>
           )}
           <div
-            className="rounded-xl p-4 menu-card h-1/2 w-4/5 mx-auto bg-red-300 relative"
+            className="rounded-xl p-4 menu-card h-1/2 w-[90%] mx-auto bg-red-300 relative"
             onClick={handleGacha}>
             <span className="menu-title font-bold text-2xl">1回ガチャ</span>
             <div className="menu-background" style={{ backgroundImage: `url(${bgImage1})` }} ></div>
             <div className="menu-background"></div>
             <div className="menu-triangle" />
           </div>
-          <div className="rounded-xl p-4  menu-card h-1/2 w-4/5 mx-auto bg-red-300 relative">
-            <span className="menu-title font-bold text-2xl">10回ガチャ</span>
+          <div className="rounded-xl p-4  menu-card h-1/2 w-[90%] mx-auto bg-red-300 relative">
+            <span className="menu-title font-bold text-2xl">10回ガチャ(近日公開)</span>
             <div className="menu-background" style={{ backgroundImage: `url(${bgImage2})` }} ></div>
             <div className="menu-background"></div>
             <div className="menu-triangle" />
