@@ -7,13 +7,13 @@ type Props = {
     username: string
     avatar: string | null
   };
-  debug: string[];
+  debug?: string[];
 }
 
 export default function Home({ user, debug }: Props) {
 
-  // 
-  // void debug;
+  
+  void debug;
 
   const [points, setPoints] = useState(0);
 
@@ -47,9 +47,6 @@ export default function Home({ user, debug }: Props) {
           <h2 className="text-xl font-bold">お気に入りカード</h2>
         </section>
       </Layout>
-      {debug.map((log, index) => (
-        <div key={index}>{log}</div>
-      ))}
     </>
   )
 }

@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import { LoaderCircle } from "lucide-react";
 
+type LoadingProps = {
+  progress: number;
+  msg: string;
+}
 
-export default function Loading() {
+export default function Loading({progress, msg}: LoadingProps) {
   return (
     <div className="flex h-screen flex-col items-center justify-center bg-neutral-950 text-white">
       <motion.div
@@ -22,6 +26,12 @@ export default function Loading() {
       >
         DreamStar
       </motion.h1>
+      <p className="mt-4 text-center text-gray-300">
+        {progress}%
+      </p>
+      <p className="mt-4 text-center text-gray-300">
+        {msg}
+      </p>
     </div>
   )
 }
