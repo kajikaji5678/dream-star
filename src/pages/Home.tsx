@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "../layouts/Layout"
+import UpdateTicker from "../components/UpdateTicker";
 
 type Props = {
   user?: {
@@ -7,13 +8,13 @@ type Props = {
     username: string
     avatar: string | null
   };
-  debug: string[];
+  debug?: string[];
 }
 
 export default function Home({ user, debug }: Props) {
 
-  // 
-  // void debug;
+  
+  void debug;
 
   const [points, setPoints] = useState(0);
 
@@ -34,7 +35,7 @@ export default function Home({ user, debug }: Props) {
 
   return (
     <>
-      <Layout>
+      <Layout ticket={<UpdateTicker />}>
         <section className="rounded-lg basis-1/5 px-6 py-4 bg-[#2b2d31]">
           <h2 className="text-xl font-bold">プレーヤー情報</h2>
           <div className="flex">
@@ -47,9 +48,6 @@ export default function Home({ user, debug }: Props) {
           <h2 className="text-xl font-bold">お気に入りカード</h2>
         </section>
       </Layout>
-      {debug.map((log, index) => (
-        <div key={index}>{log}</div>
-      ))}
     </>
   )
 }
