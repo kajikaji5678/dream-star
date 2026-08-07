@@ -6,7 +6,7 @@ type LoadingProps = {
   msg: string;
 }
 
-export default function Loading({progress, msg}: LoadingProps) {
+export default function Loading({ progress, msg }: LoadingProps) {
   return (
     <div className="flex h-screen flex-col items-center justify-center bg-neutral-950 text-white">
       <motion.div
@@ -29,6 +29,14 @@ export default function Loading({progress, msg}: LoadingProps) {
       <p className="mt-4 text-center text-gray-300">
         {progress}%
       </p>
+      <div className="h-3 w-80 overflow-hidden rounded-full bg-neutral-800">
+        <motion.div className="h-full rounded-full bg-gradient-to-r 
+        from-cyan-400 via-blue-500 to-violet-500 transition-all duration-500"
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.4 }}>
+
+        </motion.div>
+      </div>
       <p className="mt-4 text-center text-gray-300">
         {msg}
       </p>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { connectDiscord } from "../service/discord";
+import { authenticateDiscord, authorizeDiscord, loginDiscord, readyDiscord } from "../service/discord";
+
 
 export default function useDiscord() {
   const [user, setUser] = useState(null);
@@ -9,12 +10,23 @@ export default function useDiscord() {
 
   useEffect(() => {
     async function connect() {
-      try { setProgress(20);
-      setMsg("認証しています");
-      const data = await connectDiscord();
-      setProgress(100);
-      setMsg("完了！");
-      setUser(data.user);
+      try {
+        setProgress(10);
+        setMsg("認証しています");
+        await readyDiscord();
+        setProgress(30);
+        setMsg("許可中");
+        const auth = await authorizeDiscord();
+        setProgress(60);
+        setMsg("Discodと接続しています");
+        const data = await loginDiscord(auth.code);
+        setProgress(90);
+        setMsg("認証中")
+        await authenticateDiscord(data.accessToken);
+        setProgress(100);
+        setMsg("完了!");
+        setUser(data.user);
+        setLoading(false);
       } catch (e) {
         console.error(e);
       } finally {
@@ -25,7 +37,7 @@ export default function useDiscord() {
     connect()
   }, []);
 
-  return{
+  return {
     user,
     loading,
     progress,
