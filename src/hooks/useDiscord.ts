@@ -8,9 +8,16 @@ export default function useDiscord() {
   const [progress, setProgress] = useState(0);
   const [msg, setMsg] = useState("認証中");
 
+  function sleep(ms: number) {
+    return new Promise((res) => setTimeout(res, ms));
+  }
+
   useEffect(() => {
     async function connect() {
       try {
+        setProgress(0);
+        setMsg("Starting....");
+        await sleep(2000);
         setProgress(10);
         setMsg("認証しています");
         await readyDiscord();
@@ -26,6 +33,7 @@ export default function useDiscord() {
         setProgress(100);
         setMsg("完了!");
         setUser(data.user);
+        await sleep(2500);
         setLoading(false);
       } catch (e) {
         console.error(e);

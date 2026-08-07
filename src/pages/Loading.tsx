@@ -37,9 +37,14 @@ export default function Loading({ progress, msg }: LoadingProps) {
 
         </motion.div>
       </div>
-      <p className="mt-4 text-center text-gray-300">
+      <p className="mt-2 text-center text-gray-300">
         {msg}
       </p>
+      <img
+        src="/menuCardImages/hitomaz.gif"
+        className="fixed bottom-6 right-6 h-20 w-20 object-cover">
+
+      </img>
     </div>
   )
 }
