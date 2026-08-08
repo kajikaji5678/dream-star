@@ -8,6 +8,6 @@ router.post("/", createCard);
 router.get("/:id", getCard);
 router.put("/:id", updateCard);
 router.delete("/:id", deleteCard);
-router.get("/user/:userId", getUserCards);
+router.get("/user/:userIdz", getUserCards);
 
 export default router;

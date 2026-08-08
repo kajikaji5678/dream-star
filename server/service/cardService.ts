@@ -90,5 +90,5 @@ export async function findUserCards(userId: string) {
     },
   });
 
-  return userCards.map((userCard) => userCard.card);
+  return userCards.map((userCard) => ({...userCard.card, amount: userCard.amount}));
 }

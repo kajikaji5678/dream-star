@@ -9,10 +9,13 @@ type Props = {
   endpoint: string;
 }
 
+type CardWithAmout = Card & {
+  amount?: number
+};
 
 export default function CardList({ editable = false, endpoint }: Props) {
   const navigate = useNavigate();
-  const [cards, setCards] = useState<Card[]>([]);
+  const [cards, setCards] = useState<CardWithAmout[]>([]);
 
   useEffect(() => {
     fetch(endpoint)
@@ -38,6 +41,11 @@ export default function CardList({ editable = false, endpoint }: Props) {
           <p className="mt-3 text-center text-lg font-semibold">
             {card.name}
           </p>
+          {card.amount !== undefined && (
+            <p className="mt-3 text-center text-lg font-semibold">
+              所持枚数 ×{card.amount}
+            </p>
+          )}
 
           {editable && (
             <button
