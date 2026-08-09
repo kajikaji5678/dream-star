@@ -13,6 +13,15 @@ type CardWithAmout = Card & {
   amount?: number
 };
 
+const rarityStyle = {
+  C: "border-gray-400",
+  SP: "border-blue-400",
+  R: "border-purple-400",
+  DREAM: "border-yellow-400",
+  DR: "border-pink-400",
+  GXR: "border-pink-400",
+};
+
 export default function CardList({ editable = false, endpoint }: Props) {
   const navigate = useNavigate();
   const [cards, setCards] = useState<CardWithAmout[]>([]);
@@ -31,7 +40,7 @@ export default function CardList({ editable = false, endpoint }: Props) {
       {cards.map((card) => (
         <div
           key={card.id}
-          className="rounded-lg bg-black/20 p-4 text-white"
+          className={`rounded-lg bg-black/20 p-4 text-white ${rarityStyle[card.rarity]}`}
         >
           <img
             src={card.imageUrl}

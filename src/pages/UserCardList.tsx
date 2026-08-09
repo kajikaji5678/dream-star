@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function UserCardList({user}: Props) {
+
   return (
     <Layout>
       <section className="flex h-full flex-col rounded-lg bg-[#313338]">
@@ -17,7 +18,7 @@ export default function UserCardList({user}: Props) {
           <h1 className="font-bold">カード一覧</h1>
         </div>
 
-        <div className="mt-4 flex-1 overflow-y-auto rounded">
+        <div className={`mt-4 flex-1 overflow-y-auto rounded`}>
           <CardList endpoint={`/api/cards/user/${user?.id}`} />
         </div>
       </section>
