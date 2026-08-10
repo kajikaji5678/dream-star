@@ -11,6 +11,7 @@ type Props = {
 
 type CardWithAmout = Card & {
   amount?: number
+  isNew?: boolean
 };
 
 const rarityStyle = {
@@ -42,6 +43,11 @@ export default function CardList({ editable = false, endpoint }: Props) {
           key={card.id}
           className={`rounded-lg bg-black/20 p-4 text-white ${rarityStyle[card.rarity]}`}
         >
+          {card.isNew && (
+            <span className="rounded bg-red-500 px-2 py-1 text-sm font-bold">
+              New
+            </span>
+          )}
           <img
             src={card.imageUrl}
             className="w-full aspect-square object-cover rounded-lg"
