@@ -41,7 +41,7 @@ export default function CardList({ editable = false, endpoint }: Props) {
       {cards.map((card) => (
         <div
           key={card.id}
-          className={`rounded-lg bg-black/20 p-4 text-white ${rarityStyle[card.rarity]}`}
+          className={`rounded-lg border-2 bg-black/20 p-4 text-white ${rarityStyle[card.rarity]}`}
         >
           {card.isNew && (
             <span className="rounded bg-red-500 px-2 py-1 text-sm font-bold">
