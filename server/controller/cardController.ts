@@ -132,6 +132,7 @@ export async function getUserCards(
   try {
     const userId = req.params.userId as string;
     const cards = await cardService.findUserCards(userId);
+    await cardService.newBoolean(userId);
     res.json(cards);
   } catch (e) {
     console.error(e);
