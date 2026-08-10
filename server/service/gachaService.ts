@@ -52,6 +52,7 @@ export async function saveUserCard(userId: string, cardId: number) {
     data: {
       userId,
       cardId,
+      isNew: true,
     },
   });
 }

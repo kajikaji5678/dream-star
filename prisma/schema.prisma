@@ -41,6 +41,7 @@ model UserCard {
   amount Int    @default(1)
   card   Card   @relation(fields: [cardId], references: [id])
   user   User   @relation(fields: [userId], references: [id])
+  isNew Boolean @default(false)
 }
 
 model ProcessdMessage {

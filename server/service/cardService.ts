@@ -90,5 +90,17 @@ export async function findUserCards(userId: string) {
     },
   });
 
-  return userCards.map((userCard) => userCard.card);
+  return userCards.map((userCard) => ({...userCard.card, amount: userCard.amount, isNew: userCard.isNew}));
+}
+
+export async function newBoolean(userId: string) {
+  await prisma.userCard.updateMany({
+    where: {
+      userId,
+      isNew: true
+    },
+    data: {
+      isNew: false
+    },
+  });
 }

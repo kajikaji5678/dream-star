@@ -9,10 +9,23 @@ type Props = {
   endpoint: string;
 }
 
+type CardWithAmout = Card & {
+  amount?: number
+  isNew?: boolean
+};
+
+const rarityStyle = {
+  C: "border-gray-400",
+  SP: "border-blue-400",
+  R: "border-purple-400",
+  DREAM: "border-yellow-400",
+  DR: "border-pink-400",
+  GXR: "border-pink-400",
+};
 
 export default function CardList({ editable = false, endpoint }: Props) {
   const navigate = useNavigate();
-  const [cards, setCards] = useState<Card[]>([]);
+  const [cards, setCards] = useState<CardWithAmout[]>([]);
 
   useEffect(() => {
     fetch(endpoint)
@@ -28,8 +41,13 @@ export default function CardList({ editable = false, endpoint }: Props) {
       {cards.map((card) => (
         <div
           key={card.id}
-          className="rounded-lg bg-black/20 p-4 text-white"
+          className={`rounded-lg bg-black/20 p-4 text-white ${rarityStyle[card.rarity]}`}
         >
+          {card.isNew && (
+            <span className="rounded bg-red-500 px-2 py-1 text-sm font-bold">
+              New
+            </span>
+          )}
           <img
             src={card.imageUrl}
             className="w-full aspect-square object-cover rounded-lg"
@@ -38,6 +56,11 @@ export default function CardList({ editable = false, endpoint }: Props) {
           <p className="mt-3 text-center text-lg font-semibold">
             {card.name}
           </p>
+          {card.amount !== undefined && (
+            <p className="mt-3 text-center text-lg font-semibold">
+              所持枚数 ×{card.amount}
+            </p>
+          )}
 
           {editable && (
             <button
