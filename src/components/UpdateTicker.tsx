@@ -12,7 +12,7 @@ export default function UpdateTicker() {
           ease: "linear",
           repeat: Infinity
         }}>
-          v1.0.1 ローディング画面を更新しました
+          v1.0.2 インベントリ画面にてレアリティの色分けおよびNew表示を行いました
       </motion.div>
     </div>
   )
