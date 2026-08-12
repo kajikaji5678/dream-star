@@ -1,6 +1,7 @@
 import Layout from "../layouts/Layout"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { drawGacha } from "../service/gachaService";
 
 type Props = {
   user?: {
@@ -17,18 +18,9 @@ export default function Gacha({user}: Props) {
   const [error, setError] = useState("");
 
   const handleGacha = async () => {
+    if (!user?.id) return;
     try {
-      const res = await fetch("/api/gacha", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user?.id
-        })
-      });
-      const card = await res.json();
-      console.log(card);
+      const card = await drawGacha(user?.id);
       navigate("/gacha/opening", { state: { card } });
     } catch (error) {
       if (error instanceof Error) {
