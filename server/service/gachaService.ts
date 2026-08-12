@@ -73,3 +73,14 @@ export async function consumePoint(userId: string, cost: number) {
     }
   });
 }
+
+export async function drawTenGacha(userId: string) {
+  await consumePoint(userId, 20);
+  const cards = [];
+  for (let i = 0; i < 10; i++) {
+    const card = await drawCard();
+    await saveUserCard(userId, card.id);
+    cards.push(card);
+  }
+  return cards;
+}

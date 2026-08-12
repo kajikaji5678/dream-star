@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { drawCard } from "../service/gachaService.ts";
+import { drawGacha } from "../controller/gachaController.ts";
 
 const router = Router();
 
-router.post("/", drawCard);
+router.post("/", drawGacha);
 
 export default router;
