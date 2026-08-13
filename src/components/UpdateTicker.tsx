@@ -12,7 +12,7 @@ export default function UpdateTicker() {
           ease: "linear",
           repeat: Infinity
         }}>
-          v1.0.2 インベントリ画面にてレアリティの色分けおよびNew表示を行いました
+          v1.1.0 10連ガチャ機能を搭載致しました。
       </motion.div>
     </div>
   )
