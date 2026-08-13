@@ -7,7 +7,7 @@ const CARDS = Array.from({ length: 12 });
 export default function TenGachaCard({ phase }: Props) {
   return (
     <div className="fixed inset-0 flex items-center justify-center">
-      {/* {phase === "gather" && ( */}
+      {phase === "gather" && (
         <div className="gacha-gether">
           {CARDS.map((_, index) => {
             return (
@@ -24,7 +24,7 @@ export default function TenGachaCard({ phase }: Props) {
             )
           })}
         </div>
-      {/* )} */}
+      )} 
 
       {phase === "cut" && (
         <div className="card-cut cut">
