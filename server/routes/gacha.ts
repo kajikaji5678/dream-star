@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { drawGacha, drawTen } from "../controller/gachaController.ts";
+import { drawGacha, drawTen } from "../controller/gachaController.js";
 
 
 const router = Router();

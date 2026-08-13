@@ -1,7 +1,7 @@
-import { consumePoint, drawCard, drawTenGacha, saveUserCard } from "../service/gachaService.ts";
+import { consumePoint, drawCard, drawTenGacha, saveUserCard } from "../service/gachaService.js";
+import type { Request, Response } from "express";
 
-
-export const drawGacha = async (req, res) => {
+export const drawGacha = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
     await consumePoint(userId, 2);
@@ -14,7 +14,7 @@ export const drawGacha = async (req, res) => {
   }
 }
 
-export const drawTen = async (req, res) => {
+export const drawTen = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
     const cards = await drawTenGacha(userId);
