@@ -16,9 +16,12 @@ export default function Gacha({ user }: Props) {
   const bgImage2 = "menuCardImages/inventory.jpg";
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [isGachaRunning, setIsGachaRunning] = useState(false);
 
   const handleGacha = async () => {
+    if (isGachaRunning) return;
     if (!user?.id) return;
+    setIsGachaRunning(true);
     try {
       const card = await drawGacha(user?.id);
       navigate("/gacha/opening", { state: { type: "single", card } });
@@ -31,10 +34,12 @@ export default function Gacha({ user }: Props) {
     }
   }
   const handleTenGacha = async () => {
+    if (isGachaRunning) return;
     if (!user?.id) return;
+    setIsGachaRunning(true);
     try {
       const cards = await drawTenGacha(user?.id);
-      navigate("/gacha/opening/10", { state: { type: "ten" , cards } });
+      navigate("/gacha/opening/10", { state: { type: "ten", cards } });
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
