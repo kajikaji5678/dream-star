@@ -9,6 +9,7 @@ import CardAdd from "./pages/admin/CardAdd";
 import UserCardList from "./pages/UserCardList";
 import Loading from "./pages/Loading";
 import useDiscord from "./hooks/useDiscord";
+import TenGachaCard from "./components/TenGacha";
 
 console.log("App.tsx Start");
 
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/admin/cards/:id" element={<CardEdit />} />
           <Route path="/admin/cards/add" element={<CardAdd />} />
           <Route path="/cardlist" element={<UserCardList user={user ?? undefined}/>} />
+          <Route path="/test1" element={<TenGachaCard />}/>
         </Routes>
       </BrowserRouter>
     </>

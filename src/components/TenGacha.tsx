@@ -1,5 +1,5 @@
 type Props = {
-  phase: "card" | "cut" | "gather";
+  phase?: "card" | "cut" | "gather";
 };
 
 const CARDS = Array.from({ length: 12 });
@@ -7,17 +7,16 @@ const CARDS = Array.from({ length: 12 });
 export default function TenGachaCard({ phase }: Props) {
   return (
     <div className="fixed inset-0 flex items-center justify-center">
-      {phase === "gather" && (
-        <div className="gacha-gather">
+      {/* {phase === "gather" && ( */}
+        <div className="gacha-gether">
           {CARDS.map((_, index) => {
             return (
               <img
                 key={index}
-                className="gather-card"
+                className="gether-card"
                 src="/menuCardImages/startar-card.png"
                 style={
                   {
-                    "--index": index,
                     "--angle": `${index * 30}deg`
                   } as React.CSSProperties
                 }
@@ -25,7 +24,7 @@ export default function TenGachaCard({ phase }: Props) {
             )
           })}
         </div>
-      )}
+      {/* )} */}
 
       {phase === "cut" && (
         <div className="card-cut cut">
