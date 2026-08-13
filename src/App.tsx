@@ -22,7 +22,7 @@ export default function App() {
     const bgm = new Audio("/audio/21-theme-pop.mp3");
 
     bgm.loop = true;
-    bgm.volume = 0.5;
+    bgm.volume = 0.25;
     bgm.play();
 
     return () => {
@@ -30,7 +30,7 @@ export default function App() {
       bgm.currentTime = 0;
     };
   }, []);
-  
+
   const { user, loading, progress, msg } = useDiscord();
 
   if (loading) {
