@@ -10,6 +10,7 @@ import UserCardList from "./pages/UserCardList";
 import Loading from "./pages/Loading";
 import useDiscord from "./hooks/useDiscord";
 import TenGachaCard from "./components/TenGacha";
+import { useEffect } from "react";
 
 console.log("App.tsx Start");
 
@@ -17,28 +18,41 @@ export default function App() {
   //* デバック用
   // const [debug, setDebug] = useState<string[]>([]);
 
-  const {user, loading, progress, msg} = useDiscord();
+  useEffect(() => {
+    const bgm = new Audio("/audio/21-theme-pop.mp3");
+
+    bgm.loop = true;
+    bgm.volume = 0.5;
+    bgm.play();
+
+    return () => {
+      bgm.pause();
+      bgm.currentTime = 0;
+    };
+  }, []);
+  
+  const { user, loading, progress, msg } = useDiscord();
 
   if (loading) {
     return (
-      <Loading progress={progress} msg={msg}/>
+      <Loading progress={progress} msg={msg} />
     )
   }
-  
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home user={user ?? undefined}/>} />
-          <Route path="/loading" element={<Loading progress={progress} msg={msg}/>} />
-          <Route path="/gacha" element={<Gacha user={user ?? undefined}/>} />
+          <Route path="/" element={<Home user={user ?? undefined} />} />
+          <Route path="/loading" element={<Loading progress={progress} msg={msg} />} />
+          <Route path="/gacha" element={<Gacha user={user ?? undefined} />} />
           <Route path="/gacha/opening" element={<GachaOpening />} />
           <Route path="/result" element={<Result />} />
           <Route path="/admin" element={<Admin user={user ?? undefined} />} />
           <Route path="/admin/cards/:id" element={<CardEdit />} />
           <Route path="/admin/cards/add" element={<CardAdd />} />
-          <Route path="/cardlist" element={<UserCardList user={user ?? undefined}/>} />
-          <Route path="/test1" element={<TenGachaCard />}/>
+          <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
+          <Route path="/test1" element={<TenGachaCard />} />
         </Routes>
       </BrowserRouter>
     </>
