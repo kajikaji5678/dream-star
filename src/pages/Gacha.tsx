@@ -1,6 +1,7 @@
 import Layout from "../layouts/Layout"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { drawGacha, drawTenGacha } from "../service/gachaService";
 
 type Props = {
   user?: {
@@ -10,26 +11,30 @@ type Props = {
   };
 }
 
-export default function Gacha({user}: Props) {
+export default function Gacha({ user }: Props) {
   const bgImage1 = "menuCardImages/cardOne.png";
   const bgImage2 = "menuCardImages/inventory.jpg";
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
   const handleGacha = async () => {
+    if (!user?.id) return;
     try {
-      const res = await fetch("/api/gacha", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user?.id
-        })
-      });
-      const card = await res.json();
-      console.log(card);
-      navigate("/gacha/opening", { state: { card } });
+      const card = await drawGacha(user?.id);
+      navigate("/gacha/opening", { state: { type: "single", card } });
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("予期せぬエラーが発生しました");
+      }
+    }
+  }
+  const handleTenGacha = async () => {
+    if (!user?.id) return;
+    try {
+      const cards = await drawTenGacha(user?.id);
+      navigate("/gacha/opening/10", { state: { type: "ten" , cards } });
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -55,7 +60,9 @@ export default function Gacha({user}: Props) {
             <div className="menu-background"></div>
             <div className="menu-triangle" />
           </div>
-          <div className="rounded-xl p-4  menu-card h-1/2 w-[90%] mx-auto bg-red-300 relative">
+          <div
+            className="rounded-xl p-4  menu-card h-1/2 w-[90%] mx-auto bg-red-300 relative"
+            onClick={handleTenGacha}>
             <span className="menu-title font-bold text-2xl">10回ガチャ(近日公開)</span>
             <div className="menu-background" style={{ backgroundImage: `url(${bgImage2})` }} ></div>
             <div className="menu-background"></div>

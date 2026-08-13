@@ -172,6 +172,11 @@ describe("Cards API", () => {
     expect(res.status).toBe(200);
   })
 
+  it("POST /api/gacha/ten 500", async() => {
+    const res = await request(app).post(`/api/gacha/ten`);
+    expect(res.status).toBe(500);
+  })
+
   afterAll(async () => {
     if (createdCardIds) {
       for (const id of createdCardIds) {

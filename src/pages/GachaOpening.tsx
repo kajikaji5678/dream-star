@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../layouts/Layout";
 import "./GachaOpening.css";
 import { useLocation } from "react-router-dom";
+import SingleGachaCard from "../components/SingleGacha";
+import TenGachaCard from "../components/TenGacha";
 
 export default function GachaOpening() {
-  const [phase, setPhase] = useState<"pack" | "slide" | "card" | "cut">("pack");
+  const [phase, setPhase] = useState<"pack" | "slide" | "card" | "cut" | "gather">("pack");
   const navigate = useNavigate();
   const location = useLocation();
-  const card = location.state?.card;
+  const { type, card, cards } = location.state ?? {};
+  const isTenGacha = type === "ten";
 
   useEffect(() => {
     const slideTimer = setTimeout(() => {
@@ -19,12 +22,44 @@ export default function GachaOpening() {
       setPhase("card");
     }, 2000);
 
+    if (isTenGacha) {
+      const gatherTimer = setTimeout(() => {
+        setPhase("gather");
+      }, 3000);
+
+      const cutTimer = setTimeout(() => {
+        setPhase("cut");
+      }, 5200);
+
+      const naviTimer = setTimeout(() => {
+        navigate("/result", {
+          state: {
+            type: "ten",
+            cards
+          }
+        })
+      }, 6200);
+
+      return () => {
+        clearTimeout(slideTimer);
+        clearTimeout(cardTimer);
+        clearTimeout(gatherTimer);
+        clearTimeout(cutTimer);
+        clearTimeout(naviTimer);
+      }
+    }
+
     const cutTimer = setTimeout(() => {
       setPhase("cut");
     }, 3000);
 
     const naviTimer = setTimeout(() => {
-      navigate("/result", { state: { card } })
+      navigate("/result", {
+        state: {
+          type: "single",
+          card
+        }
+      })
     }, 4000);
 
     return () => {
@@ -33,11 +68,11 @@ export default function GachaOpening() {
       clearTimeout(cutTimer)
       clearTimeout(naviTimer);
     }
-  }, [navigate, card]);
+  }, [navigate, card, isTenGacha, cards]);
   return (
 
     <>
-    {/* デバック用 */}
+      {/* デバック用 */}
       {/* <pre className="fixed top-0 left-0 z-50 bg-black text-white p-4">
         {JSON.stringify(card, null, 2)}
       </pre> */}
@@ -50,13 +85,14 @@ export default function GachaOpening() {
           </Layout>
         </div>
       )}
-      {(phase === "card" || phase === "cut") && (
-        <div className="fixed inset-0 flex items-center justify-center">
-          <div className={`card-cut ${phase === "cut" ? "cut" : ""}`}>
-            <img className="card-top" src="/menuCardImages/startar-card.png"></img>
-            <img className="card-bottom" src="/menuCardImages/startar-card.png"></img>
-          </div>
-        </div>
+      {isTenGacha ? (
+        (phase === "card" || phase === "gather" || phase === "cut") && (
+          <TenGachaCard phase={phase} />
+        )
+      ) : (
+        (phase === "card" || phase === "cut") && (
+          <SingleGachaCard phase={phase} />
+        )
       )}
     </>
 
