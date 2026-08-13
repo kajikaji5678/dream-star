@@ -28,7 +28,7 @@ export const drawTenGacha = async (userId: string) => {
   });
 
   if (!res.ok) {
-    throw new Error("ガチャに失敗しました");
+    throw new Error(`ガチャに失敗しました: ${res.status}`);
   }
 
   return await res.json();
