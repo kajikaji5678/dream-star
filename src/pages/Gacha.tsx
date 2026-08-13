@@ -39,7 +39,7 @@ export default function Gacha({ user }: Props) {
     setIsGachaRunning(true);
     try {
       const cards = await drawTenGacha(user?.id);
-      navigate("/gacha/opening/10", { state: { type: "ten", cards } });
+      navigate("/gacha/opening/", { state: { type: "ten", cards } });
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

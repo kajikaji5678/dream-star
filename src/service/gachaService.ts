@@ -17,7 +17,7 @@ export const drawGacha = async (userId: string) => {
 };
 
 export const drawTenGacha = async (userId: string) => {
-  const res = await fetch("/api/gacha/10", {
+  const res = await fetch("/api/gacha/ten", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
