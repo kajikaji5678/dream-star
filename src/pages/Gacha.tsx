@@ -21,7 +21,7 @@ export default function Gacha({ user }: Props) {
     if (!user?.id) return;
     try {
       const card = await drawGacha(user?.id);
-      navigate("/gacha/opening", { state: { card } });
+      navigate("/gacha/opening", { state: { type: "single", card } });
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -33,8 +33,8 @@ export default function Gacha({ user }: Props) {
   const handleTenGacha = async () => {
     if (!user?.id) return;
     try {
-      const card = await drawTenGacha(user?.id);
-      navigate("/gacha/opening/10", { state: { card } });
+      const cards = await drawTenGacha(user?.id);
+      navigate("/gacha/opening/10", { state: { type: "ten" , cards } });
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../layouts/Layout";
 import "./GachaOpening.css";
 import { useLocation } from "react-router-dom";
+import SingleGachaCard from "../components/SingleGacha";
+import TenGachaCard from "../components/TenGacha";
 
 export default function GachaOpening() {
   const [phase, setPhase] = useState<"pack" | "slide" | "card" | "cut">("pack");
   const navigate = useNavigate();
   const location = useLocation();
-  const card = location.state?.card;
+  const {type, card, cards} = location.state ?? {};
+  const isTenGacha = type === "ten";
 
   useEffect(() => {
     const slideTimer = setTimeout(() => {
@@ -24,7 +27,11 @@ export default function GachaOpening() {
     }, 3000);
 
     const naviTimer = setTimeout(() => {
-      navigate("/result", { state: { card } })
+      navigate("/result", {
+        state: isTenGacha 
+          ? {type : "ten", cards}
+          : {type: "single", card}
+      })
     }, 4000);
 
     return () => {
@@ -33,7 +40,7 @@ export default function GachaOpening() {
       clearTimeout(cutTimer)
       clearTimeout(naviTimer);
     }
-  }, [navigate, card]);
+  }, [navigate, card, isTenGacha, cards]);
   return (
 
     <>
@@ -51,12 +58,13 @@ export default function GachaOpening() {
         </div>
       )}
       {(phase === "card" || phase === "cut") && (
-        <div className="fixed inset-0 flex items-center justify-center">
-          <div className={`card-cut ${phase === "cut" ? "cut" : ""}`}>
-            <img className="card-top" src="/menuCardImages/startar-card.png"></img>
-            <img className="card-bottom" src="/menuCardImages/startar-card.png"></img>
-          </div>
-        </div>
+        <>
+          {isTenGacha ? (
+            <TenGachaCard phase={phase}/>
+          ) : (
+            <SingleGachaCard phase={phase}/>
+          )}
+        </>
       )}
     </>
 
