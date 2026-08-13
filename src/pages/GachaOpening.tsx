@@ -85,14 +85,14 @@ export default function GachaOpening() {
           </Layout>
         </div>
       )}
-      {(phase === "card" || phase === "cut") && (
-        <>
-          {isTenGacha ? (
-            <TenGachaCard phase={phase} />
-          ) : (
-            <SingleGachaCard phase={phase} />
-          )}
-        </>
+      {isTenGacha ? (
+        (phase === "card" || phase === "gather" || phase === "cut") && (
+          <TenGachaCard phase={phase} />
+        )
+      ) : (
+        (phase === "card" || phase === "cut") && (
+          <SingleGachaCard phase={phase} />
+        )
       )}
     </>
 
