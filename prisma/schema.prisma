@@ -22,7 +22,12 @@ model User {
   avatar String?
   points Int        @default(0)
   messageCount Int @default(0)
+
   cards  UserCard[]
+  loginBonusClaims LoginBonusClaim[]
+
+  loginStreak Int @default(0)
+  lastLoginDate DateTime?
 }
 
 model Card {
@@ -46,4 +51,12 @@ model UserCard {
 model ProcessdMessage {
   id        String   @id
   createdAt DateTime @default(now())
+}
+
+model LoginBonusClaim {
+  id Int @id @default(autoincrement())
+  userId String
+  loginDate DateTime @db.Date
+  user User @relation(fields: [userId], references: [id])
+  @@unique([userId, loginDate])
 }
