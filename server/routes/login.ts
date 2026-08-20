@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getLoginInfo } from "../controller/loginController.js";
+import { getLoginInfo, updateLogin } from "../controller/loginController.js";
 
 const loginRouter = Router();
 
-loginRouter.get("/get", getLoginInfo);
+loginRouter.get("/get/:userId", getLoginInfo);
+loginRouter.put("/put/:userId", updateLogin);
 
 export default loginRouter;

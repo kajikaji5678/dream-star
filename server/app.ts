@@ -8,7 +8,7 @@ import discordRouter from "./routes/discord.js";
 import uploadRouter from "./routes/upload.js";
 import gachaRouter from "./routes/gacha.js";
 import userRouter from "./routes/user.js";
-import loginRouter from "./routes/login.ts";
+import loginRouter from "./routes/login.js";
 
 const app = express();
 
