@@ -24,12 +24,12 @@ export const getLoginInfo = async (req: Request, res: Response) => {
 export async function updateLogin(req: Request, res: Response) {
   try {
     const userId = req.params;
-    if (userId) return res.status(400).json({message: 400});
+    if (userId) return res.status(400).json({ message: 400 });
 
     const claim = await updateLoginInfoService(userId);
-    return res.status(200).json({message: "ログイン情報を更新", claim});
+    return res.status(200).json({ message: "ログイン情報を更新", claim });
   } catch (e) {
     console.error(e);
-    return res.status(500).json({message: 500});
+    return res.status(500).json({ message: 500 });
   }
 }

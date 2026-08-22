@@ -8,6 +8,12 @@ function getToday() {
   return today;
 }
 
+function getLoginBonusDGP(loginStreak: number) {
+  if (loginStreak <= 3) return 2;
+  if (loginStreak <= 6) return 4;
+  return 6;
+}
+
 async function findUser(userId: string) {
   return prisma.user.findUnique({
     where: {
@@ -70,7 +76,9 @@ export async function updateLoginInfoService(userId: string) {
     }
   }
 
+  //~ トランザクションは複数DB処理を一度に実行すること
   const result = await prisma.$transaction(async (tx) => {
+    // ユーザーが今日ログインボーナスを受け取った処理
     const claim = await tx.loginBonusClaim.create({
       data: {
         userId,
@@ -78,23 +86,31 @@ export async function updateLoginInfoService(userId: string) {
       }
     });
 
+    const reward = getLoginBonusDGP(loginStreak);
+
+    // 計算した連続ログイン日数と日付を更新 + DGP付与 処理
     const updateUser = await tx.user.update({
       where: {
         id: userId
       },
       data: {
         loginStreak,
-        lastLoginDate: today
+        lastLoginDate: today,
+        points: {
+          increment: reward
+        }
       },
       select: {
         loginStreak: true,
-        lastLoginDate: true
+        lastLoginDate: true,
+        points: true
       }
     });
 
     return {
       claim,
-      user: updateUser
+      user: updateUser,
+      reward
     }
   });
 
@@ -102,5 +118,7 @@ export async function updateLoginInfoService(userId: string) {
     loginStreak: result.user.loginStreak,
     lastLoginDate: result.user.lastLoginDate,
     todayClaimed: true,
+    reward: result.reward,
+    points: result.user.points
   }
 }
