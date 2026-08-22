@@ -2,8 +2,14 @@ import { PrismaClient } from "../generated/prisma/index.js";
 
 const prisma = new PrismaClient();
 
-export async function getLoginInfoService(userId: string) {
-  const user = await prisma.user.findUnique({
+function getToday() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
+}
+
+async function findUser(userId: string) {
+  return prisma.user.findUnique({
     where: {
       id: userId
     },
@@ -12,12 +18,15 @@ export async function getLoginInfoService(userId: string) {
       lastLoginDate: true,
     }
   });
+}
 
-  const today = new Date();
-  today.setHours(0,0,0,0);
+export async function getLoginInfoService(userId: string) {
+  const user = await findUser(userId);
+  const today = getToday();
 
   const todayClaim = await prisma.loginBonusClaim.findUnique({
     where: {
+      // 複合ユニークキー
       userId_loginDate: {
         userId,
         loginDate: today
@@ -32,19 +41,9 @@ export async function getLoginInfoService(userId: string) {
   }
 }
 
-export async function updateLogin(userId: string) {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId
-    },
-    select: {
-      loginStreak: true,
-      lastLoginDate: true
-    }
-  });
-
-  const today = new Date();
-  today.setHours(0,0,0,0);
+export async function updateLoginInfoService(userId: string) {
+  const user = await findUser(userId);
+  const today = getToday();
 
   const todayClaim = await prisma.loginBonusClaim.findUnique({
     where: {
@@ -57,10 +56,12 @@ export async function updateLogin(userId: string) {
 
   if (todayClaim) throw new Error("すでにログインしています");
 
+  //! 一旦ここまで理解
+
   let loginStreak = 1;
   if (user?.lastLoginDate) {
     const lastLoginDate = new Date(user.lastLoginDate);
-    lastLoginDate.setHours(0,0,0,0);
+    lastLoginDate.setHours(0, 0, 0, 0);
 
     const diff = (today.getTime() - lastLoginDate.getTime()) / (1000 * 60 * 60 * 24);
 
