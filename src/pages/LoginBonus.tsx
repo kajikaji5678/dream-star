@@ -6,16 +6,11 @@ import { getLoginFront, updateLoginFront } from "@/service/loginService";
 import type { User } from "@/types/ user";
 import { useNavigate } from "react-router-dom";
 
-
-const loginRewards = [
-  { day: 1, reward: 50, status: "received" },
-  { day: 2, reward: 50, status: "received" },
-  { day: 3, reward: 100, status: "current" },
-  { day: 4, reward: 100, status: "locked" },
-  { day: 5, reward: 100, status: "locked" },
-  { day: 6, reward: 150, status: "locked" },
-  { day: 7, reward: 150, status: "locked" }
-];
+function getLoginBonusDGP(day: number) {
+  if (day <= 3) return 2;
+  if (day <= 6) return 4;
+  return 6;
+}
 
 export default function LoginBonus({ user }: User) {
 
@@ -24,16 +19,32 @@ export default function LoginBonus({ user }: User) {
   const [claimed, setClaimed] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const loginDays = 3;
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
   const [loginStreak, setLoginStreak] = useState(0);
   const [todayClaimed, setTodayClaimed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  //* ================== 7日分計算処理 ======================
+  const loginRewards = Array.from({ length: 7 }, (_, index) => {
+    const day = index + 1;
+
+    return {
+      day,
+      reward: getLoginBonusDGP(day),
+      status:
+        day < loginStreak ? "received" : day === loginStreak ? "current" : "locked",
+    }
+  })
+
   //* ================== イベント処理 ======================
 
   useEffect(() => {
+
+    if (todayClaimed) {
+      navigate("/home")
+      return;
+    }
     const loadLoadingInfo = async () => {
       try {
         const res = await getLoginFront(user.id);
@@ -43,12 +54,17 @@ export default function LoginBonus({ user }: User) {
       catch (e) {
         console.error(e);
         setError(e instanceof Error ? e.message : "予期せぬエラー");
+      } finally {
+        setIsLoading(false);
       }
     }
-  });
+
+    loadLoadingInfo();
+  }, [user.id, todayClaimed, navigate]);
 
   const handleClaim = async () => {
     try {
+      setIsClaiming(true);
       const res = await updateLoginFront(user.id);
       console.log(res);
       setClaimed(true);
@@ -74,6 +90,11 @@ export default function LoginBonus({ user }: User) {
   }, [step]);
 
   //* ================== TSX ======================
+
+  if (isLoading) {
+    return <div className="text-2xl">ログインボーナスを準備中...</div>
+  }
+
   return (
     <div className="h-screen text-white">
       <div className="mx-auto mt-4 h-[90vh] w-[90vw]">
@@ -96,13 +117,13 @@ export default function LoginBonus({ user }: User) {
                     連続ログイン
                   </p>
                   <p className="text-2xl font-bold">
-                    {loginDays}日目
+                    {loginStreak}日目
                   </p>
                   <span className="text-3xl">🔥</span>
                 </div>
-                <Progress value={(loginDays / 7) * 100} className="h-2" />
+                <Progress value={(loginStreak / 7) * 100} className="h-2" />
                 <p className="mt-2 text-right text-xs text-[#949ba4]">
-                  {loginDays} / 7 日
+                  {loginStreak} / 7 日
                 </p>
               </section>
             )}
@@ -156,7 +177,7 @@ export default function LoginBonus({ user }: User) {
                 </p>
                 <div className="my-5">
                   <div className="text-5xl">💎</div>
-                  <p className="mt-3 text-2xl font-bold">100 DGP</p>
+                  <p className="mt-3 text-2xl font-bold">{getLoginBonusDGP(loginStreak)} DGP</p>
                 </div>
                 <Button
                   className="w-1/2 p-4 rounded-md bg-[#5865f2] hover:bg-[#4752c4]"
@@ -166,7 +187,7 @@ export default function LoginBonus({ user }: User) {
                   {claimed ? "報酬を受け取りました！メニュー画面へ移行します！" : isClaiming ? "受け取り中" : "報酬を受け取る"}
                 </Button>
                 {error && (
-                  <p className="text-red-500">${error}</p>
+                  <p className="text-red-500">{error}</p>
                 )}
               </section>
             )}
