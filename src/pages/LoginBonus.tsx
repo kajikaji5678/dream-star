@@ -33,7 +33,7 @@ export default function LoginBonus({ user }: User) {
       day,
       reward: getLoginBonusDGP(day),
       status:
-        day < loginStreak ? "received" : day === loginStreak ? "current" : "locked",
+        day <= loginStreak ? "received" : day === loginStreak + 1 ? "current" : "locked",
     }
   })
 
@@ -123,7 +123,7 @@ export default function LoginBonus({ user }: User) {
                 </div>
                 <Progress value={(loginStreak / 7) * 100} className="h-2" />
                 <p className="mt-2 text-right text-xs text-[#949ba4]">
-                  {loginStreak} / 7 日
+                  {loginStreak + 1} / 7 日
                 </p>
               </section>
             )}
