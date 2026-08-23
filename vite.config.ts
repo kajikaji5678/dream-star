@@ -21,5 +21,10 @@ export default defineConfig({
     host: true,
     hmr: true
   },
+
+  build: {
+    cssMinify: "esbuild",
+  },
+  
   logLevel: "info"
 })
