@@ -2,6 +2,10 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "@base-ui/react/button";
 import { useEffect, useState } from "react";
+import { updateLoginFront } from "@/service/loginService";
+import type { User } from "@/types/ user";
+import { Navigate } from "react-router-dom";
+
 
 const loginRewards = [
   { day: 1, reward: 50, status: "received" },
@@ -13,7 +17,13 @@ const loginRewards = [
   { day: 7, reward: 150, status: "locked" }
 ];
 
-export default function LoginBonus() {
+export default function LoginBonus({ user }: User) {
+
+  //* ================== 状態管理 ======================
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = Navigate();
+
   const loginDays = 3;
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -114,7 +124,9 @@ export default function LoginBonus() {
                   <div className="text-5xl">💎</div>
                   <p className="mt-3 text-2xl font-bold">100 DGP</p>
                 </div>
-                <Button className="w-1/2 p-4 rounded-md bg-[#5865f2] hover:bg-[#4752c4]">
+                <Button 
+                className="w-1/2 p-4 rounded-md bg-[#5865f2] hover:bg-[#4752c4]"
+                onClick={nav}>
                   報酬を受け取る
                 </Button>
               </section>
