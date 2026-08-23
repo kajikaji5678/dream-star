@@ -2,7 +2,7 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "@base-ui/react/button";
 import { useEffect, useState } from "react";
-import { updateLoginFront } from "@/service/loginService";
+import { getLoginFront, updateLoginFront } from "@/service/loginService";
 import type { User } from "@/types/ user";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +27,26 @@ export default function LoginBonus({ user }: User) {
   const loginDays = 3;
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
+  const [loginStreak, setLoginStreak] = useState(0);
+  const [todayClaimed, setTodayClaimed] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   //* ================== イベント処理 ======================
+
+  useEffect(() => {
+    const loadLoadingInfo = async () => {
+      try {
+        const res = await getLoginFront(user.id);
+        setLoginStreak(res.loginStreak);
+        setTodayClaimed(res.todayClaimed);
+      }
+      catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : "予期せぬエラー");
+      }
+    }
+  });
+
   const handleClaim = async () => {
     try {
       const res = await updateLoginFront(user.id);
@@ -38,7 +57,7 @@ export default function LoginBonus({ user }: User) {
       }, 2500);
     } catch (e) {
       console.error(e);
-      setError(e instanceof Error ? e.message : "失敗");
+      setError(e instanceof Error ? e.message : "予期せぬエラー");
     } finally {
       setIsClaiming(false);
     }
