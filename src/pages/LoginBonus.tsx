@@ -117,7 +117,7 @@ export default function LoginBonus({ user }: User) {
                     連続ログイン
                   </p>
                   <p className="text-2xl font-bold">
-                    {loginStreak}日目
+                    {loginStreak + 1}日目
                   </p>
                   <span className="text-3xl">🔥</span>
                 </div>
