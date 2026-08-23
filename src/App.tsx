@@ -40,11 +40,16 @@ export default function App() {
     )
   }
 
+  if (!user) {
+    return <></>
+  }
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home user={user ?? undefined} />} />
+          <Route path="/" element={<LoginBonus user={user ?? undefined} />} />
+          <Route path="/home" element={<Home user={user ?? undefined} />} />
           <Route path="/loading" element={<Loading progress={progress} msg={msg} />} />
           <Route path="/gacha" element={<Gacha user={user ?? undefined} />} />
           <Route path="/gacha/opening" element={<GachaOpening />} />
@@ -54,7 +59,7 @@ export default function App() {
           <Route path="/admin/cards/add" element={<CardAdd />} />
           <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
           <Route path="/test1" element={<TenGachaCard />} />
-          <Route path="/test2" element={<LoginBonus/>} />
+          <Route path="/test2" element={<LoginBonus user={user}/>} />
         </Routes>
       </BrowserRouter>
     </>
