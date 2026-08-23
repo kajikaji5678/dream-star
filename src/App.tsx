@@ -59,7 +59,7 @@ export default function App() {
           <Route path="/admin/cards/add" element={<CardAdd />} />
           <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
           <Route path="/test1" element={<TenGachaCard />} />
-          <Route path="/test2" element={<LoginBonus/>} />
+          <Route path="/test2" element={<LoginBonus user={user}/>} />
         </Routes>
       </BrowserRouter>
     </>
