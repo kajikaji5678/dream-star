@@ -21,14 +21,21 @@ export default function LoginBonus({ user }: User) {
 
   //* ================== 状態管理 ======================
   const [isClaiming, setIsClaiming] = useState(false);
+  const [claimed, setClaimed] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const loginDays = 3;
+  const [step, setStep] = useState<1 | 2 | 3>(1);
 
+  //* ================== イベント処理 ======================
   const handleClaim = async () => {
     try {
       const res = await updateLoginFront(user.id);
       console.log(res);
-      navigate("/")
+      setClaimed(true);
+      setTimeout(() => {
+        navigate("/home");
+      }, 2500);
     } catch (e) {
       console.error(e);
       setError(e instanceof Error ? e.message : "失敗");
@@ -37,22 +44,17 @@ export default function LoginBonus({ user }: User) {
     }
   }
 
-  const loginDays = 3;
-
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-
   useEffect(() => {
     if (step !== 1) return;
-
     const timer = setTimeout(() => {
       setStep(2)
     }, 3000);
-
     return () => {
       clearTimeout(timer);
     };
   }, [step]);
 
+  //* ================== TSX ======================
   return (
     <div className="h-screen text-white">
       <div className="mx-auto mt-4 h-[90vh] w-[90vw]">
@@ -140,12 +142,12 @@ export default function LoginBonus({ user }: User) {
                 <Button
                   className="w-1/2 p-4 rounded-md bg-[#5865f2] hover:bg-[#4752c4]"
                   onClick={handleClaim}
-                  disabled={isClaiming}
+                  disabled={isClaiming || claimed}
                 >
-                  {isClaiming ? "受け取り中" : "報酬を受け取る"}
+                  {claimed ? "報酬を受け取りました！メニュー画面へ移行します！" : isClaiming ? "受け取り中" : "報酬を受け取る"}
                 </Button>
                 {error && (
-                  <p>${error}</p>
+                  <p className="text-red-500">${error}</p>
                 )}
               </section>
             )}

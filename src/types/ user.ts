@@ -1,5 +1,5 @@
 export type User = {
-  user?: {
+  user: {
     id: string
     username: string
     avatar: string | null
