@@ -36,6 +36,14 @@ model Card {
   imageUrl String?
   rarity String?
   users UserCard[]
+  HP String?
+  type String?
+  attack String?
+  SKILL String?
+  escapePoint String?
+  category String?
+  consumePoint String?
+  supportType String?
 }
 
 model UserCard {
