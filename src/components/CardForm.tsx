@@ -18,6 +18,13 @@ const cardInfo: CardInfo[] = [
   { label: "画像URL", key: "imageUrl" },
   { label: "名前", key: "name" },
   { label: "レア度", key: "rarity" },
+  {label: "HP", key: "HP"},
+  {label: "属性", key: "type"},
+  {label: "技", key: "attack"},
+  {label: "SKILL", key: "SKILL"},
+  {label: "逃げ消費ポイント", key: "escapePoint"},
+  {label: "使用消費ポイント", key: "consumePoint"},
+  {label: "種類", key: "supportType"}
 ];
 
 export default function CardForm({
@@ -34,7 +41,7 @@ export default function CardForm({
 }: Props) {
   return (
     <div className="mt-4 flex-1 rounded-lg bg-black/20 p-2">
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-4">
         <div className="col-span-1">
           <div className="rounded-lg bg-black/30 p-4">
             <img
@@ -44,7 +51,7 @@ export default function CardForm({
           </div>
         </div>
 
-        <div className="col-span-2">
+        <div className="col-span-2 overflow-y-auto">
           <table className="w-full text-white">
             <tbody>
               {cardInfo.map((item) => (
