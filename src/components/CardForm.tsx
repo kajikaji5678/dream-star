@@ -40,8 +40,8 @@ export default function CardForm({
   success
 }: Props) {
   return (
-    <div className="mt-4 flex-1 rounded-lg bg-black/20 p-2">
-      <div className="grid grid-cols-3 gap-4 overflow-y-auto">
+    <div className="mt-4 flex-1 rounded-lg bg-black/20 p-2  overflow-y-auto">
+      <div className="grid grid-cols-3 gap-4">
         <div className="col-span-1">
           <div className="rounded-lg bg-black/30 p-4">
             <img
