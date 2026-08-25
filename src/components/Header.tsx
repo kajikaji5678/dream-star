@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <>
       <header className="h-16 flex bg-gradient-to-r from-purple-900 to-indigo-600 items-center px-6 border-b border-[#1e1f22]">
-        <h1 className="text-2xl font-bold">DreamStar</h1>
+        <h1 className="text-2xl font-bold">DREAMスターライト</h1>
         <div className="ml-auto flex gap-3">
           <button
             className="px-4 py-2 rounded-lg bg-black/20 hover:bg-black/40 transition"
@@ -14,7 +14,7 @@ export default function Header() {
           </button>
           <button
             className="px-4 py-2 rounded-lg bg-black/20 hover:bg-black/40 transition"
-            onClick={() => navigate("/")}>
+            onClick={() => navigate("/home")}>
             🏠 ホーム
           </button>
           <button
