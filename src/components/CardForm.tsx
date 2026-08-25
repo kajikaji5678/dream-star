@@ -33,7 +33,7 @@ export default function CardForm({
   success
 }: Props) {
   return (
-    <div className="mt-4 flex-1 rounded-lg bg-black/20 p-6">
+    <div className="mt-4 flex-1 rounded-lg bg-black/20 p-2">
       <div className="grid grid-cols-3 gap-6">
         <div className="col-span-1">
           <div className="rounded-lg bg-black/30 p-4">
@@ -95,7 +95,7 @@ export default function CardForm({
 
           <div className="mt-4 flex justify-center">
             <button
-              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+              className="mt-2 mr-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
               onClick={onSubmit}
             >
               {buttonText}
