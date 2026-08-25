@@ -41,7 +41,7 @@ export default function CardForm({
 }: Props) {
   return (
     <div className="mt-4 flex-1 rounded-lg bg-black/20 p-2">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4 overflow-y-auto">
         <div className="col-span-1">
           <div className="rounded-lg bg-black/30 p-4">
             <img
@@ -51,7 +51,7 @@ export default function CardForm({
           </div>
         </div>
 
-        <div className="col-span-2 overflow-y-auto">
+        <div className="col-span-2">
           <table className="w-full text-white">
             <tbody>
               {cardInfo.map((item) => (
