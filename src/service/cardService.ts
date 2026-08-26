@@ -43,6 +43,10 @@ export async function submitCard(
 
   const reqBody = {
     ...card,
+    hp: card.hp === "" ? null : Number(card.hp),
+    attack: card.attack === "" ? null : Number(card.attack),
+    escapePoint: card.escapePoint === "" ? null : Number(card.escapePoint),
+    consumePoint: card.consumePoint === "" ? null : Number(card.consumePoint),
     imageUrl: uploadData.imageUrl
   }
 
