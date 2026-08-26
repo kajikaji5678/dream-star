@@ -36,7 +36,7 @@ model Card {
   imageUrl String?
   rarity String?
   users UserCard[]
-  HP Int?
+  hp Int?
   // type String?
   attack Int?
   // SKILL String?
