@@ -34,22 +34,26 @@ export async function submitCard(
   try {
     uploadData = await uploadRes.json()
   } catch (e) {
-    throw new Error(`[upload/json] レスポンス解析失敗: ${uploadRes.status} ${uploadRes.statusText}`, {cause: e});
+    throw new Error(`[upload/json] レスポンス解析失敗: ${uploadRes.status} ${uploadRes.statusText}`, { cause: e });
   }
 
   if (!uploadRes.ok) {
     throw new Error(`[upload] ${uploadData.error ?? "画像アップロードに失敗"}`);
   }
 
+  const reqBody = {
+    ...card,
+    imageUrl: uploadData.imageUrl
+  }
+
+  console.log(reqBody);
+
   const res = await fetch(`${API_URL}/api/cards`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      ...card,
-      imageUrl: uploadData.imageUrl,
-    }),
+    body: JSON.stringify(reqBody),
   });
 
   const data = await res.json();
@@ -107,7 +111,7 @@ export async function updateCard(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({...card, imageUrl}),
+    body: JSON.stringify({ ...card, imageUrl }),
   });
 
   const data = await res.json();
@@ -123,7 +127,7 @@ export async function updateCard(
 export async function deleteCard(id: string) {
   const res = await fetch(`${API_URL}/api/cards/${id}`, {
     method: "DELETE",
-  }) ;
+  });
 
   const data = await res.json();
 

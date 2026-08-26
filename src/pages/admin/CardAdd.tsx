@@ -32,6 +32,7 @@ export default function CardAdd() {
     
     setError("");
     try {
+      console.log("送信card:", card);
       await submitCard(card, imageFile);
       setSuccess("カードを登録しました");
       setTimeout(() => {

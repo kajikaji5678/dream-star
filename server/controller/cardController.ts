@@ -18,6 +18,7 @@ export async function getCard(
   req: Request,
   res: Response
 ) {
+  console.log("req.body:", req.body);
   const id = Number(req.params.id);
   if (Number.isNaN(id)) return res.status(400).json({ error: "400" });
 
