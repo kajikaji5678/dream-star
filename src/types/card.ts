@@ -3,9 +3,9 @@ export type CardFormData = {
   name: string;
   rarity: string;
   HP?: number;
-  type?: string;
+  // type?: string;
   attack?: string;
-  SKILL?: string;
+  // SKILL?: string;
   escapePoint?: number;
   category?: string;
   consumePoint?: number;

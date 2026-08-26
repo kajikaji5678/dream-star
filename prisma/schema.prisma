@@ -37,9 +37,9 @@ model Card {
   rarity String?
   users UserCard[]
   HP String?
-  type String?
+  // type String?
   attack String?
-  SKILL String?
+  // SKILL String?
   escapePoint String?
   category String?
   consumePoint String?
