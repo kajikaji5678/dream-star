@@ -36,14 +36,19 @@ export async function createCard(
   res: Response
 ) {
   try {
-    const { name, imageUrl, rarity } = req.body;
+    const { name, imageUrl, rarity, hp, attack, escapePoint, category, consumePoint } = req.body;
     if (!name?.trim()) return res.status(400).json({ error: "400: カード名は必須" });
     if (!rarity?.trim()) return res.status(400).json({ error: "400: レア度は必須" });
 
     const card = await cardService.createCard({
       name: name.trim(),
       imageUrl,
-      rarity: rarity.trim()
+      rarity: rarity.trim(),
+      hp,
+      attack,
+      escapePoint,
+      category,
+      consumePoint
     });
 
     res.status(201).json(card);

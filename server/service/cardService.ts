@@ -21,6 +21,11 @@ export async function createCard(data: {
   name: string;
   imageUrl: string;
   rarity: string;
+  hp: number;
+  attack: number;
+  escapePoint: number;
+  category: string;
+  consumePoint: number;
 }) {
   return prisma.card.create({
     data,
