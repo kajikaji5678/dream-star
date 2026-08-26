@@ -54,7 +54,7 @@ export async function createCard(
     res.status(201).json(card);
   } catch (e) {
     console.error(e);
-    res.status(500).json({ error: "500" });
+    res.status(500).json({ error: `500: ${e}` });
   }
 }
 
