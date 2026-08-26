@@ -18,7 +18,6 @@ export async function getCard(
   req: Request,
   res: Response
 ) {
-  console.log("req.body:", req.body);
   const id = Number(req.params.id);
   if (Number.isNaN(id)) return res.status(400).json({ error: "400" });
 
@@ -36,6 +35,7 @@ export async function createCard(
   req: Request,
   res: Response
 ) {
+  console.log("req.body:", req.body);
   try {
     const { name, imageUrl, rarity, hp, attack, escapePoint, category, consumePoint } = req.body;
     if (!name?.trim()) return res.status(400).json({ error: "400: カード名は必須" });
@@ -142,6 +142,6 @@ export async function getUserCards(
     res.json(cards);
   } catch (e) {
     console.error(e);
-    res.status(500).json({error: "500"});
+    res.status(500).json({ error: "500" });
   }
 }
