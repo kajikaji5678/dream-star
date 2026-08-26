@@ -2,13 +2,13 @@ export type CardFormData = {
   imageUrl: string;
   name: string;
   rarity: string;
-  HP?: number;
+  hp?: number | "";
   // type?: string;
-  attack?: number;
+  attack?: number | "";
   // SKILL?: string;
-  escapePoint?: number;
+  escapePoint?: number | "";
   category?: string;
-  consumePoint?: number;
+  consumePoint?: number | "";
   supportType?: string;
 }
 

@@ -13,7 +13,13 @@ export default function CardAdd() {
   const [card, setCard] = useState<CardFormData>({
     imageUrl: "",
     name: "",
-    rarity: ""
+    rarity: "",
+    hp: "",
+    attack: "",
+    escapePoint: "",
+    category: "",
+    consumePoint: "",
+    supportType: "",
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);

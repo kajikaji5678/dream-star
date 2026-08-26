@@ -18,11 +18,11 @@ const cardInfo: CardInfo[] = [
   { label: "画像URL", key: "imageUrl" },
   { label: "名前", key: "name" },
   { label: "レア度", key: "rarity" },
-  {label: "HP", key: "HP"},
-  {label: "技", key: "attack"},
-  {label: "逃げ消費ポイント", key: "escapePoint"},
-  {label: "使用消費ポイント", key: "consumePoint"},
-  {label: "サポート属性", key: "supportType"}
+  { label: "HP", key: "hp" },
+  { label: "技で相手に与えるダメージ", key: "attack" },
+  { label: "逃げ消費ポイント", key: "escapePoint" },
+  { label: "使用消費ポイント", key: "consumePoint" },
+  { label: "サポート属性", key: "supportType" }
 ];
 
 export default function CardForm({
