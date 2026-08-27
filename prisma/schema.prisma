@@ -77,6 +77,36 @@ model CardAbility {
 
   name String
   description String?
+
+  condtions AbilityCondition[]
+  effects abilityEffect[]
   
   card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+}
+
+model AbilityCondition {
+  id Int @id @default(autoincrement())
+  abilityId Int
+  
+  type String
+  value String?
+  valueNumber Int?
+
+  ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)
+}
+
+model abilityEffect {
+  id Int @id @default(autoincrement())
+  abilityId Int
+
+  type String
+  target String?
+  valueNumber Int?
+  valueText String?
+  attribute String?
+  status String?
+  destination String?
+  duration String?
+
+  ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)
 }
