@@ -44,6 +44,8 @@ model Card {
   category String?
   consumePoint Int?
   supportType String?
+
+  abilities CardAbility[]
 }
 
 model UserCard {
@@ -67,4 +69,14 @@ model LoginBonusClaim {
   loginDate DateTime @db.Date
   user User @relation(fields: [userId], references: [id])
   @@unique([userId, loginDate])
+}
+
+model CardAbility {
+  id Int @id @default(autoincrement())
+  cardId Int
+
+  name String
+  description String?
+  
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
 }

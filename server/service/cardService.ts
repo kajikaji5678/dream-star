@@ -39,6 +39,11 @@ export async function updateCard(
     name: string;
     imageUrl: string;
     rarity: string;
+    hp: number;
+    attack: number;
+    escapePoint: number;
+    category: string;
+    consumePoint: number;
   }
 ) {
   return prisma.card.update({
@@ -95,7 +100,7 @@ export async function findUserCards(userId: string) {
     },
   });
 
-  return userCards.map((userCard) => ({...userCard.card, amount: userCard.amount, isNew: userCard.isNew}));
+  return userCards.map((userCard) => ({ ...userCard.card, amount: userCard.amount, isNew: userCard.isNew }));
 }
 
 export async function newBoolean(userId: string) {

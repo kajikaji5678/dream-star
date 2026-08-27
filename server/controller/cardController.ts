@@ -72,7 +72,7 @@ export async function updateCard(
   }
 
   try {
-    const { name, imageUrl, rarity } = req.body;
+    const { name, imageUrl, rarity, hp, attack, escapePoint, category, consumePoint } = req.body;
     if (!name?.trim()) return res.status(400).json({ error: "400: カード名は必須" });
     if (!rarity?.trim()) return res.status(400).json({ error: "400: レア度は必須" });
 
@@ -80,6 +80,11 @@ export async function updateCard(
       name: name.trim(),
       imageUrl,
       rarity: rarity.trim(),
+      hp,
+      attack,
+      escapePoint,
+      category,
+      consumePoint
     });
 
     res.json(card);
