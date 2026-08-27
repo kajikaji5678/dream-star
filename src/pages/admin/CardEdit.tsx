@@ -8,6 +8,7 @@ import { getCard } from "../../service/cardService";
 import { updateCard } from "../../service/cardService";
 import { deleteCard } from "../../service/cardService";
 import { useNavigate } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function CardEdit() {
 
@@ -92,24 +93,36 @@ export default function CardEdit() {
     <Layout>
       <section className="p-4 flex h-full flex-col rounded-lg bg-[#313338]">
         <AdminTitle title="カード編集" />
+        <Tabs defaultValue="info" className="flex-1">
+          <TabsList>
+            <TabsTrigger value="info">基本情報</TabsTrigger>
+            <TabsTrigger value="ability">能力</TabsTrigger>
+            <TabsContent value="info">
+              <CardForm
+                card={card}
+                setCard={setCard}
+                setImageFile={setImageFile}
+                previewUrl={previewUrl}
+                setPreviewUrl={setPreviewUrl}
+                error={error}
+                success={success}
+                buttonText="更新する"
+                onSubmit={handleSubmit}
+              >
+                <button
+                  className="mt-2 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
+                  onClick={handleDelete}
+                >
+                  削除する
+                </button>
+              </CardForm>
+            </TabsContent>
 
-        <CardForm
-          card={card}
-          setCard={setCard}
-          setImageFile={setImageFile}
-          previewUrl={previewUrl}
-          setPreviewUrl={setPreviewUrl}
-          error={error}
-          success={success}
-          buttonText="更新する"
-          onSubmit={handleSubmit}>
-          <button
-            className="mt-2 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
-            onClick={handleDelete}
-          >
-            削除する
-          </button>
-        </CardForm>
+            <TabsContent value="ability">
+              <div>能力編集</div>
+            </TabsContent>
+          </TabsList>
+        </Tabs>
       </section>
     </Layout>
   );

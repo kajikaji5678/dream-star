@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { authenticateDiscord, authorizeDiscord, loginDiscord, readyDiscord } from "../service/discord";
-
+import type { User } from "@/types/ user";
 
 export default function useDiscord() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User["user"] | null>(null);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [msg, setMsg] = useState("認証中");
@@ -14,6 +14,19 @@ export default function useDiscord() {
 
   useEffect(() => {
     async function connect() {
+
+      if (import.meta.env.DEV) {
+        setUser({
+          id: "dev-user",
+          username: "Development User",
+          avatar: null,
+        });
+        setProgress(100);
+        setMsg("開発者モード");
+        setLoading(false);
+        return;
+      }
+
       try {
         setProgress(0);
         setMsg("Starting....");
