@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { getAbilityCondition, createAbilityCondition, updateAbilityCondition, deleteAbilityCondition } from "../service/cardDetailService.js";
+import { getAbilityCondition, createAbilityCondition, updateAbilityCondition, deleteAbilityCondition, createCardAbility } from "../service/cardDetailService.js";
 
 import {
   getAbilityEffects,
@@ -7,6 +7,21 @@ import {
   updateAbilityEffect,
   deleteAbilityEffect,
 } from "../service/cardDetailService.ts";
+
+export async function createAbility(req: Request, res: Response) {
+  try {
+    const cardId = Number(req.params.cardId);
+    const {name,description} = req.body;
+    const ability = await createCardAbility(cardId, {
+      name,
+      description
+    });
+    return res.status(201).json(ability);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({error: `${e}`});
+  }
+}
 
 export async function getCondition(req: Request, res: Response) {
   try {

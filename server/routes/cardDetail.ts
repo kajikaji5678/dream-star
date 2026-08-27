@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { getCondition, createCondition, updateCondition, deleteCondition } from "../controller/cardDetailController.js";
+import { getCondition, createCondition, updateCondition, deleteCondition, createAbility } from "../controller/cardDetailController.js";
 import { getEffects, createEffect, updateEffect, deleteEffect } from "../controller/cardDetailController.js";
 
 const router = Router();
@@ -13,5 +13,6 @@ router.get("/:abilityId/effects", getEffects);
 router.post("/:abilityId/effects", createEffect);
 router.put("/effects/:effectId", updateEffect);
 router.delete("/effects/:effectId", deleteEffect);
+router.get("/:cardId/abilities", createAbility);
 
 export default router;

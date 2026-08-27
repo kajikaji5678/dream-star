@@ -13,6 +13,21 @@ type EffectData = {
   valueNumber?: null | number;
 }
 
+type AbilityData = {
+  name: string;
+  description?: string;
+}
+
+export async function createCardAbility(cardId: number, data: AbilityData) {
+  return prisma.cardAbility.create({
+    data: {
+      cardId,
+      name: data.name,
+      description: data.description
+    }
+  })
+}
+
 export async function getAbilityCondition(abilityId: number) {
   return prisma.abilityCondition.findFirst({
     where: {
