@@ -36,7 +36,13 @@ export default function CardEdit() {
         setCard({
           imageUrl: data.imageUrl,
           name: data.name,
-          rarity: data.rarity
+          rarity: data.rarity,
+          hp: data.hp,
+          attack: data.attack,
+          escapePoint: data.escapePoint,
+          category: data.category,
+          consumePoint: data.consumePoint,
+          supportType: data.supportType
         });
 
         setPreviewUrl(`${API_URL}${data.imageUrl}`);
