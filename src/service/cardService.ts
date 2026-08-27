@@ -115,7 +115,14 @@ export async function updateCard(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ ...card, imageUrl }),
+    body: JSON.stringify({
+      ...card,
+      hp: card.hp === "" ? null : Number(card.hp),
+      attack: card.attack === "" ? null : Number(card.attack),
+      escapePoint: card.escapePoint === "" ? null : Number(card.escapePoint),
+      consumePoint: card.consumePoint === "" ? null : Number(card.consumePoint),
+      imageUrl
+    }),
   });
 
   const data = await res.json();
