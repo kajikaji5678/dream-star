@@ -25,7 +25,7 @@ export default function LoginBonus({ user }: User) {
   const [todayClaimed, setTodayClaimed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const currentDay = (loginStreak % 7) + 1;
+  const currentDay = loginStreak + 1;
 
   //* ================== 7日分計算処理 ======================
   const loginRewards = Array.from({ length: 7 }, (_, index) => {
