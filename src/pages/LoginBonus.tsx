@@ -25,6 +25,8 @@ export default function LoginBonus({ user }: User) {
   const [todayClaimed, setTodayClaimed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const currentDay = (loginStreak % 7) + 1;
+
   //* ================== 7日分計算処理 ======================
   const loginRewards = Array.from({ length: 7 }, (_, index) => {
     const day = index + 1;
@@ -33,7 +35,7 @@ export default function LoginBonus({ user }: User) {
       day,
       reward: getLoginBonusDGP(day),
       status:
-        day <= loginStreak ? "received" : day === loginStreak + 1 ? "current" : "locked",
+        day < Math.min(currentDay, 7) ? "received" : day === Math.min(currentDay, 7) ? "current" : "locked",
     }
   })
 
@@ -117,13 +119,13 @@ export default function LoginBonus({ user }: User) {
                     連続ログイン
                   </p>
                   <p className="text-2xl font-bold">
-                    {loginStreak + 1}日目
+                    {currentDay}日目
                   </p>
                   <span className="text-3xl">🔥</span>
                 </div>
                 <Progress value={(loginStreak / 7) * 100} className="h-2" />
                 <p className="mt-2 text-right text-xs text-[#949ba4]">
-                  {loginStreak + 1} / 7 日
+                  {currentDay} / 7 日
                 </p>
               </section>
             )}
@@ -149,7 +151,7 @@ export default function LoginBonus({ user }: User) {
                         className={`lounded-lg border p-4 text-center
                     transition${item.status === "current" ? "border-[#5865f2] bg-[#404249]" : "border-[#1e1f22] bg-[#232428]"}`}>
                         <p className="text-xs font-medium text-[#949ba4]">
-                          {item.day}日目
+                          今日の報酬
                         </p>
                         <div className="my-2 text-2xl">
                           {item.status === "received" && "✅"}
@@ -177,7 +179,9 @@ export default function LoginBonus({ user }: User) {
                 </p>
                 <div className="my-5">
                   <div className="text-5xl">💎</div>
-                  <p className="mt-3 text-2xl font-bold">{getLoginBonusDGP(loginStreak)} DGP</p>
+                  <p className="mt-3 text-2xl font-bold">
+                    {getLoginBonusDGP(currentDay)} DGP
+                  </p>
                 </div>
                 <Button
                   className="w-1/2 p-4 rounded-md bg-[#5865f2] hover:bg-[#4752c4]"
