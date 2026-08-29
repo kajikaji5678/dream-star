@@ -9,6 +9,8 @@ import { updateCard } from "../../service/cardService";
 import { deleteCard } from "../../service/cardService";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function CardEdit() {
 
@@ -93,36 +95,70 @@ export default function CardEdit() {
     <Layout>
       <section className="p-4 flex h-full flex-col rounded-lg bg-[#313338]">
         <AdminTitle title="カード編集" />
-        <Tabs defaultValue="info" className="flex-1">
+        <Tabs
+          defaultValue="info"
+          className="mt-2 flex min-h-0 flex-1 flex-col"
+        >
           <TabsList>
-            <TabsTrigger value="info">基本情報</TabsTrigger>
-            <TabsTrigger value="ability">能力</TabsTrigger>
-            <TabsContent value="info">
-              <CardForm
-                card={card}
-                setCard={setCard}
-                setImageFile={setImageFile}
-                previewUrl={previewUrl}
-                setPreviewUrl={setPreviewUrl}
-                error={error}
-                success={success}
-                buttonText="更新する"
-                onSubmit={handleSubmit}
-              >
-                <button
-                  className="mt-2 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
-                  onClick={handleDelete}
-                >
-                  削除する
-                </button>
-              </CardForm>
-            </TabsContent>
-
-            <TabsContent value="ability">
-              <div>能力編集</div>
-            </TabsContent>
+            <TabsTrigger value="info" className="[&[data-active]]:text-black">
+              基本情報
+            </TabsTrigger>
+            <TabsTrigger value="ability" className="[&[data-active]]:text-black">
+              能力
+            </TabsTrigger>
           </TabsList>
+          <TabsContent
+            value="info"
+            className="min-h-0 flex-1 mt-0 overflow-y-auto"
+          >
+            <CardForm
+              card={card}
+              setCard={setCard}
+              setImageFile={setImageFile}
+              previewUrl={previewUrl}
+              setPreviewUrl={setPreviewUrl}
+              error={error}
+              success={success}
+              buttonText="更新する"
+              onSubmit={handleSubmit}
+            >
+              <button
+                className="mt-2 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
+                onClick={handleDelete}
+              >
+                削除する
+              </button>
+            </CardForm>
+          </TabsContent>
+          <TabsContent
+            value="ability"
+            className="min-h-0 flex-1 mt-0 overflow-y-auto"
+          >
+            <div className="space-y-3">
+              <Card className="border-white/10 bg-black/20 p-2">
+                <CardHeader>
+                  <CardTitle className="text-lg text-white">
+                    効果
+                  </CardTitle>
+                  <CardDescription className="text-white">
+                    相手に3ダメージ与える
+                  </CardDescription>
+                </CardHeader>
+
+                <CardFooter className="mt-2 flex justify-end bg-transparent pt-2">
+                  <Button variant="outline" className="bg-blue-200 hover:bg-blue-400">
+                    編集
+                  </Button>
+                  <Button variant="destructive" className="bg-red-200 hover:bg-red-400">
+                    削除
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </TabsContent>
+
         </Tabs>
+
       </section>
     </Layout>
   );
