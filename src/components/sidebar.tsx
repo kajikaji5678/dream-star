@@ -1,52 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import { sidebarVariants, cardVariants } from "./animation/animation";
 
 type MenuCardProps = {
   icon: string;
   title: string;
   bgImage: string;
   path: string;
-};
-
-const sidebarVariants: Variants = {
-  hidden: {
-    x: "-100%",
-  },
-
-  visible: {
-    x: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-
-      // asideが完全に入ってから子要素開始
-      when: "beforeChildren",
-
-      // 最初のカードまで少し待つ
-      delayChildren: 0.1,
-      // カードを順番に出す
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    x: -30,
-    rotate: 45
-  },
-
-  visible: {
-    opacity: 1,
-    x: 0,
-    y: 0,
-    rotate: 0,
-    transition: {
-      duration: 0.3,
-      ease: "easeOut",
-    },
-  },
 };
 
 function MenuCard({ icon, title, bgImage, path }: MenuCardProps) {
@@ -64,7 +24,11 @@ function MenuCard({ icon, title, bgImage, path }: MenuCardProps) {
   )
 }
 
-export default function Sidebar() {
+type Props = {
+  animate?: boolean;
+}
+
+export default function Sidebar({ animate = false }: Props) {
 
   const menues: MenuCardProps[] = [
     {
@@ -96,10 +60,10 @@ export default function Sidebar() {
 
   return (
     <motion.aside
-      className="w-1/3 h-full bg-[#2b2d31] p-6 flex flex-col gap-4 overflow-y-auto"
+      className="w-[30%] md:w-1/3 h-full bg-[#2b2d31] p-6 flex flex-col gap-4 overflow-y-auto"
       variants={sidebarVariants}
-      initial="hidden"
-      animate="visible"
+      initial={animate ? "hidden" : false}
+      animate={animate ? "visible" : false}
     >
       {menues.map((menu, index) => (
         <motion.div

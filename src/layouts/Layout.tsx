@@ -4,9 +4,10 @@ import Sidebar from "../components/sidebar"
 type Props = {
   children?: React.ReactNode;
   ticket?: React.ReactNode;
+  animateSidebar?: boolean;
 }
 
-export default function Layout({ children, ticket }: Props) {
+export default function Layout({ children, ticket, animateSidebar }: Props) {
   return (
     <>
       <div className="h-screen flex items-center">
@@ -14,7 +15,7 @@ export default function Layout({ children, ticket }: Props) {
           <Header />
           {ticket}
           <div className="flex flex-1 min-h-0">
-            <Sidebar />
+            <Sidebar animate={animateSidebar}/>
             <main className="flex-1 p-2">
               {children}
             </main>

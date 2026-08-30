@@ -44,7 +44,7 @@ export default function LoginBonus({ user }: User) {
   useEffect(() => {
 
     if (todayClaimed) {
-      navigate("/home")
+      navigate("/home", {state: {playSidebarAnimation: true}})
       return;
     }
     const loadLoadingInfo = async () => {
