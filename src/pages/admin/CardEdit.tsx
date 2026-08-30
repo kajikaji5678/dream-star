@@ -194,8 +194,8 @@ export default function CardEdit() {
           </Tabs>
         )}
         {selectedAvilityId !== null && (
-          // <AbilityCondition />
-          <AbilityEffect />
+          <AbilityCondition />
+          // <AbilityEffect />
         )}
       </section>
     </Layout>

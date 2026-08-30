@@ -4,8 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -17,46 +17,46 @@ model votes {
 }
 
 model User {
-  id     String     @id
-  username String?
-  avatar String?
-  points Int        @default(0)
-  messageCount Int @default(0)
+  id           String  @id
+  username     String?
+  avatar       String?
+  points       Int     @default(0)
+  messageCount Int     @default(0)
 
-  cards  UserCard[]
+  cards            UserCard[]
   loginBonusClaims LoginBonusClaim[]
 
-  loginStreak Int @default(0)
+  loginStreak   Int       @default(0)
   lastLoginDate DateTime?
 }
 
 model Card {
-  id    Int        @id @default(autoincrement())
-  name  String
-  imageUrl String?
-  rarity String?
-  users UserCard[]
-  hp Int?
+  id           Int        @id @default(autoincrement())
+  name         String
+  imageUrl     String?
+  rarity       String?
+  users        UserCard[]
+  hp           Int?
   // type String?
-  attack Int?
+  attack       Int?
   // SKILL String?
-  escapePoint Int?
-  category String?
+  escapePoint  Int?
+  category     String?
   consumePoint Int?
-  supportType String?
-  mainType String?
+  supportType  String?
+  mainType     String?
 
   abilities CardAbility[]
 }
 
 model UserCard {
-  id     Int    @id @default(autoincrement())
+  id     Int     @id @default(autoincrement())
   userId String
   cardId Int
-  amount Int    @default(1)
-  card   Card   @relation(fields: [cardId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
-  isNew Boolean @default(false)
+  amount Int     @default(1)
+  card   Card    @relation(fields: [cardId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
+  isNew  Boolean @default(false)
 }
 
 model ProcessdMessage {
@@ -65,49 +65,52 @@ model ProcessdMessage {
 }
 
 model LoginBonusClaim {
-  id Int @id @default(autoincrement())
-  userId String
+  id        Int      @id @default(autoincrement())
+  userId    String
   loginDate DateTime @db.Date
-  user User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
   @@unique([userId, loginDate])
 }
 
 model CardAbility {
-  id Int @id @default(autoincrement())
+  id     Int @id @default(autoincrement())
   cardId Int
 
-  name String
+  name        String
   description String?
 
   condtions AbilityCondition[]
-  effects abilityEffect[]
-  
+  effects   abilityEffect[]
+
   card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
 }
 
 model AbilityCondition {
-  id Int @id @default(autoincrement())
+  id        Int @id @default(autoincrement())
   abilityId Int
-  
-  type String
-  value String?
-  valueNumber Int?
+
+  // type        String
+  ActivationTiming String?
+  // value            String?
+  target           String?
+  valueNumber      Int?
 
   ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)
 }
 
 model abilityEffect {
-  id Int @id @default(autoincrement())
+  id        Int @id @default(autoincrement())
   abilityId Int
 
-  type String
-  target String?
-  valueNumber Int?
-  valueText String?
-  attribute String?
-  status String?
-  destination String?
-  duration String?
+  effectType    String?
+  specialStatus String?
+  target        String?
+  // valueText   String?
+  // attribute String?
+  // destination String?
+  // duration    String?
+  valueNumber   Int?
 
   ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)
 }
