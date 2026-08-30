@@ -13,6 +13,7 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/comp
 import { Button } from "@/components/ui/button";
 import AbilityCondition from "./AbilityEditor/AbilityCondition";
 import AbilityEffect from "./AbilityEditor/AbilityEffect";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function CardEdit() {
 
@@ -31,6 +32,8 @@ export default function CardEdit() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [selectedAvilityId, setSelectedAvilityId] = useState<number | null>(null);
+  const [isTextEditing, setIsTextEditing] = useState(false);
+  const [desc, setDesc] = useState("相手に3ダメージ与える");
 
   useEffect(() => {
     async function fetchCard() {
@@ -145,12 +148,26 @@ export default function CardEdit() {
               <div className="space-y-3">
                 <Card className="border-white/10 bg-black/20 p-2">
                   <CardHeader>
-                    <CardTitle className="text-lg text-white">
-                      効果1
+                    <CardTitle className="flex justify-between text-white">
+                      <p className="font-bold text-xl">効果1</p>
+                      <Button
+                        variant="outline"
+                        className="bg-green-200 text-black hover:bg-green-400"
+                        onClick={() => setIsTextEditing(!isTextEditing)}
+                      >
+                        {isTextEditing ? "確定" : "説明欄"}
+                      </Button>
                     </CardTitle>
-                    <CardDescription className="text-white">
-                      相手に3ダメージ与える
-                    </CardDescription>
+                    {isTextEditing ? (
+                      <Textarea
+                        onChange={(e) => setDesc(e.target.value)}
+                        className="focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500"
+                      />
+                    ) : (
+                      <CardDescription className="text-base text-white">
+                        {desc}
+                      </CardDescription>
+                    )}
                   </CardHeader>
 
                   <CardFooter className="mt-2 flex justify-end bg-transparent pt-2">
@@ -158,7 +175,13 @@ export default function CardEdit() {
                       variant="outline"
                       className="bg-blue-200 hover:bg-blue-400"
                       onClick={() => setSelectedAvilityId(0)}>
-                      編集
+                      条件の編集
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="ml-2 bg-blue-200 hover:bg-blue-400"
+                      onClick={() => setSelectedAvilityId(0)}>
+                      効果の編集
                     </Button>
                     <Button variant="outline" className="ml-2 bg-red-200 hover:bg-red-400">
                       削除

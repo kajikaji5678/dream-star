@@ -70,7 +70,7 @@ export default function AbilityEffect() {
         )}
 
         <div className="space-y-2">
-          <Label className="text-base">対象</Label>
+          <Label className="text-base">効果の対象</Label>
           <Select>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="対象を選択します"></SelectValue>
@@ -80,19 +80,19 @@ export default function AbilityEffect() {
                 自分
               </SelectItem>
               <SelectItem value="ally_only">
-                自分以外の誰か一人
+                自分以外の味方一人
               </SelectItem>
               <SelectItem value="ally_all">
-                味方全員
+                味方全体
               </SelectItem>
               <SelectItem value="enemy_self">
-                相手そのもの
+                相手
               </SelectItem>
               <SelectItem value="enemy_only">
-                相手そのもの以外の一人
+                敵の一人
               </SelectItem>
               <SelectItem value="enemy_all">
-                相手全体
+                敵全体
               </SelectItem>
               <SelectItem value="all">
                 全員
@@ -114,6 +114,12 @@ export default function AbilityEffect() {
           className="bg-blue-200 hover:bg-blue-400 text-black"
         >
           条件を保存する
+        </Button>
+        <Button
+          variant="outline"
+          className="ml-2 bg-blue-200 hover:bg-blue-400 text-black"
+        >
+          保存せずに戻る
         </Button>
       </CardContent>
     </Card>
