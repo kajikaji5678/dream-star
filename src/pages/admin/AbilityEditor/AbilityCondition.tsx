@@ -50,14 +50,23 @@ export default function AbilityCondition() {
               <SelectItem value="self">
                 自分
               </SelectItem>
-              <SelectItem value="ally">
-                味方
+              <SelectItem value="ally_only">
+                自分以外の誰か一人
               </SelectItem>
-              <SelectItem value="enemy">
-                相手
+              <SelectItem value="ally_all">
+                味方全員
+              </SelectItem>
+              <SelectItem value="enemy_self">
+                相手そのもの
+              </SelectItem>
+              <SelectItem value="enemy_only">
+                相手そのもの以外の一人
+              </SelectItem>
+              <SelectItem value="enemy_all">
+                相手全体
               </SelectItem>
               <SelectItem value="all">
-                全体
+                全員
               </SelectItem>
             </SelectContent>
           </Select>

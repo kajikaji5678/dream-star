@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import AbilityCondition from "./AbilityEditor/AbilityCondition";
+import AbilityEffect from "./AbilityEditor/AbilityEffect";
 
 export default function CardEdit() {
 
@@ -170,7 +171,8 @@ export default function CardEdit() {
           </Tabs>
         )}
         {selectedAvilityId !== null && (
-          <AbilityCondition />
+          // <AbilityCondition />
+          <AbilityEffect />
         )}
       </section>
     </Layout>
