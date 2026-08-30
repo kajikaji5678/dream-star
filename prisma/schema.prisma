@@ -99,7 +99,7 @@ model AbilityCondition {
   ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)
 }
 
-model abilityEffect {
+model AbilityEffect {
   id        Int @id @default(autoincrement())
   abilityId Int
 
