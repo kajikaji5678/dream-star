@@ -1,6 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { sidebarVariants, cardVariants } from "./animation/animation";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 type MenuCardProps = {
   icon: string;
@@ -29,6 +32,9 @@ type Props = {
 }
 
 export default function Sidebar({ animate = false }: Props) {
+
+  const location = useLocation();
+  const isCardList = location.pathname === "/cardlist";
 
   const menues: MenuCardProps[] = [
     {
@@ -59,30 +65,107 @@ export default function Sidebar({ animate = false }: Props) {
 
 
   return (
-    <motion.aside
-      className="w-[30%] md:w-1/3 h-full bg-[#2b2d31] p-6 flex flex-col gap-4 overflow-y-auto"
-      variants={sidebarVariants}
-      initial={animate ? "hidden" : false}
-      animate={animate ? "visible" : false}
-    >
-      {menues.map((menu, index) => (
-        <motion.div
-          key={menu.title}
-          variants={cardVariants}
-          style={{
-            "--card-index": index,
-          } as React.CSSProperties}
-        >
-          <div>
-            <MenuCard
-              icon={menu.icon}
-              title={menu.title}
-              bgImage={menu.bgImage}
-              path={menu.path}
-            />
+    (isCardList ? (
+      <motion.aside
+        className="w-[30%] md:w-1/3 h-full bg-[#2b2d31] p-6 flex flex-col gap-4 overflow-y-auto"
+        variants={sidebarVariants}
+        initial={animate ? "hidden" : false}
+        animate={animate ? "visible" : false}
+      >
+        <section>
+          <h2 className="mb-2 text-lg font-bold">
+            ソート
+          </h2>
+          <div className="flex flex-col gap-3">
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="レア度"></SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="rarity-desc">
+                  レア度: 高い順
+                </SelectItem>
+                <SelectItem value="rarity-asc">
+                  レア度: 低い順
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="所持枚数"></SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="owned-desc">
+                  所持枚数: 多い順
+                </SelectItem>
+                <SelectItem value="owned-asc">
+                  所持枚数z: 低い順
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <Select disabled>
+              <SelectTrigger>
+                <SelectValue placeholder="攻撃力(準備中)"></SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="attack-desc">
+                  攻撃力: 高い順
+                </SelectItem>
+                <SelectItem value="attack-asc">
+                  攻撃力: 低い順
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-        </motion.div>
-      ))}
-    </motion.aside>
+          {/* <section>
+            <h2 className="mt-4 mb-2 text-lg font-bold">
+              絞り込み
+            </h2>
+            <div className="flex flex-col gap-3">
+              <Input placeholder="カード名で検索" />
+              <Input placeholder="パック名で検索" />
+              <RadioGroup defaultValue="all">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="all" id="type-all" />
+                  <label htmlFor="type-all">すべて</label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="all" id="type-all" />
+                  <label htmlFor="type-all"></label>
+                </div>
+              </RadioGroup>
+            </div>
+          </section> */}
+        </section>
+      </motion.aside>
+    )
+      : (
+        <motion.aside
+          className="w-[30%] md:w-1/3 h-full bg-[#2b2d31] p-6 flex flex-col gap-4 overflow-y-auto"
+          variants={sidebarVariants}
+          initial={animate ? "hidden" : false}
+          animate={animate ? "visible" : false}
+        >
+          {menues.map((menu, index) => (
+            <motion.div
+              key={menu.title}
+              variants={cardVariants}
+              style={{
+                "--card-index": index,
+              } as React.CSSProperties}
+            >
+              <div>
+                <MenuCard
+                  icon={menu.icon}
+                  title={menu.title}
+                  bgImage={menu.bgImage}
+                  path={menu.path}
+                />
+              </div>
+            </motion.div>
+          ))}
+        </motion.aside>
+      )
+    )
   )
 }
