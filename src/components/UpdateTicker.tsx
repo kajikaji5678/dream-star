@@ -12,7 +12,7 @@ export default function UpdateTicker() {
           ease: "linear",
           repeat: Infinity
         }}>
-          v1.1.0 10連ガチャ機能を搭載致しました。
+          v1.1.1 ソート機能およびUIの微調整を行いました。
       </motion.div>
     </div>
   )
