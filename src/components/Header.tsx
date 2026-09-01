@@ -14,7 +14,7 @@ export default function Header() {
           </button>
           <button
             className="px-4 py-2 rounded-lg bg-black/20 hover:bg-black/40 transition"
-            onClick={() => navigate("/home")}>
+            onClick={() => navigate("/home", {state: {playSidebarAnimation: true}})}>
             🏠 ホーム
           </button>
           <button

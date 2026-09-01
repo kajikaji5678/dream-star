@@ -5,7 +5,8 @@ import CardList from "../components/CardList";
 const Admin_id = [
   "1450733147867185215",
   "687875015227605016",
-  "884440765332328468"
+  "884440765332328468",
+  "1",
 ]
 
 type Props = {
@@ -19,7 +20,8 @@ type Props = {
 
 export default function Admin({ user }: Props) {
   const navigate = useNavigate();
-  const isAdmin = user && Admin_id.includes(user.id);
+  const isAdmin = user && Admin_id.includes(user.id) || import.meta.env.DEV;
+
   return (
     <Layout>
       {isAdmin ? (
