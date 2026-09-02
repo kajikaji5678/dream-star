@@ -65,6 +65,12 @@ export default function Sidebar({ animate = false }: Props) {
       title: "ネット対戦",
       bgImage: "/menuCardImages/vs.png",
       path: "#"
+    },
+    {
+      icon: "📂",
+      title: "データ",
+      bgImage: "",
+      path: "/data"
     }
   ]
 
