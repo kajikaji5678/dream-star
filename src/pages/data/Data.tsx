@@ -39,14 +39,14 @@ export default function Data({ user }: User) {
         <div className="self-start px-4 py-2 mb-4 bg-gradient-to-r from-sky-900 to-sky-500 w-full rounded">
           <h1 className="font-bold">ユーザーデータ</h1>
         </div>
-        <div className="lg:hidden bg-transparent overflow-y-auto">
-          <div className="relative h-[180px] p-4 bg-[#313338]">
+        <div className="lg:flex lg:gap-4 bg-transparent overflow-y-auto">
+          <div className="lg:flex-1 relative h-[180px] p-4 bg-[#313338]">
             <LiquidGraph value={20}></LiquidGraph>
             <p className="absolute top-[70px] left-[170px]">
               図鑑達成率は<span className="font-bold">20%</span>です。
             </p>
           </div>
-          <div className="px-4 py-2 mt-4 bg-[#313338]">
+          <div className="lg:flex-1 mt-4 lg:mt-0 px-4 py-2 bg-[#313338]">
             {rarities.map((rarity) => (
               <div key={rarity} className="flex mt-1 items-center gap-2">
                 <span className="w-14 text-sm text-white">
