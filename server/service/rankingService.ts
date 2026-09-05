@@ -62,7 +62,7 @@ export async function getCollectionRanking() {
       rank: index + 1,
       userId: user.userId,
       username: discordUser?.username ?? "unknown",
-      avater: avatarUrl,
+      avatar: avatarUrl,
       ownedCount: user.ownedCount,
       completionRate: user.completionRate
     }
