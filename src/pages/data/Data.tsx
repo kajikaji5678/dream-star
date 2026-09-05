@@ -6,6 +6,14 @@ import { useState, useEffect } from "react";
 
 type Rarity = "C" | "SP" | "R" | "DREAM" | "DR" | "GXR";
 
+type RankingItem = {
+  rank: number;
+  userId: string;
+  username: string;
+  avatar: string | null;
+  ownedCount: number;
+  completionRate: number;
+};
 
 const rarityStyle: Record<Rarity, string> = {
   C: "bg-gray-400",
@@ -34,15 +42,6 @@ const rarityTotal: Record<Rarity, number> = {
   GXR: 2
 }
 
-const progress: Record<Rarity, number> = {
-  C: 80,
-  SP: 60,
-  R: 45,
-  DREAM: 30,
-  DR: 20,
-  GXR: 10,
-};
-
 export default function Data({ user }: User) {
 
   const [completionRate, setCompletionRate] = useState(0);
@@ -53,7 +52,8 @@ export default function Data({ user }: User) {
     DREAM: 0,
     DR: 0,
     GXR: 0
-  })
+  });
+  const [ranking, setRanking] = useState<RankingItem[]>([]);
 
   useEffect(() => {
     const fetchUserCards = async () => {
@@ -84,6 +84,21 @@ export default function Data({ user }: User) {
     if (user?.id) fetchUserCards();
   }, [user?.id]);
 
+  useEffect(() => {
+    const fetchRanking = async () => {
+      try {
+        const res = await fetch("/api/ranking");
+        if (!res.ok) throw new Error("ランキング情報の取得失敗");
+        const data: RankingItem[] = await res.json();
+        setRanking(data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchRanking();
+  }, [])
+
   return (
     <Layout>
       <section className="rounded-lg h-full flex flex-col px-6 py-4 bg-[#2b2d31]">
@@ -112,6 +127,47 @@ export default function Data({ user }: User) {
                 </div>
               </div>))}
           </div>
+        </div>
+        <div className="bg-[#313338] space-y-2 px-4 py-2">
+          <p className="font-bold text-lg">図鑑達成率ランキング</p>
+          {ranking.map((item) => (
+            <div className="flex items-center gap-3 rounded-md py-2" key={item.rank}>
+              <span className={`w-8 text-center font-bold ${item.rank === 1
+                ? "text-yellow-400"
+                : item.rank === 2
+                  ? "text-gray-300"
+                  : item.rank === 3
+                    ? "text-orange-300"
+                    : "text-gray-500"
+                }`}
+              >
+                {item.rank}
+              </span>
+              {item.avatar ? (
+                <img src={item.avatar} className="h-9 w-9 rounded-full object-cover"></img>
+              ) : (
+                <div className="h-9 w-9 rounded-full bg-gray-600"></div>
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="truncate text-sm font-semibold">
+                  {item.username}
+                </p>
+                <div className="mt-1 flex items-center gap-2">
+                  <div className="h-[6px] flex-1 overflow-hidden rounded-full bg-gray-700">
+                    <motion.div
+                      className="h-full rounded-full bg-sky-400"
+                      initial={{ width: "0%" }}
+                      animate={{ width: `${item.completionRate}%` }}
+                      transition={{ duration: 1.2, ease: "easeInOut" }}
+                    />
+                  </div>
+                  <span className="w-12 text-right text-sm font-bold">
+                    {item.completionRate}%
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </Layout>
