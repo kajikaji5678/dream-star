@@ -46,7 +46,7 @@ export default function Data({ user }: User) {
 
   const [completionRate, setCompletionRate] = useState(0);
   const [rarityProgress, setRarityProgress] = useState<Record<Rarity, number>>({
-    C:0, 
+    C: 0,
     SP: 0,
     R: 0,
     DREAM: 0,
@@ -54,13 +54,14 @@ export default function Data({ user }: User) {
     GXR: 0
   });
   const [ranking, setRanking] = useState<RankingItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserCards = async () => {
       try {
         const res = await fetch(import.meta.env.DEV ? `/api/cards/user/1450733147867185215` : `/api/cards/user/${user?.id}`);
         if (!res.ok) throw new Error("カード情報の取得失敗");
-        const cards: { id: number; amount: number; rarity:Rarity }[] = await res.json();
+        const cards: { id: number; amount: number; rarity: Rarity }[] = await res.json();
         const ownedCount = new Set(cards.filter((card) => card.amount > 0).map((card) => card.id)).size;
         const rate = Math.min(Math.round((ownedCount / 80) * 100), 100);
         setCompletionRate(rate);
@@ -73,7 +74,7 @@ export default function Data({ user }: User) {
           GXR: 0
         };
         rarities.forEach((rarity) => {
-          const ownedRarityCount = new Set(cards.filter((card) => card.rarity === rarity && card.amount > 0).map((card) => card.id)).size; 
+          const ownedRarityCount = new Set(cards.filter((card) => card.rarity === rarity && card.amount > 0).map((card) => card.id)).size;
           calucrateProgress[rarity] = Math.min(Math.round((ownedRarityCount / rarityTotal[rarity]) * 100), 100);
         });
         setRarityProgress(calucrateProgress);
@@ -93,6 +94,7 @@ export default function Data({ user }: User) {
         setRanking(data);
       } catch (e) {
         console.error(e);
+        setError(String(e));
       }
     };
 
@@ -105,6 +107,9 @@ export default function Data({ user }: User) {
         <div className="self-start px-4 py-2 mb-4 bg-gradient-to-r from-sky-900 to-sky-500 w-full rounded">
           <h1 className="font-bold">ユーザーデータ</h1>
         </div>
+        {error &&
+          <p className="text-red-400">{error}</p>
+        }
         <div className="lg:flex lg:gap-4 bg-transparent mb-4">
           <div className="lg:flex-1 relative h-[180px] p-4 bg-[#313338]">
             <LiquidGraph value={completionRate}></LiquidGraph>
