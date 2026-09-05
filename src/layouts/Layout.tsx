@@ -18,7 +18,7 @@ export default function Layout({ children, ticket, animateSidebar }: Props) {
             {ticket}
             <div className="flex flex-1 min-h-0">
               <Sidebar animate={animateSidebar} />
-              <main className="flex-1 p-2">
+              <main className="flex-1 p-3">
                 {children}
               </main>
             </div>
