@@ -34,19 +34,20 @@ const rarityTotal: Record<Rarity, number> = {
   GXR: 2
 }
 
-const ranking = [
-  { rank: 1, name: "マスター", rate: 90, avatar: null },
-  { rank: 2, name: "テスター", rate: 90, avatar: null  },
-  { rank: 3, name: "うっすまん", rate: 90, avatar: null  },
-  { rank: 4, name: "おっすまん", rate: 90, avatar: null  },
-  { rank: 5, name: "kaji", rate: 90, avatar: null  }
-]
+const progress: Record<Rarity, number> = {
+  C: 80,
+  SP: 60,
+  R: 45,
+  DREAM: 30,
+  DR: 20,
+  GXR: 10,
+};
 
 export default function Data({ user }: User) {
 
   const [completionRate, setCompletionRate] = useState(0);
   const [rarityProgress, setRarityProgress] = useState<Record<Rarity, number>>({
-    C: 0,
+    C:0, 
     SP: 0,
     R: 0,
     DREAM: 0,
@@ -59,7 +60,7 @@ export default function Data({ user }: User) {
       try {
         const res = await fetch(import.meta.env.DEV ? `/api/cards/user/1450733147867185215` : `/api/cards/user/${user?.id}`);
         if (!res.ok) throw new Error("カード情報の取得失敗");
-        const cards: { id: number; amount: number; rarity: Rarity }[] = await res.json();
+        const cards: { id: number; amount: number; rarity:Rarity }[] = await res.json();
         const ownedCount = new Set(cards.filter((card) => card.amount > 0).map((card) => card.id)).size;
         const rate = Math.min(Math.round((ownedCount / 80) * 100), 100);
         setCompletionRate(rate);
@@ -72,7 +73,7 @@ export default function Data({ user }: User) {
           GXR: 0
         };
         rarities.forEach((rarity) => {
-          const ownedRarityCount = new Set(cards.filter((card) => card.rarity === rarity && card.amount > 0).map((card) => card.id)).size;
+          const ownedRarityCount = new Set(cards.filter((card) => card.rarity === rarity && card.amount > 0).map((card) => card.id)).size; 
           calucrateProgress[rarity] = Math.min(Math.round((ownedRarityCount / rarityTotal[rarity]) * 100), 100);
         });
         setRarityProgress(calucrateProgress);
@@ -85,11 +86,11 @@ export default function Data({ user }: User) {
 
   return (
     <Layout>
-      <section className="rounded-lg h-full flex flex-col px-6 py-4 bg-[#2b2d31] overflow-y-auto">
+      <section className="rounded-lg h-full flex flex-col px-6 py-4 bg-[#2b2d31]">
         <div className="self-start px-4 py-2 mb-4 bg-gradient-to-r from-sky-900 to-sky-500 w-full rounded">
           <h1 className="font-bold">ユーザーデータ</h1>
         </div>
-        <div className="mb-4 lg:flex lg:gap-4 bg-transparent">
+        <div className="lg:flex lg:gap-4 bg-transparent overflow-y-auto">
           <div className="lg:flex-1 relative h-[180px] p-4 bg-[#313338]">
             <LiquidGraph value={completionRate}></LiquidGraph>
             <p className="absolute top-[70px] left-[170px]">
@@ -111,42 +112,6 @@ export default function Data({ user }: User) {
                 </div>
               </div>))}
           </div>
-        </div>
-        <div className="bg-[#313338] space-y-2 px-4 py-2">
-          <p className="font-bold text-lg">図鑑達成率ランキング</p>
-          {ranking.map((item) => (
-            <div className="flex items-center gap-3 rounded-md py-2" key={item.rank}>
-              <span className={`w-8 text-center font-bold ${
-                item.rank === 1
-                  ? "text-yellow-400"
-                  : item.rank === 2
-                  ? "text-gray-300"
-                  : item.rank === 3
-                  ? "text-orange-300"
-                  : "text-gray-500"
-              }`}
-              >
-                {item.rank}
-              </span>
-              <img src={item.avatar} className="h-9 w-9 rounded-full object-cover"></img>
-              <div className="flex-1 min-w-0">
-                <p className="truncate text-sm font-semibold">
-                  {item.name}
-                </p>
-                <div className="mt-1 h-[6px] overflow-hidden rounded-full bg-gray-700">
-                  <motion.div 
-                    className="h-full rounded-full bg-sky-400"
-                    initial={{width: "0%"}}
-                    animate={{width: `${item.rate}%`}}
-                    transition={{duration: 1.2, ease: "easeInOut"}}
-                  />
-                </div>
-                <span className="w-12 text-right text-sm font-bold">
-                  {item.rate}%
-                </span>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
     </Layout>
