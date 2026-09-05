@@ -6,6 +6,14 @@ import { useState, useEffect } from "react";
 
 type Rarity = "C" | "SP" | "R" | "DREAM" | "DR" | "GXR";
 
+type RankingItem = {
+  rank: number;
+  userId: string;
+  username: string;
+  avatar: string | null;
+  ownedCount: number;
+  completionRate: number;
+};
 
 const rarityStyle: Record<Rarity, string> = {
   C: "bg-gray-400",
@@ -34,14 +42,6 @@ const rarityTotal: Record<Rarity, number> = {
   GXR: 2
 }
 
-const ranking = [
-  { rank: 1, name: "マスター", rate: 90, avatar: null },
-  { rank: 2, name: "テスター", rate: 90, avatar: null  },
-  { rank: 3, name: "うっすまん", rate: 90, avatar: null  },
-  { rank: 4, name: "おっすまん", rate: 90, avatar: null  },
-  { rank: 5, name: "kaji", rate: 90, avatar: null  }
-]
-
 export default function Data({ user }: User) {
 
   const [completionRate, setCompletionRate] = useState(0);
@@ -52,7 +52,8 @@ export default function Data({ user }: User) {
     DREAM: 0,
     DR: 0,
     GXR: 0
-  })
+  });
+  const [ranking, setRanking] = useState<RankingItem[]>([]);
 
   useEffect(() => {
     const fetchUserCards = async () => {
@@ -82,6 +83,21 @@ export default function Data({ user }: User) {
     };
     if (user?.id) fetchUserCards();
   }, [user?.id]);
+
+  useEffect(() => {
+    const fetchRanking = async () => {
+      try {
+        const res = await fetch("/api/ranking");
+        if (!res.ok) throw new Error("ランキング情報の取得失敗");
+        const data: RankingItem[] = await res.json();
+        setRanking(data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchRanking();
+  }, [])
 
   return (
     <Layout>
@@ -116,34 +132,39 @@ export default function Data({ user }: User) {
           <p className="font-bold text-lg">図鑑達成率ランキング</p>
           {ranking.map((item) => (
             <div className="flex items-center gap-3 rounded-md py-2" key={item.rank}>
-              <span className={`w-8 text-center font-bold ${
-                item.rank === 1
-                  ? "text-yellow-400"
-                  : item.rank === 2
+              <span className={`w-8 text-center font-bold ${item.rank === 1
+                ? "text-yellow-400"
+                : item.rank === 2
                   ? "text-gray-300"
                   : item.rank === 3
-                  ? "text-orange-300"
-                  : "text-gray-500"
-              }`}
+                    ? "text-orange-300"
+                    : "text-gray-500"
+                }`}
               >
                 {item.rank}
               </span>
-              <img src={item.avatar} className="h-9 w-9 rounded-full object-cover"></img>
+              {item.avatar ? (
+                <img src={item.avatar} className="h-9 w-9 rounded-full object-cover"></img>
+              ) : (
+                <div className="h-9 w-9 rounded-full bg-gray-600"></div>
+              )}
               <div className="flex-1 min-w-0">
                 <p className="truncate text-sm font-semibold">
-                  {item.name}
+                  {item.username}
                 </p>
-                <div className="mt-1 h-[6px] overflow-hidden rounded-full bg-gray-700">
-                  <motion.div 
-                    className="h-full rounded-full bg-sky-400"
-                    initial={{width: "0%"}}
-                    animate={{width: `${item.rate}%`}}
-                    transition={{duration: 1.2, ease: "easeInOut"}}
-                  />
+                <div className="mt-1 flex items-center gap-2">
+                  <div className="h-[6px] flex-1 overflow-hidden rounded-full bg-gray-700">
+                    <motion.div
+                      className="h-full rounded-full bg-sky-400"
+                      initial={{ width: "0%" }}
+                      animate={{ width: `${item.completionRate}%` }}
+                      transition={{ duration: 1.2, ease: "easeInOut" }}
+                    />
+                  </div>
+                  <span className="w-12 text-right text-sm font-bold">
+                    {item.completionRate}%
+                  </span>
                 </div>
-                <span className="w-12 text-right text-sm font-bold">
-                  {item.rate}%
-                </span>
               </div>
             </div>
           ))}

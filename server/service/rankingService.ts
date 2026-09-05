@@ -59,7 +59,7 @@ export async function getCollectionRanking() {
     if (discordUser?.avatar) { avatarUrl = `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`; }
 
     return {
-      ranl: index + 1,
+      rank: index + 1,
       userId: user.userId,
       username: discordUser?.username ?? "unknown",
       avater: avatarUrl,
