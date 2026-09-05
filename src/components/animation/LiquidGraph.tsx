@@ -17,7 +17,7 @@ export default function LiquidGraph({ value }: Props) {
       series: [
         {
           type: "liquidFill",
-          data: [value / 100, (value / 100) * 0.8],
+          data: [value / 100, (value / 100) * 0.9],
           radius: "90%",
           color: ["#38bdf8"],
           amplitude: 2.5,
