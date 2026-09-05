@@ -12,7 +12,7 @@ export default function UpdateTicker() {
           ease: "linear",
           repeat: Infinity
         }}>
-          v1.1.1 ソート機能およびUIの微調整を行いました。
+          v1.1.2 ユーザーの図鑑達成率のデータUIを作成しました。
       </motion.div>
     </div>
   )
