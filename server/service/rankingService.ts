@@ -1,4 +1,4 @@
-import { prisma } from "../prisma.ts";
+import { prisma } from "../prisma.js";
 
 const TOTAL_CARDS = 80;
 export async function getCollectionRanking() {
