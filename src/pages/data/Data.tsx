@@ -101,11 +101,11 @@ export default function Data({ user }: User) {
 
   return (
     <Layout>
-      <section className="rounded-lg h-full flex flex-col px-6 py-4 bg-[#2b2d31]">
+      <section className="rounded-lg h-full flex flex-col px-6 py-4 bg-[#2b2d31] overflow-y-auto">
         <div className="self-start px-4 py-2 mb-4 bg-gradient-to-r from-sky-900 to-sky-500 w-full rounded">
           <h1 className="font-bold">ユーザーデータ</h1>
         </div>
-        <div className="lg:flex lg:gap-4 bg-transparent overflow-y-auto">
+        <div className="lg:flex lg:gap-4 bg-transparent mb-4">
           <div className="lg:flex-1 relative h-[180px] p-4 bg-[#313338]">
             <LiquidGraph value={completionRate}></LiquidGraph>
             <p className="absolute top-[70px] left-[170px]">

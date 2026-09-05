@@ -12,7 +12,7 @@ export default function UpdateTicker() {
           ease: "linear",
           repeat: Infinity
         }}>
-          v1.1.2 ユーザーの図鑑達成率のデータUIを作成しました。
+          v1.1.3 ユーザーの図鑑達成率およびランキングのUIをつくりました。
       </motion.div>
     </div>
   )
