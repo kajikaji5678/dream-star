@@ -25,6 +25,15 @@ const rarities: Rarity[] = [
   "GXR"
 ]
 
+const rarityTotal: Record<Rarity, number> = {
+  C: 34,
+  SP: 16,
+  R: 9,
+  DREAM: 10,
+  DR: 9,
+  GXR: 2
+}
+
 const progress: Record<Rarity, number> = {
   C: 80,
   SP: 60,
@@ -37,18 +46,37 @@ const progress: Record<Rarity, number> = {
 export default function Data({ user }: User) {
 
   const [completionRate, setCompletionRate] = useState(0);
+  const [rarityProgress, setRarityProgress] = useState<Record<Rarity, number>>({
+    C:0, 
+    SP: 0,
+    R: 0,
+    DREAM: 0,
+    DR: 0,
+    GXR: 0
+  })
 
   useEffect(() => {
     const fetchUserCards = async () => {
       try {
         const res = await fetch(import.meta.env.DEV ? `/api/cards/user/1450733147867185215` : `/api/cards/user/${user?.id}`);
         if (!res.ok) throw new Error("カード情報の取得失敗");
-        const cards: { id: number; amount: number }[] = await res.json();
+        const cards: { id: number; amount: number; rarity:Rarity }[] = await res.json();
         const ownedCount = new Set(cards.filter((card) => card.amount > 0).map((card) => card.id)).size;
         const rate = Math.min(Math.round((ownedCount / 80) * 100), 100);
         setCompletionRate(rate);
-        console.log("API Cards:", cards);
-        console.log("owendCard:", ownedCount)
+        const calucrateProgress: Record<Rarity, number> = {
+          C: 0,
+          SP: 0,
+          R: 0,
+          DREAM: 0,
+          DR: 0,
+          GXR: 0
+        };
+        rarities.forEach((rarity) => {
+          const ownedRarityCount = new Set(cards.filter((card) => card.rarity === rarity && card.amount > 0).map((card) => card.id)).size; 
+          calucrateProgress[rarity] = Math.min(Math.round((ownedRarityCount / rarityTotal[rarity]) * 100), 100);
+        });
+        setRarityProgress(calucrateProgress);
       } catch (e) {
         console.error(e);
       }
@@ -79,7 +107,7 @@ export default function Data({ user }: User) {
                   <motion.div
                     className={`h-full rounded-full ${rarityStyle[rarity]}`}
                     initial={{ width: "0%" }}
-                    animate={{ width: `${progress[rarity]}%` }}
+                    animate={{ width: `${rarityProgress[rarity]}%` }}
                     transition={{ duration: 1, ease: "easeInOut" }} />
                 </div>
               </div>))}
