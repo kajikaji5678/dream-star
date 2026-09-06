@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectValue } from "@/components/ui/
 import { SelectTrigger } from "@/components/ui/select"
 import { useEffect, useState } from "react";
 import type { Condition } from "@/types/card";
+import { useNavigate, useParams } from "react-router-dom";
 
 type Props = {
   abilityId: number;
@@ -13,6 +14,9 @@ type Props = {
 }
 
 export default function AbilityCondition({ onBack, abilityId }: Props) {
+
+  const navigate = useNavigate();
+  const { cardId } = useParams();
 
   const [conditionId, setConditionId] = useState<number | null>(null);
   const [activationTiming, setActivationTimig] = useState("");
@@ -26,9 +30,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
       try {
         const res = await fetch(`/api/details/${abilityId}/conditions`);
         if (!res.ok) throw new Error("条件の取得に失敗しました");
-
-        const data: Condition[] = await res.json();
-        const condition = data[0];
+        const condition = await res.json();
         if (!condition) return;
         setConditionId(condition.id);
         setActivationTimig(condition.activationTiming ?? "");
@@ -54,7 +56,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
 
       let response;
 
-      if (conditionId !== null) {
+      if (conditionId != null) {
         response = await fetch(`/api/details/conditions/${conditionId}`, {
           method: "PUT",
           headers: {
@@ -74,7 +76,12 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
       if (!response.ok) throw new Error("条件の保存失敗");
       const data: Condition = await response.json();
       setConditionId(data.id);
-      setSuccess("条件を保存しました。")
+      setSuccess("条件を保存しました。");
+      if (response.ok) {
+        setTimeout(() => {
+          onBack();
+        }, 2000)
+      }
     } catch (e) {
       if (e instanceof Error) setError(e.message);
     }
@@ -125,9 +132,9 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
 
         <div className="space-y-2">
           <Label className="text-base">判定対象</Label>
-          <Select 
-          value={target}
-          onValueChange={(value) => setTarget(value ?? "")}>
+          <Select
+            value={target}
+            onValueChange={(value) => setTarget(value ?? "")}>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="対象を選択します"></SelectValue>
             </SelectTrigger>
