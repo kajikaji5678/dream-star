@@ -6,7 +6,6 @@ import { Select, SelectContent, SelectItem, SelectValue } from "@/components/ui/
 import { SelectTrigger } from "@/components/ui/select"
 import { useEffect, useState } from "react";
 import type { Condition } from "@/types/card";
-import { useNavigate, useParams } from "react-router-dom";
 
 type Props = {
   abilityId: number;
@@ -14,9 +13,6 @@ type Props = {
 }
 
 export default function AbilityCondition({ onBack, abilityId }: Props) {
-
-  const navigate = useNavigate();
-  const { cardId } = useParams();
 
   const [conditionId, setConditionId] = useState<number | null>(null);
   const [activationTiming, setActivationTimig] = useState("");

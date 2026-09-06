@@ -11,9 +11,60 @@ type Props = {
   abilityId: number;
 }
 
-export default function AbilityEffect({onBack, abilityId}: Props) {
+export default function AbilityEffect({ onBack, abilityId }: Props) {
 
+  const [effectId, setEffectId] = useState<number | null>(null);
   const [isSpecialOpen, setIsSpecialOpen] = useState(false);
+  const [effectType, setEffectType] = useState("");
+  const [specialStatus, setSpecialStatus] = useState("");
+  const [target, setTarget] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [valueNumber, setValueNumber] = useState("");
+
+  const handleSave = async () => {
+    const body = {
+      abilityId,
+      effectType,
+      specialStatus: effectType === "special" ? specialStatus : null,
+      target,
+      valueNumber: valueNumber === "" ? null : Number(valueNumber)
+    };
+
+    try {
+      let response;
+      if (effectId != null) {
+        response = await fetch(`/api/details/effects/${effectId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        });
+      } else {
+        response = await fetch(`/api/details/${abilityId}/effects`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        });
+      }
+      if (!response.ok) throw new Error("効果の保存失敗");
+
+      const data = await response.json();
+      setEffectId(data.id);
+      setSuccess("効果を保存しました");
+
+      if (response?.ok) {
+        setTimeout(() => {
+          onBack();
+        }, 2000)
+      }
+    } catch (e) {
+      if (e instanceof Error) setError(e.message);
+    }
+  }
 
   return (
     <Card className="border-0 bg-[#232428] text-white p-2 mt-2">
