@@ -42,6 +42,15 @@ const rarityTotal: Record<Rarity, number> = {
   GXR: 2
 }
 
+const rarityRate: Record<Rarity, number> = {
+  C: 65,
+  SP: 20,
+  R: 11.32,
+  DREAM: 3,
+  DR: 0.6,
+  GXR: 0.08,
+};
+
 export default function Data({ user }: User) {
 
   const [completionRate, setCompletionRate] = useState(0);
@@ -113,24 +122,48 @@ export default function Data({ user }: User) {
         <div className="lg:flex lg:gap-4 bg-transparent mb-4">
           <div className="lg:flex-1 relative h-[180px] p-4 bg-[#313338]">
             <LiquidGraph value={completionRate}></LiquidGraph>
-            <p className="absolute top-[70px] left-[170px]">
-              図鑑達成率は<span className="font-bold">{completionRate}</span>です。
+            <p className="absolute top-[50px] left-[170px]">
+              図鑑達成率は<span className="font-bold">{completionRate}%</span>です。
+            </p>
+            <h2 className="font-semibold absolute top-[84px] left-[170px]">排出率一覧</h2>
+            <p className="absolute top-[110px] left-[170px]">
+              C: 65%, SP: 20%, R: 11.32%, <br />DREAM: 3%, DR: 0.6%, GXR: 0.02%
             </p>
           </div>
           <div className="lg:flex-1 mt-4 lg:mt-0 px-4 py-2 bg-[#313338]">
-            {rarities.map((rarity) => (
-              <div key={rarity} className="flex mt-1 items-center gap-2">
-                <span className="w-14 text-sm text-white">
-                  {rarity}
-                </span>
-                <div className="h-[6px] flex-1 overflow-hidden rounded-full bg-gray-700">
-                  <motion.div
-                    className={`h-full rounded-full ${rarityStyle[rarity]}`}
-                    initial={{ width: "0%" }}
-                    animate={{ width: `${rarityProgress[rarity]}%` }}
-                    transition={{ duration: 1, ease: "easeInOut" }} />
+            {rarities.map((rarity) => {
+              const ownedCount = Math.round((rarityProgress[rarity] / 100) * rarityTotal[rarity]);
+              const remainingCount = rarityTotal[rarity] - ownedCount;
+              const isCompleted = remainingCount === 0;
+              return (
+                <div key={rarity} className="flex mt-1 items-center gap-2">
+                  <span className="w-14 text-sm text-white">
+                    {rarity}
+                  </span>
+                  <div className="h-[6px] flex-1 overflow-hidden rounded-full bg-gray-700">
+                    <motion.div
+                      className={`h-full rounded-full ${rarityStyle[rarity]}`}
+                      initial={{ width: "0%" }}
+                      animate={{ width: `${rarityProgress[rarity]}%` }}
+                      transition={{ duration: 1, ease: "easeInOut" }} />
+                  </div>
+                  <div className="mt-1 items-center justify-between text-xs">
+                    <span className="text-gray-200">
+                      {rarityProgress[rarity]}%
+                    </span>
+                    {isCompleted ? (
+                      <span className="italic font-semibold text-sky-400">
+                        Completed!!!
+                      </span>
+                    ) : (
+                      <span className="ml-2 text-gray-200">
+                        あと{remainingCount}枚
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>))}
+              )
+            })}
           </div>
         </div>
         <div className="bg-[#313338] space-y-2 px-4 py-2">
@@ -175,6 +208,6 @@ export default function Data({ user }: User) {
           ))}
         </div>
       </section>
-    </Layout>
+    </Layout >
   )
 }
