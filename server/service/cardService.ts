@@ -13,6 +13,9 @@ export async function findCardById(id: number) {
     where: {
       id,
     },
+    include: {
+      abilities: true,
+    }
   });
 }
 

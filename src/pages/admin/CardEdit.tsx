@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Layout from "../../layouts/Layout";
 import AdminTitle from "./AdminTitle";
 import CardForm from "../../components/CardForm";
-import type { CardFormData } from "../../types/card";
+import type { Ability, CardFormData } from "../../types/card";
 import { getCard } from "../../service/cardService";
 import { updateCard } from "../../service/cardService";
 import { deleteCard } from "../../service/cardService";
@@ -42,11 +42,11 @@ export default function CardEdit() {
   const [isAbilityAdding, setIsAbilityAdding] = useState(false);
   const [abilityName, setAbilityName] = useState("");
   const [abilityDesc, setAbilityDesc] = useState("");
+  const [abilities, setAbilities] = useState<Ability[]>([]);
 
   useEffect(() => {
     async function fetchCard() {
       if (!id) return;
-
       try {
         const data = await getCard(id);
 
@@ -62,7 +62,9 @@ export default function CardEdit() {
           supportType: data.supportType
         });
 
+        console.log(data);
         setPreviewUrl(`${API_URL}${data.imageUrl}`);
+        setAbilities(data.abilities ?? []);
       } catch (e) {
         if (e instanceof Error) {
           setError(e.message);
@@ -181,49 +183,54 @@ export default function CardEdit() {
               className="min-h-0 flex-1 mt-0 overflow-y-auto"
             >
               <div className="space-y-3">
-                <Card className="border-white/10 bg-black/20 p-2">
-                  <CardHeader>
-                    <CardTitle className="flex justify-between text-white">
-                      <p className="font-bold text-xl">効果1</p>
+                {abilities.map((ability, index) => (
+                  <Card
+                    key={ability.id}
+                    className="border-white/10 bg-black/20 p-2"
+                  >
+                    <CardHeader>
+                      <CardTitle className="flex justify-between text-white">
+                        <p className="font-bold text-xl">効果{index + 1}: {ability.name}</p>
+                        <Button
+                          variant="outline"
+                          className="bg-green-200 text-black hover:bg-green-400"
+                          onClick={() => setIsTextEditing(!isTextEditing)}
+                        >
+                          {isTextEditing ? "確定" : "説明欄"}
+                        </Button>
+
+                      </CardTitle>
+                      {isTextEditing ? (
+                        <Textarea
+                          onChange={(e) => setDesc(e.target.value)}
+                          className="focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500"
+                        />
+                      ) : (
+                        <CardDescription className="text-base text-white">
+                          {ability.description}
+                        </CardDescription>
+                      )}
+                    </CardHeader>
+
+                    <CardFooter className="mt-2 flex justify-end bg-transparent pt-2">
                       <Button
                         variant="outline"
-                        className="bg-green-200 text-black hover:bg-green-400"
-                        onClick={() => setIsTextEditing(!isTextEditing)}
-                      >
-                        {isTextEditing ? "確定" : "説明欄"}
+                        className="bg-blue-200 hover:bg-blue-400"
+                        onClick={() => { setSelectedAvilityId(0); setEditorType("condition") }}>
+                        条件の編集
                       </Button>
-
-                    </CardTitle>
-                    {isTextEditing ? (
-                      <Textarea
-                        onChange={(e) => setDesc(e.target.value)}
-                        className="focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500"
-                      />
-                    ) : (
-                      <CardDescription className="text-base text-white">
-                        {desc}
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-
-                  <CardFooter className="mt-2 flex justify-end bg-transparent pt-2">
-                    <Button
-                      variant="outline"
-                      className="bg-blue-200 hover:bg-blue-400"
-                      onClick={() => { setSelectedAvilityId(0); setEditorType("condition") }}>
-                      条件の編集
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="ml-2 bg-blue-200 hover:bg-blue-400"
-                      onClick={() => { setSelectedAvilityId(0); setEditorType("effect") }}>
-                      効果の編集
-                    </Button>
-                    <Button variant="outline" className="ml-2 bg-red-200 hover:bg-red-400">
-                      削除
-                    </Button>
-                  </CardFooter>
-                </Card>
+                      <Button
+                        variant="outline"
+                        className="ml-2 bg-blue-200 hover:bg-blue-400"
+                        onClick={() => { setSelectedAvilityId(0); setEditorType("effect") }}>
+                        効果の編集
+                      </Button>
+                      <Button variant="outline" className="ml-2 bg-red-200 hover:bg-red-400">
+                        削除
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
                 <div className="flex justify-end">
                   <Button
                     variant="outline"

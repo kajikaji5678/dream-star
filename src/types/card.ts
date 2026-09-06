@@ -31,3 +31,9 @@ export type Condition = {
   target: string | null;
   valueNumber: number | null;
 };
+
+export type Ability = {
+  id: number;
+  name: string;
+  description: string | null;
+}
