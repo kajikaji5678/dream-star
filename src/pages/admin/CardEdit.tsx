@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import AbilityCondition from "./AbilityEditor/AbilityCondition";
 import AbilityEffect from "./AbilityEditor/AbilityEffect";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Input } from "@base-ui/react/input";
 
 export default function CardEdit() {
 
@@ -37,6 +39,9 @@ export default function CardEdit() {
   const [selectedAvilityId, setSelectedAvilityId] = useState<number | null>(null);
   const [isTextEditing, setIsTextEditing] = useState(false);
   const [desc, setDesc] = useState("相手に3ダメージ与える");
+  const [isAbilityAdding, setIsAbilityAdding] = useState(false);
+  const [abilityName, setAbilityName] = useState("");
+  const [abilityDesc, setAbilityDesc] = useState("");
 
   useEffect(() => {
     async function fetchCard() {
@@ -160,6 +165,7 @@ export default function CardEdit() {
                       >
                         {isTextEditing ? "確定" : "説明欄"}
                       </Button>
+
                     </CardTitle>
                     {isTextEditing ? (
                       <Textarea
@@ -191,18 +197,73 @@ export default function CardEdit() {
                     </Button>
                   </CardFooter>
                 </Card>
+                <div className="flex justify-end">
+                  <Button
+                    variant="outline"
+                    className="bg-blue-200 hover:bg-blue-400 text-black"
+                    onClick={() => setIsAbilityAdding(true)}
+                  >
+                    追加する
+                  </Button>
+                </div>
+                {isAbilityAdding && (
+                  <Card className="border-white/10 bg-black/20 p-2">
+                    <CardHeader>
+                      <CardTitle className="flex justify-between text-white">
+                        <p className="font-bold text-xl">新しい能力</p>
+                      </CardTitle>
+                      <div className="space-y-3">
+                        <div>
+                          <Label className="text-white mb-1">能力名</Label>
+                          <Input
+                            value={abilityName}
+                            onChange={(e) => setAbilityName(e.target.value)}
+                            placeholder="能力名を入力"
+                            className="border-white border p-1 rounded bg-transparent focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500" />
+                        </div>
+                        <div>
+                          <Label className="text-white mb-1">説明</Label>
+                          <Textarea
+                            value={abilityName}
+                            onChange={(e) => setAbilityName(e.target.value)}
+                            placeholder="説明を入力"
+                            className="focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500 " />
+                        </div>
+                      </div>
+                    </CardHeader>
+
+                    <CardFooter className="mt-2 flex justify-end bg-transparent pt-2">
+                      <Button
+                        variant="outline"
+                        className="ml-2 bg-gray-200 hover:bg-gray-400"
+                        onClick={() => {
+                          setIsAbilityAdding(false);
+                          setAbilityName("");
+                          setAbilityDesc("");
+                        }}>
+                        キャンセル
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="ml-2 bg-green-200 hover:bg-green-400 text-black"
+                        >
+                        追加する
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                )}
               </div>
             </TabsContent>
 
           </Tabs>
         )}
         {editorType === "condition" && selectedAvilityId !== null && (
-          <AbilityCondition 
-          onBack={() => setEditorType("list")}
-          abilityId={selectedAvilityId}/>
+          <AbilityCondition
+            onBack={() => setEditorType("list")}
+            abilityId={selectedAvilityId} />
         )}
         {editorType === "effect" && selectedAvilityId !== null && (
-          <AbilityEffect onBack={() => setEditorType("list")}/>
+          <AbilityEffect onBack={() => setEditorType("list")} />
         )}
       </section>
     </Layout>
