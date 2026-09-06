@@ -122,11 +122,11 @@ export default function Data({ user }: User) {
         <div className="lg:flex lg:gap-4 bg-transparent mb-4">
           <div className="lg:flex-1 relative h-[180px] p-4 bg-[#313338]">
             <LiquidGraph value={completionRate}></LiquidGraph>
-            <p className="absolute top-[50px] left-[170px]">
+            <p className="absolute top-[40px] left-[170px]">
               図鑑達成率は<span className="font-bold">{completionRate}%</span>です。
             </p>
-            <h2 className="font-semibold absolute top-[84px] left-[170px]">排出率一覧</h2>
-            <p className="absolute top-[110px] left-[170px]">
+            <h2 className="font-semibold absolute top-[70px] left-[170px]">排出率一覧</h2>
+            <p className="absolute top-[90px] left-[170px]">
               C: 65%, SP: 20%, R: 11.32%, <br />DREAM: 3%, DR: 0.6%, GXR: 0.02%
             </p>
           </div>
