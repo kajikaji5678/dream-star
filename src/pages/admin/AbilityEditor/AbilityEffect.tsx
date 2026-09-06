@@ -8,9 +8,10 @@ import { useState } from "react";
 
 type Props = {
   onBack: () => void;
+  abilityId: number;
 }
 
-export default function AbilityEffect({onBack}: Props) {
+export default function AbilityEffect({onBack, abilityId}: Props) {
 
   const [isSpecialOpen, setIsSpecialOpen] = useState(false);
 

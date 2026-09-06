@@ -13,6 +13,6 @@ router.get("/:abilityId/effects", getEffects);
 router.post("/:abilityId/effects", createEffect);
 router.put("/effects/:effectId", updateEffect);
 router.delete("/effects/:effectId", deleteEffect);
-router.get("/:cardId/abilities", createAbility);
+router.post("/:cardId/abilities", createAbility);
 
 export default router;

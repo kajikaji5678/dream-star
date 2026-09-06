@@ -105,6 +105,33 @@ export default function CardEdit() {
     }
   };
 
+  const handleCreateAbility = async () => {
+    if (!id) return;
+    try {
+      const res = await fetch(`/api/details/${id}/abilities`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: abilityName,
+          desc: abilityDesc
+        })
+      });
+
+      if (!res.ok) throw new Error("能力の作成に失敗しました");
+      const ability = await res.json();
+      setSelectedAvilityId(ability.id);
+      setIsAbilityAdding(false);
+      setAbilityName("");
+      setAbilityDesc("");
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      }
+    }
+  }
+
   return (
     <Layout>
       <section className="p-4 flex h-full flex-col rounded-lg bg-[#313338]">
@@ -219,15 +246,15 @@ export default function CardEdit() {
                             value={abilityName}
                             onChange={(e) => setAbilityName(e.target.value)}
                             placeholder="能力名を入力"
-                            className="border-white border p-1 rounded bg-transparent focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500" />
+                            className="border-white border p-1 text-white rounded bg-transparent focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500" />
                         </div>
                         <div>
                           <Label className="text-white mb-1">説明</Label>
                           <Textarea
-                            value={abilityName}
-                            onChange={(e) => setAbilityName(e.target.value)}
+                            value={abilityDesc}
+                            onChange={(e) => setAbilityDesc(e.target.value)}
                             placeholder="説明を入力"
-                            className="focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500 " />
+                            className="text-white focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500 " />
                         </div>
                       </div>
                     </CardHeader>
@@ -246,7 +273,8 @@ export default function CardEdit() {
                       <Button
                         variant="outline"
                         className="ml-2 bg-green-200 hover:bg-green-400 text-black"
-                        >
+                        onClick={handleCreateAbility}
+                      >
                         追加する
                       </Button>
                     </CardFooter>
@@ -263,7 +291,9 @@ export default function CardEdit() {
             abilityId={selectedAvilityId} />
         )}
         {editorType === "effect" && selectedAvilityId !== null && (
-          <AbilityEffect onBack={() => setEditorType("list")} />
+          <AbilityEffect
+            onBack={() => setEditorType("list")}
+            abilityId={selectedAvilityId} />
         )}
       </section>
     </Layout>

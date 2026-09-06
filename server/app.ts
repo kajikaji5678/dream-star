@@ -22,7 +22,7 @@ app.use("/api/upload", uploadRouter);
 app.use("/api/gacha", gachaRouter);
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
-app.use("/api/abilities", cardDetailRouter);
+app.use("/api/details", cardDetailRouter);
 
 app.use(
   "/uploads",

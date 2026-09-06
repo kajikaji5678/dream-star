@@ -11,15 +11,15 @@ import {
 export async function createAbility(req: Request, res: Response) {
   try {
     const cardId = Number(req.params.cardId);
-    const {name,description} = req.body;
+    const { name, desc } = req.body;
     const ability = await createCardAbility(cardId, {
       name,
-      description
+      desc
     });
     return res.status(201).json(ability);
   } catch (e) {
     console.error(e);
-    return res.status(500).json({error: `${e}`});
+    return res.status(500).json({ error: `${e}` });
   }
 }
 

@@ -15,7 +15,7 @@ type EffectData = {
 
 type AbilityData = {
   name: string;
-  description?: string;
+  desc?: string;
 }
 
 export async function createCardAbility(cardId: number, data: AbilityData) {
@@ -23,7 +23,7 @@ export async function createCardAbility(cardId: number, data: AbilityData) {
     data: {
       cardId,
       name: data.name,
-      description: data.description
+      description: data.desc
     }
   })
 }
