@@ -37,7 +37,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
       }
     }
     fetchCondition()
-  }, [abilityId])
+  }, [abilityId]);
 
   const handleSave = async () => {
     setError("");

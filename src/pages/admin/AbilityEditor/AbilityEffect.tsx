@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { SelectTrigger } from "@/components/ui/select"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   onBack: () => void;
@@ -21,6 +21,27 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [valueNumber, setValueNumber] = useState("");
+
+  useEffect(() => {
+    async function fetchEffect() {
+      try {
+        const res = await fetch(`/api/details/${abilityId}/effects`);
+        if (!res.ok) throw new Error("効果の取得失敗");
+        const effec = await res.json();
+        if (!effec) return;
+        const effect = effec[0]
+        setEffectId(effect.id);
+        setEffectType(effect.effectType ?? "");
+        setSpecialStatus(effect.specialStatus ?? "");
+        setIsSpecialOpen(effect.effectType === "special");
+        setTarget(effect.target ?? "");
+        setValueNumber(effect.valueNumber !== null ? String(effect.valueNumber) : "");
+      } catch (e) {
+        if (e instanceof Error) setError(e.message);
+      }
+    }
+    fetchEffect();
+  }, [abilityId])
 
   const handleSave = async () => {
     const body = {
@@ -72,10 +93,25 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
         エフェクト
       </CardHeader>
 
+      {error && (
+        <p className="text-sm text-red-400">
+          {error}
+        </p>
+      )}
+
+      {/* 成功 */}
+      {success && (
+        <p className="text-sm text-green-400">
+          {success}
+        </p>
+      )}
+
       <CardContent className="mt-2 space-y-6">
         <div className="space-y-2">
-          <Label className="text-base">ダメージ</Label>
-          <Select onValueChange={(value) => setIsSpecialOpen(value === "special")}>
+          <Label className="text-base">効果の種類</Label>
+          <Select
+            value={effectType}
+            onValueChange={(value) => { setIsSpecialOpen(value === "special"); setEffectType(value ?? ""); if (value !== "special") setSpecialStatus("") }}>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="種類を選択"></SelectValue>
             </SelectTrigger>
@@ -96,7 +132,10 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
         {isSpecialOpen && (
           <div className="space-y-2">
             <Label className="text-base">特殊効果の内容を指定</Label>
-            <Select>
+            <Select
+              value={specialStatus}
+              onValueChange={(value) => setSpecialStatus(value ?? "")}
+            >
               <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
                 <SelectValue placeholder="種類を選択"></SelectValue>
               </SelectTrigger>
@@ -126,7 +165,9 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
 
         <div className="space-y-2">
           <Label className="text-base">効果対象</Label>
-          <Select>
+          <Select
+            value={target}
+            onValueChange={(value) => setTarget(value ?? "")}>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="対象を選択します"></SelectValue>
             </SelectTrigger>
@@ -161,12 +202,15 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
           <Input
             type="number"
             placeholder="例: 50"
+            value={valueNumber}
+            onChange={(e) => setValueNumber(e.target.value)}
             className="border-[#1e1f22] bg-[#a4a4a5] text-whit"
           />
         </div>
         <Button
           variant="outline"
           className="bg-blue-200 hover:bg-blue-400 text-black"
+          onClick={handleSave}
         >
           条件を保存する
         </Button>
