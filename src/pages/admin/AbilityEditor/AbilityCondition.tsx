@@ -24,7 +24,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
   useEffect(() => {
     async function fetchCondition() {
       try {
-        const res = await fetch(`/api/abilities/${abilityId}/conditions`);
+        const res = await fetch(`/api/details/${abilityId}/conditions`);
         if (!res.ok) throw new Error("条件の取得に失敗しました");
 
         const data: Condition[] = await res.json();
@@ -55,7 +55,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
       let response;
 
       if (conditionId !== null) {
-        response = await fetch(`/api/abilities/conditions/${conditionId}`, {
+        response = await fetch(`/api/details/conditions/${conditionId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -63,8 +63,8 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
           body: JSON.stringify(body),
         });
       } else {
-        response = await fetch(`/api/abilities/${abilityId}/conditions`, {
-          method: "PUT",
+        response = await fetch(`/api/details/${abilityId}/conditions`, {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },

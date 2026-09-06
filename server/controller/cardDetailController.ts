@@ -27,8 +27,7 @@ export async function getCondition(req: Request, res: Response) {
   try {
     const abilityId = Number(req.params.abilityId);
     const condition = await getAbilityCondition(abilityId);
-    if (!condition) return res.status(404).json({ message: 404 });
-    return res.status(200).json(condition);
+    return res.status(200).json(condition ?? []);
   } catch (e) {
     console.error(e);
     return res.status(500).json({ error: `${e}` });

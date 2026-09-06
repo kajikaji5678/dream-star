@@ -216,13 +216,13 @@ export default function CardEdit() {
                       <Button
                         variant="outline"
                         className="bg-blue-200 hover:bg-blue-400"
-                        onClick={() => { setSelectedAvilityId(0); setEditorType("condition") }}>
+                        onClick={() => { setSelectedAvilityId(ability.id); setEditorType("condition") }}>
                         条件の編集
                       </Button>
                       <Button
                         variant="outline"
                         className="ml-2 bg-blue-200 hover:bg-blue-400"
-                        onClick={() => { setSelectedAvilityId(0); setEditorType("effect") }}>
+                        onClick={() => { setSelectedAvilityId(ability.id); setEditorType("effect") }}>
                         効果の編集
                       </Button>
                       <Button variant="outline" className="ml-2 bg-red-200 hover:bg-red-400">
