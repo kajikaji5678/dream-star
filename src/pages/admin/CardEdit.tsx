@@ -17,6 +17,9 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function CardEdit() {
 
+  type EditorType = "list" | "condition" | "effect";
+  const [editorType, setEditorType] = useState<EditorType>("list");
+
   const API_URL = import.meta.env.VITE_API_URL;
   const { id } = useParams();
   const navigate = useNavigate();
@@ -101,7 +104,7 @@ export default function CardEdit() {
     <Layout>
       <section className="p-4 flex h-full flex-col rounded-lg bg-[#313338]">
         <AdminTitle title="カード編集" />
-        {selectedAvilityId === null && (
+        {editorType === "list" && (
           <Tabs
             defaultValue="info"
             className="mt-2 flex min-h-0 flex-1 flex-col"
@@ -174,13 +177,13 @@ export default function CardEdit() {
                     <Button
                       variant="outline"
                       className="bg-blue-200 hover:bg-blue-400"
-                      onClick={() => setSelectedAvilityId(0)}>
+                      onClick={() => { setSelectedAvilityId(0); setEditorType("condition") }}>
                       条件の編集
                     </Button>
                     <Button
                       variant="outline"
                       className="ml-2 bg-blue-200 hover:bg-blue-400"
-                      onClick={() => setSelectedAvilityId(0)}>
+                      onClick={() => { setSelectedAvilityId(0); setEditorType("effect") }}>
                       効果の編集
                     </Button>
                     <Button variant="outline" className="ml-2 bg-red-200 hover:bg-red-400">
@@ -193,9 +196,11 @@ export default function CardEdit() {
 
           </Tabs>
         )}
-        {selectedAvilityId !== null && (
-          <AbilityCondition />
-          // <AbilityEffect />
+        {editorType === "condition" && selectedAvilityId !== null && (
+          <AbilityCondition onBack={() => setEditorType("list")}/>
+        )}
+        {editorType === "effect" && selectedAvilityId !== null && (
+          <AbilityEffect onBack={() => setEditorType("list")}/>
         )}
       </section>
     </Layout>

@@ -6,8 +6,11 @@ import { Select, SelectContent, SelectItem, SelectValue } from "@/components/ui/
 import { SelectTrigger } from "@/components/ui/select"
 import { useState } from "react";
 
+type Props = {
+  onBack: () => void;
+}
 
-export default function AbilityEffect() {
+export default function AbilityEffect({onBack}: Props) {
 
   const [isSpecialOpen, setIsSpecialOpen] = useState(false);
 
@@ -70,7 +73,7 @@ export default function AbilityEffect() {
         )}
 
         <div className="space-y-2">
-          <Label className="text-base">効果の対象</Label>
+          <Label className="text-base">効果対象</Label>
           <Select>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="対象を選択します"></SelectValue>
@@ -118,6 +121,7 @@ export default function AbilityEffect() {
         <Button
           variant="outline"
           className="ml-2 bg-blue-200 hover:bg-blue-400 text-black"
+          onClick={onBack}
         >
           保存せずに戻る
         </Button>

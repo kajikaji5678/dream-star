@@ -5,8 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { SelectTrigger } from "@/components/ui/select"
 
+type Props = {
+  onBack: () => void
+}
 
-export default function AbilityCondition() {
+export default function AbilityCondition({onBack}: Props) {
   return (
     <Card className="border-0 bg-[#232428] text-white p-2 mt-2">
       <CardHeader className="text-lg">
@@ -41,7 +44,7 @@ export default function AbilityCondition() {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-base">条件の対象</Label>
+          <Label className="text-base">判定対象</Label>
           <Select>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="対象を選択します"></SelectValue>
@@ -89,6 +92,7 @@ export default function AbilityCondition() {
         <Button
           variant="outline"
           className="ml-2 bg-blue-200 hover:bg-blue-400 text-black"
+          onClick={onBack}
         >
           保存せずに戻る
         </Button>
