@@ -80,8 +80,8 @@ model CardAbility {
   name        String
   description String?
 
-  condtions AbilityCondition[]
-  effects   abilityEffect[]
+  conditions AbilityCondition[]
+  effects   AbilityEffect[]
 
   card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
 }
@@ -91,7 +91,7 @@ model AbilityCondition {
   abilityId Int
 
   // type        String
-  ActivationTiming String?
+  activationTiming String?
   // value            String?
   target           String?
   valueNumber      Int?
