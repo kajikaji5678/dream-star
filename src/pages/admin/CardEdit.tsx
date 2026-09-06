@@ -197,7 +197,9 @@ export default function CardEdit() {
           </Tabs>
         )}
         {editorType === "condition" && selectedAvilityId !== null && (
-          <AbilityCondition onBack={() => setEditorType("list")}/>
+          <AbilityCondition 
+          onBack={() => setEditorType("list")}
+          abilityId={selectedAvilityId}/>
         )}
         {editorType === "effect" && selectedAvilityId !== null && (
           <AbilityEffect onBack={() => setEditorType("list")}/>

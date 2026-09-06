@@ -23,3 +23,11 @@ export type CardInfo = {
   label: string;
   key: keyof CardFormData;
 }
+
+export type Condition = {
+  id: number;
+  abilityId: number;
+  activationTiming: string | null;
+  target: string | null;
+  valueNumber: number | null;
+};
