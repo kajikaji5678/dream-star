@@ -25,10 +25,9 @@ export async function createAbility(req: Request, res: Response) {
 
 export async function deleteAbility(req: Request, res: Response) {
   try {
-    const abilityId = Number(req.params.id);
-    if (Number.isNaN(abilityId)) return res.status(400).json({message: "能力IDが不正です"});
+    const abilityId = Number(req.params.abilityId);
     await deleteCardAbility(abilityId);
-    return res.status(200);
+    return res.status(200).send();
   } catch (e) {
     console.error(e);
     return res.status(500).json({ error: `${e}` });

@@ -123,6 +123,7 @@ export default function CardEdit() {
 
       if (!res.ok) throw new Error("能力の作成に失敗しました");
       const ability = await res.json();
+      setAbilities((prev) => [...prev, ability]);
       setSelectedAvilityId(ability.id);
       setIsAbilityAdding(false);
       setAbilityName("");
@@ -133,6 +134,23 @@ export default function CardEdit() {
       }
     }
   }
+
+  const handleDeleteAbility = async (abilityId: number) => {
+    try {
+      const res = await fetch(`/api/details/abilities/${abilityId}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("能力の削除に失敗しました");
+      setAbilities((prev) => prev.filter((ability) => ability.id !== abilityId));
+      if (selectedAvilityId === abilityId) setSelectedAvilityId(null);
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      }
+    }
+  }
+
+  console.log(abilities);
 
   return (
     <Layout>
@@ -225,7 +243,10 @@ export default function CardEdit() {
                         onClick={() => { setSelectedAvilityId(ability.id); setEditorType("effect") }}>
                         効果の編集
                       </Button>
-                      <Button variant="outline" className="ml-2 bg-red-200 hover:bg-red-400">
+                      <Button
+                        variant="outline"
+                        className="ml-2 bg-red-200 hover:bg-red-400"
+                        onClick={() => handleDeleteAbility(ability.id)}>
                         削除
                       </Button>
                     </CardFooter>
