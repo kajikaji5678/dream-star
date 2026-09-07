@@ -71,7 +71,7 @@ export async function submitCard(
 
 // 編集画面にてカード情報取得
 export async function getCard(id: string) {
-  const res = await fetch(`${API_URL}/api/cards/${id}`);
+  const res = await fetch(`/api/cards/${id}`);
   const data = await res.json();
 
   if (!res.ok) {

@@ -9,6 +9,7 @@ import uploadRouter from "./routes/upload.js";
 import gachaRouter from "./routes/gacha.js";
 import userRouter from "./routes/user.js";
 import loginRouter from "./routes/login.js";
+import cardDetailRouter from "./routes/cardDetail.js"
 import RankingRouter from "./routes/ranking.js"
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/api/upload", uploadRouter);
 app.use("/api/gacha", gachaRouter);
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
+app.use("/api/details", cardDetailRouter);
 app.use("/api/ranking", RankingRouter);
 
 app.use(
