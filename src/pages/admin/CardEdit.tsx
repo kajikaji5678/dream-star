@@ -37,12 +37,12 @@ export default function CardEdit() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [selectedAvilityId, setSelectedAvilityId] = useState<number | null>(null);
-  const [isTextEditing, setIsTextEditing] = useState(false);
   const [desc, setDesc] = useState("相手に3ダメージ与える");
   const [isAbilityAdding, setIsAbilityAdding] = useState(false);
   const [abilityName, setAbilityName] = useState("");
   const [abilityDesc, setAbilityDesc] = useState("");
   const [abilities, setAbilities] = useState<Ability[]>([]);
+  const [editingAbilityId, setEditingAvilityId] = useState<number | null>(null);
 
   useEffect(() => {
     async function fetchCard() {
@@ -150,6 +150,29 @@ export default function CardEdit() {
     }
   }
 
+  const handleUpdateAbility = async (abilityId: number) => {
+    try {
+      const res = await fetch(`/api/details/abilities/${abilityId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          description: desc,
+          name: abilityName
+        })
+      });
+      if (!res.ok) throw new Error("能力の更新に失敗しました");
+      const updateAbility = await res.json();
+      setAbilities((prev) => prev.map((ability) => ability.id === abilityId ? updateAbility : ability));
+      setSuccess("能力を更新しました");
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      }
+    }
+  }
+
   console.log(abilities);
 
   return (
@@ -208,18 +231,37 @@ export default function CardEdit() {
                   >
                     <CardHeader>
                       <CardTitle className="flex justify-between text-white">
-                        <p className="font-bold text-xl">効果{index + 1}: {ability.name}</p>
+                        {editingAbilityId === ability.id ? (
+                          <Input
+                            value={abilityName}
+                            onChange={(e) => setAbilityName(e.target.value)}
+                            className="mr-2 tetx-black"
+                          />
+                        ) : (
+                          <p className="font-bold text-xl">
+                            効果{index + 1}: {ability.name}
+                          </p>
+                        )}
                         <Button
                           variant="outline"
                           className="bg-green-200 text-black hover:bg-green-400"
-                          onClick={() => setIsTextEditing(!isTextEditing)}
+                          onClick={() => {
+                            if (editingAbilityId === ability.id) {
+                              handleUpdateAbility(ability.id);
+                            } else {
+                              setEditingAvilityId(ability.id);
+                              setAbilityName(ability.name);
+                              setDesc(ability.description ?? "");
+                            }
+                          }}
                         >
-                          {isTextEditing ? "確定" : "説明欄"}
+                          {editingAbilityId === ability.id ? "確定" : "説明欄"}
                         </Button>
 
                       </CardTitle>
-                      {isTextEditing ? (
+                      {editingAbilityId === ability.id ? (
                         <Textarea
+                          value={desc}
                           onChange={(e) => setDesc(e.target.value)}
                           className="focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500"
                         />
