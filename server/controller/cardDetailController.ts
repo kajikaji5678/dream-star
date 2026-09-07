@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { getAbilityCondition, createAbilityCondition, updateAbilityCondition, deleteAbilityCondition, createCardAbility } from "../service/cardDetailService.js";
+import { getAbilityCondition, createAbilityCondition, updateAbilityCondition, deleteAbilityCondition, createCardAbility, deleteCardAbility } from "../service/cardDetailService.js";
 
 import {
   getAbilityEffects,
@@ -17,6 +17,18 @@ export async function createAbility(req: Request, res: Response) {
       desc
     });
     return res.status(201).json(ability);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ error: `${e}` });
+  }
+}
+
+export async function deleteAbility(req: Request, res: Response) {
+  try {
+    const abilityId = Number(req.params.id);
+    if (Number.isNaN(abilityId)) return res.status(400).json({message: "能力IDが不正です"});
+    await deleteCardAbility(abilityId);
+    return res.status(200);
   } catch (e) {
     console.error(e);
     return res.status(500).json({ error: `${e}` });

@@ -121,3 +121,11 @@ export async function deleteAbilityEffect(effectId: number) {
     },
   });
 }
+
+export async function deleteCardAbility(abilityId: number) {
+  return await prisma.cardAbility.delete({
+    where: {
+      id: abilityId
+    }
+  })
+}
