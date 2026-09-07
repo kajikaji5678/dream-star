@@ -12,6 +12,7 @@ import useDiscord from "./hooks/useDiscord";
 import TenGachaCard from "./components/TenGacha";
 import { useEffect } from "react";
 import LoginBonus from "./pages/LoginBonus";
+import Data from "./pages/data/Data";
 
 console.log("App.tsx Start");
 
@@ -59,6 +60,7 @@ export default function App() {
           <Route path="/admin/cards/add" element={<CardAdd />} />
           <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
           <Route path="/test1" element={<TenGachaCard />} />
+          <Route path="/data" element={<Data user={user ?? undefined}/>} />
         </Routes>
       </BrowserRouter>
     </>

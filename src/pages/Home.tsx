@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../layouts/Layout"
 import UpdateTicker from "../components/UpdateTicker";
+import { useLocation } from "react-router-dom";
 
 type Props = {
   user?: {
@@ -13,7 +14,9 @@ type Props = {
 
 export default function Home({ user, debug }: Props) {
 
-  
+  const location = useLocation();
+  const animateSidebar = location.state?.playSidebarAnimation === true;
+
   void debug;
 
   const [points, setPoints] = useState(0);
@@ -35,7 +38,7 @@ export default function Home({ user, debug }: Props) {
 
   return (
     <>
-      <Layout ticket={<UpdateTicker />}>
+      <Layout animateSidebar={animateSidebar} ticket={<UpdateTicker />}>
         <section className="rounded-lg basis-1/5 px-6 py-4 bg-[#2b2d31]">
           <h2 className="text-xl font-bold">プレーヤー情報</h2>
           <div className="flex">
