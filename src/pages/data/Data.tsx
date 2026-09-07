@@ -34,7 +34,7 @@ const rarities: Rarity[] = [
 ]
 
 const rarityTotal: Record<Rarity, number> = {
-  C: 33,
+  C: 31,
   SP: 16,
   R: 9,
   DREAM: 10,
