@@ -130,14 +130,14 @@ export async function deleteCardAbility(abilityId: number) {
   })
 }
 
-export async function updateCardAbility(abilityId: number, name:string, desc: string) {
+export async function updateCardAbility(abilityId: number, name:string, description: string) {
   return await prisma.cardAbility.update({
     where: {
       id: abilityId
     },
     data: {
       name,
-      desc
+      description
     }
   })
 }

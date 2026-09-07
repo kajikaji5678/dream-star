@@ -165,7 +165,13 @@ export default function CardEdit() {
       if (!res.ok) throw new Error("能力の更新に失敗しました");
       const updateAbility = await res.json();
       setAbilities((prev) => prev.map((ability) => ability.id === abilityId ? updateAbility : ability));
+      setEditingAvilityId(null);
+      setAbilityName("");
+      setDesc("");
       setSuccess("能力を更新しました");
+      setTimeout(() => {
+        setSuccess("")
+      }, 2000)
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
@@ -184,7 +190,7 @@ export default function CardEdit() {
             defaultValue="info"
             className="mt-2 flex min-h-0 flex-1 flex-col"
           >
-            <TabsList className="p-1 bg-gray-300">
+            <TabsList className="p-1 mt-2 bg-gray-300">
               <TabsTrigger value="info" className="[&[data-active]]:text-black [&[data-active]]:bg-gray-100">
                 基本情報
               </TabsTrigger>
@@ -221,8 +227,10 @@ export default function CardEdit() {
             {/* // カード効果のコンテンツ */}
             <TabsContent
               value="ability"
-              className="min-h-0 flex-1 mt-0 overflow-y-auto"
+              className="min-h-0 flex-1 mt-2 overflow-y-auto"
             >
+              {error && (<p className="text-red-400 mb-2">{error}</p>)}
+              {success && (<p className="text-blue-400 mb-2">{success}</p>)}
               <div className="space-y-3">
                 {abilities.map((ability, index) => (
                   <Card
@@ -235,7 +243,7 @@ export default function CardEdit() {
                           <Input
                             value={abilityName}
                             onChange={(e) => setAbilityName(e.target.value)}
-                            className="mr-2 tetx-black"
+                            className="mr-3 mb-2 p-2 text-white bg-transparent border rounded"
                           />
                         ) : (
                           <p className="font-bold text-xl">
@@ -263,7 +271,7 @@ export default function CardEdit() {
                         <Textarea
                           value={desc}
                           onChange={(e) => setDesc(e.target.value)}
-                          className="focus-visible:border-blue-500 focus-visible:ring-1 focus:ring-blue-500"
+                          className="focus-visible:border-blue-500 focus-visible:ring-1 text-white focus:ring-blue-500"
                         />
                       ) : (
                         <CardDescription className="text-base text-white">
