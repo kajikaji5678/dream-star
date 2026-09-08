@@ -6,7 +6,7 @@ import {
   createAbilityEffect,
   updateAbilityEffect,
   deleteAbilityEffect,
-} from "../service/cardDetailService.ts";
+} from "../service/cardDetailService.js";
 
 export async function createAbility(req: Request, res: Response) {
   try {
