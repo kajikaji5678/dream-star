@@ -23,11 +23,12 @@ export async function getCollectionRanking() {
     userCardMap.get(userCard.userId)!.add(userCard.cardId);
   }
 
+  //! マジックナンバー
   const baseRanking = Array.from(userCardMap.entries())
     .map(([userId, cardIds]) => ({
       userId,
       ownedCount: cardIds.size,
-      completionRate: Math.min(Math.round((cardIds.size / TOTAL_CARDS) * 100), 100)
+      completionRate: Math.min(Math.round((cardIds.size / 77) * 100), 100)
     }))
     .sort((a, b) => {
       if (b.completionRate !== a.completionRate) {
