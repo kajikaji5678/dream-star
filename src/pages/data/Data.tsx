@@ -63,7 +63,7 @@ export default function Data({ user }: User) {
         if (!res.ok) throw new Error("カード情報の取得失敗");
         const cards: { id: number; amount: number; rarity: Rarity }[] = await res.json();
         const ownedCount = new Set(cards.filter((card) => card.amount > 0).map((card) => card.id)).size;
-        const rate = Math.min(Math.round((ownedCount / 77) * 100), 100);
+        const rate = Math.min(Math.round((ownedCount / 80) * 100), 100);
         setCompletionRate(rate);
         const calucrateProgress: Record<Rarity, number> = {
           C: 0,
