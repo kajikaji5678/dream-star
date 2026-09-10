@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { PurpleSmoke } from "../effects/TestSmoke";
+// import { PurpleSmoke } from "../effects/TestSmoke";
 
 export function TestSmokeCanvas() {
   const canvasRef =
@@ -13,14 +13,14 @@ export function TestSmokeCanvas() {
       return;
     }
 
-    const smoke =
-      new PurpleSmoke(canvas);
+    // const smoke =
+    //   new PurpleSmoke(canvas);
 
-    smoke.start();
+    // smoke.start();
 
-    return () => {
-      smoke.stop();
-    };
+    // return () => {
+    //   smoke.stop();
+    // };
   }, []);
 
   return (

@@ -81,7 +81,7 @@ model CardAbility {
   description String?
 
   conditions AbilityCondition[]
-  effects   AbilityEffect[]
+  effects    AbilityEffect[]
 
   card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
 }
@@ -113,4 +113,13 @@ model AbilityEffect {
   valueNumber   Int?
 
   ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)
+}
+
+model DGPRewardClaim {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  rewardKey String
+  claimedAt DateTime @default(now())
+
+  @@unique([userId, rewardKey])
 }
