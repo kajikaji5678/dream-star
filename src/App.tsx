@@ -10,28 +10,16 @@ import UserCardList from "./pages/UserCardList";
 import Loading from "./pages/Loading";
 import useDiscord from "./hooks/useDiscord";
 import TenGachaCard from "./components/TenGacha";
-import { useEffect } from "react";
 import LoginBonus from "./pages/LoginBonus";
 import Data from "./pages/data/Data";
+import { TestSmokeCanvas } from "./components/test/TestSmoke";
+import { BgmProvider } from "./pages/contexts/BgmContext";
 
 console.log("App.tsx Start");
 
 export default function App() {
   //* デバック用
   // const [debug, setDebug] = useState<string[]>([]);
-
-  useEffect(() => {
-    const bgm = new Audio("/audio/21-theme-pop.mp3");
-
-    bgm.loop = true;
-    bgm.volume = 0.25;
-    bgm.play();
-
-    return () => {
-      bgm.pause();
-      bgm.currentTime = 0;
-    };
-  }, []);
 
   const { user, loading, progress, msg } = useDiscord();
 
@@ -47,22 +35,25 @@ export default function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Routes><Route path="/" element={import.meta.env.DEV ? <Admin user={user ?? undefined}/> : <LoginBonus user={user ?? undefined} />} />
-          
-          <Route path="/home" element={<Home user={user ?? undefined} />} />
-          <Route path="/loading" element={<Loading progress={progress} msg={msg} />} />
-          <Route path="/gacha" element={<Gacha user={user ?? undefined} />} />
-          <Route path="/gacha/opening" element={<GachaOpening />} />
-          <Route path="/result" element={<Result />} />
-          <Route path="/admin" element={<Admin user={user ?? undefined} />} />
-          <Route path="/admin/cards/:id" element={<CardEdit />} />
-          <Route path="/admin/cards/add" element={<CardAdd />} />
-          <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
-          <Route path="/test1" element={<TenGachaCard />} />
-          <Route path="/data" element={<Data user={user ?? undefined}/>} />
-        </Routes>
-      </BrowserRouter>
+      <BgmProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={import.meta.env.DEV ? <Admin user={user ?? undefined} /> : <LoginBonus user={user ?? undefined} />} />
+            <Route path="/home" element={<Home user={user ?? undefined} />} />
+            <Route path="/loading" element={<Loading progress={progress} msg={msg} />} />
+            <Route path="/gacha" element={<Gacha user={user ?? undefined} />} />
+            <Route path="/gacha/opening" element={<GachaOpening />} />
+            <Route path="/result" element={<Result />} />
+            <Route path="/admin" element={<Admin user={user ?? undefined} />} />
+            <Route path="/admin/cards/:id" element={<CardEdit />} />
+            <Route path="/admin/cards/add" element={<CardAdd />} />
+            <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
+            <Route path="/test1" element={<TenGachaCard />} />
+            <Route path="/test2" element={<TestSmokeCanvas />} />
+            <Route path="/data" element={<Data user={user ?? undefined} />} />
+          </Routes>
+        </BrowserRouter>
+      </BgmProvider>
     </>
   )
 }
