@@ -1,11 +1,7 @@
-import React, { createContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { BgmContext } from "./BgmContext";
 
-type BgmContextType = {
-  volume: number;
-  setVolume: (value: number) => void;
-}
 
-const BgmContext = createContext<BgmContextType | undefined>(undefined);
 
 const MAX = 0.25;
 const DEFAULT = 25;
@@ -14,7 +10,9 @@ export function BgmProvider({ children }: { children: React.ReactNode }) {
   const bgmRef = useRef<HTMLAudioElement | null>(null);
   const [volumeState, setVolumeState] = useState(25);
 
+  //* BGM作成
   useEffect(() => {
+    // 開始時
     const bgm = new Audio("/audio/21-theme-pop.mp3");
     bgm.loop = true;
     bgm.volume = (DEFAULT / 100) * MAX;
@@ -23,13 +21,15 @@ export function BgmProvider({ children }: { children: React.ReactNode }) {
       console.error(e);
     });
 
+    // 終了時
     return () => {
       bgm.pause();
       bgm.currentTime = 0;
       bgmRef.current = null;
     };
-  },[]);
+  }, []);
 
+  //* 音量が変わるとAudioに反映させる
   useEffect(() => {
     if (bgmRef.current) {
       bgmRef.current.volume = (volumeState / 100) * MAX;

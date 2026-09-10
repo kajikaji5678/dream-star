@@ -1,14 +1,12 @@
-import { useContext, createContext } from "react";
-
-type BgmContextType = {
-  volume: number;
-  setVolume: (value: number) => void;
-}
-
-const BgmContext = createContext<BgmContextType | undefined>(undefined);
+import { useContext } from "react";
+import { BgmContext } from "../contexts/BgmContext";
 
 export function useBgm() {
   const context = useContext(BgmContext);
-  if (!context) throw new Error("error");
-  return context
+
+  if (!context) {
+    throw new Error("useBgm must be used within BgmProvider");
+  }
+
+  return context;
 }

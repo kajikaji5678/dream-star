@@ -4,6 +4,7 @@ import UpdateTicker from "../components/UpdateTicker";
 import { useLocation } from "react-router-dom";
 import { Volume2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import { useBgm } from "./contexts/useBgm";
 
 type Props = {
   user?: {
@@ -15,6 +16,8 @@ type Props = {
 }
 
 export default function Home({ user, debug }: Props) {
+
+  const { volume, setVolume } = useBgm();
 
   const location = useLocation();
   const animateSidebar = location.state?.playSidebarAnimation === true;
@@ -58,7 +61,11 @@ export default function Home({ user, debug }: Props) {
           <div className="mt-6 flex items-center gap-3">
             <Volume2 className="h-5 w-5 " />
             <Slider
-              defaultValue={[25]}
+              value={[volume]}
+              onValueChange={(value) => {
+                const newVolume = Array.isArray(value) ? value[0] : value;
+                setVolume(newVolume);
+              }}
               max={25}
               step={1}
               className="w-40 "
