@@ -13,6 +13,7 @@ import TenGachaCard from "./components/TenGacha";
 import { useEffect } from "react";
 import LoginBonus from "./pages/LoginBonus";
 import Data from "./pages/data/Data";
+import { TestSmokeCanvas } from "./components/test/TestSmoke";
 
 console.log("App.tsx Start");
 
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="/admin/cards/add" element={<CardAdd />} />
           <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
           <Route path="/test1" element={<TenGachaCard />} />
+          <Route path="/test2" element={<TestSmokeCanvas />}/>
           <Route path="/data" element={<Data user={user ?? undefined}/>} />
         </Routes>
       </BrowserRouter>
