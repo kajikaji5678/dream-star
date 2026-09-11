@@ -13,7 +13,7 @@ import TenGachaCard from "./components/TenGacha";
 import LoginBonus from "./pages/LoginBonus";
 import Data from "./pages/data/Data";
 import { TestSmokeCanvas } from "./components/test/TestSmoke";
-import { BgmProvider } from "./pages/contexts/BgmContext";
+import { BgmProvider } from "./pages/contexts/BgmProvider";
 
 console.log("App.tsx Start");
 

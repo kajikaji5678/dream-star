@@ -41,10 +41,10 @@ export default function Result() {
     <div className="result-screen flex flex-col">
       <img
         key={currentIndex}
-        src={testImage}
+        src={displayCard.image}
         className="result-card">
       </img>
-      <p className="result-text mt-10 text-4xl">ゲット!</p>
+      <p className="result-text mt-10 text-4xl">{displayCard.name}ゲット!</p>
     </div>
   );
 } 
