@@ -10,6 +10,7 @@ export type CardFormData = {
   category?: string;
   consumePoint?: number | "";
   supportType?: string;
+  mainType?: string;
 }
 
 export type Card = {

@@ -1,6 +1,7 @@
 import { prisma } from "../prisma.js";
 import fs from "fs/promises";
 import path from "path";
+import type { CardFormData } from "../../src/types/card.ts"
 
 
 export async function findCards() {
@@ -20,18 +21,15 @@ export async function findCardById(id: number) {
 }
 
 
-export async function createCard(data: {
-  name: string;
-  imageUrl: string;
-  rarity: string;
-  hp: number;
-  attack: number;
-  escapePoint: number;
-  category: string;
-  consumePoint: number;
-}) {
+export async function createCard(data: CardFormData) {
   return prisma.card.create({
-    data,
+    data: {
+      ...data,
+      hp: data.hp === "" ? null : data.hp,
+      attack: data.attack === "" ? null : data.attack,
+      escapePoint: data.escapePoint === "" ? null : data.escapePoint,
+      consumePoint: data.consumePoint === "" ? null : data.consumePoint,
+    }
   });
 }
 

@@ -22,6 +22,8 @@ const cardInfo: CardInfo[] = [
   { label: "技で相手に与えるダメージ", key: "attack" },
   { label: "逃げ消費ポイント", key: "escapePoint" },
   { label: "使用消費ポイント", key: "consumePoint" },
+  { label: "キャラカードの属性", key: "mainType" },
+  {label: "サポートタイプの属性", key: "supportType"}
 ];
 
 export default function CardForm({

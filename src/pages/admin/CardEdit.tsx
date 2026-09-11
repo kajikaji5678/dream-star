@@ -59,7 +59,8 @@ export default function CardEdit() {
           escapePoint: data.escapePoint,
           category: data.category,
           consumePoint: data.consumePoint,
-          supportType: data.supportType
+          supportType: data.supportType,
+          mainType: data.mainType,
         });
 
         console.log(data);
