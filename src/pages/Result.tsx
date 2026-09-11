@@ -3,11 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Result.css"
 
-type imageUrl = {
-  image: string;
-  name: string;
-};
-
 export default function Result() {
 
   const navigate = useNavigate();
@@ -35,13 +30,13 @@ export default function Result() {
     return () => clearTimeout(timer);
   }, [isTenGacha, navigate, cards, currentIndex]);
 
-  const displayCard: imageUrl = isTenGacha ? cards[currentIndex] : card;
+  const displayCard = isTenGacha ? cards[currentIndex] : card;
 
   return (
     <div className="result-screen flex flex-col">
       <img
         key={currentIndex}
-        src={displayCard.image}
+        src={displayCard.imageUrl}
         className="result-card">
       </img>
       <p className="result-text mt-10 text-4xl">{displayCard.name}ゲット!</p>
