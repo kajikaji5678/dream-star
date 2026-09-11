@@ -7,10 +7,9 @@ export default function Result() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { type, card, cards } = location.state ?? {};
+  const {type, card, cards} = location.state ?? {};
   const isTenGacha = type === "ten";
   const [currentIndex, setCurrentIndex] = useState(0);
-  const testImage = "/public/menuCardImages/Dr.srone.png";
 
   useEffect(() => {
     if (!isTenGacha) {
@@ -34,11 +33,7 @@ export default function Result() {
 
   return (
     <div className="result-screen flex flex-col">
-      <img
-        key={currentIndex}
-        src={displayCard.imageUrl}
-        className="result-card">
-      </img>
+      <img src={displayCard.imageUrl} className="result-card"></img>
       <p className="result-text mt-10 text-4xl">{displayCard.name}ゲット!</p>
     </div>
   );
