@@ -12,7 +12,7 @@ export default function UpdateTicker() {
           ease: "linear",
           repeat: Infinity
         }}>
-          v1.1.3 ユーザーの図鑑達成率およびランキングのUIをつくりました。
+          v1.1.4 音量調節を追加しました。
       </motion.div>
     </div>
   )
