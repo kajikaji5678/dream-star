@@ -156,3 +156,65 @@ export class PurpleSmokeParticle {
     ctx.restore();
   }
 }
+
+export class PurpleSmoke {
+  private canvas: HTMLCanvasElement;
+  private rarity: Rarity;
+  private particles: PurpleSmokeParticle[] = [];
+  private animationId: number | null = null;
+
+  constructor(
+    canvas: HTMLCanvasElement,
+    rarity: Rarity,
+  ) {
+    this.canvas = canvas;
+    this.rarity = rarity;
+  }
+
+  //* Canvasを実際の表示サイズに合わせる関数
+  resize() {
+    this.canvas.width = this.canvas.clientWidth;
+    this.canvas.height = this.canvas.clientHeight;
+  }
+
+  //* 新しい煙を生み出す関数
+  spawn() {
+    for (let i = 0; i < 3; i++) {
+      this.particles.push(
+        new PurpleSmokeParticle(
+          this.canvas,
+          this.rarity
+        )
+      );
+    }
+  }
+
+  //~ 毎フレーム行う処理を全部まとめたもの
+  animate = () => {
+    const ctx = this.canvas.getContext("2d");
+    if (!ctx) return;
+    /// 前のフレームを透明にする
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    /// 新しい煙を作る
+    this.spawn();
+    /// 既存の煙をupdateもしくはdrawする(動かす)
+    this.particles = this.particles.filter((particle) => {
+      const alive = particle.update();
+      if (alive) particle.draw(ctx);
+      return alive
+    });
+    // 延々と繰り返す
+    this.animationId = requestAnimationFrame(this.animate);
+  }
+
+  start() {
+    this.resize();
+    this.animate();
+  }
+  stop() {
+    if (this.animationId !== null) {
+      cancelAnimationFrame(this.animationId);
+      this.animationId = null
+    }
+  }
+}
