@@ -2,20 +2,22 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Result.css"
+import { TestSmokeCanvasLeft, TestSmokeCanvasRight } from "@/components/test/TestSmoke";
 
 export default function Result() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const {type, card, cards} = location.state ?? {};
+  const { type, card, cards } = location.state ?? {};
   const isTenGacha = type === "ten";
   const [currentIndex, setCurrentIndex] = useState(0);
+  const testImage = "/public/menuCardImages/Dr.srone.png"
 
   useEffect(() => {
     if (!isTenGacha) {
       const timer = setTimeout(() => {
         navigate("/");
-      }, 4000);
+      }, 500000);
       return () => clearTimeout(timer);
     }
 
@@ -25,7 +27,7 @@ export default function Result() {
       } else {
         setCurrentIndex((prev) => prev + 1);
       }
-    }, 2500)
+    }, 3000)
     return () => clearTimeout(timer);
   }, [isTenGacha, navigate, cards, currentIndex]);
 
@@ -33,8 +35,12 @@ export default function Result() {
 
   return (
     <div className="result-screen flex flex-col">
-      <img src={displayCard.imageUrl} className="result-card"></img>
-      <p className="result-text mt-10 text-4xl">{displayCard.name}ゲット!</p>
+      <div className="result-card-wrapper">
+        <TestSmokeCanvasRight />
+        <TestSmokeCanvasLeft />
+        <img src={testImage} className="result-card"></img>
+      </div>
+      <p className="result-text mt-5 text-4xl">ゲット!</p>
     </div>
   );
 } 

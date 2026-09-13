@@ -12,7 +12,6 @@ import useDiscord from "./hooks/useDiscord";
 import TenGachaCard from "./components/TenGacha";
 import LoginBonus from "./pages/LoginBonus";
 import Data from "./pages/data/Data";
-import { TestSmokeCanvas } from "./components/test/TestSmoke";
 import { BgmProvider } from "./pages/contexts/BgmProvider";
 
 console.log("App.tsx Start");
@@ -49,7 +48,6 @@ export default function App() {
             <Route path="/admin/cards/add" element={<CardAdd />} />
             <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
             <Route path="/test1" element={<TenGachaCard />} />
-            <Route path="/test2" element={<TestSmokeCanvas />} />
             <Route path="/data" element={<Data user={user ?? undefined} />} />
           </Routes>
         </BrowserRouter>

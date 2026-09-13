@@ -56,11 +56,11 @@ export class PurpleSmokeParticle {
     //* 座標
     /// x座標はとりあえずまんなか付近から
     this.x =
-      this.canvas.width / 2 + (Math.random() - 0.5) * 80;
+      this.canvas.width / 2 + (Math.random() - 0.5) * 120;
 
     /// y座標はしたから25%の場所
     this.y =
-      this.canvas.height * 0.75;
+      this.canvas.height * 0.8;
 
     this.size =
       20 + Math.random() * 35;
@@ -72,15 +72,18 @@ export class PurpleSmokeParticle {
 
     /// -0.5 ~ 1.7
     this.vy =
-      -0.5 - Math.random() * 1.2;
+      -1.0 - Math.random() * 1.2;
 
     //* 生存時間
     this.life = 0;
-    this.maxLife = 100 + Math.random() * 100;
+    this.maxLife = (100 + Math.random() * 100) / 2;
 
     //* 物体の回転
     this.rotation = Math.random() * Math.PI * 2;
     this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+
+    //* 透明度
+    this.alpha = 0.15 + Math.random() * 0.2
   }
 
   //* 1フレーム更新
@@ -173,6 +176,10 @@ export class PurpleSmoke {
 
   //* Canvasを実際の表示サイズに合わせる関数
   resize() {
+    console.log(
+      this.canvas.clientWidth,
+      this.canvas.clientHeight
+    );
     this.canvas.width = this.canvas.clientWidth;
     this.canvas.height = this.canvas.clientHeight;
   }
