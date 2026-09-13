@@ -32,33 +32,33 @@ export function TestSmokeCanvasRight() {
   );
 }
 
-export function TestSmokeCanvasLeft() {
-  const canvasRef =
-    useRef<HTMLCanvasElement>(null);
+// export function TestSmokeCanvasLeft() {
+//   const canvasRef =
+//     useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    const canvas =
-      canvasRef.current;
+//   useEffect(() => {
+//     const canvas =
+//       canvasRef.current;
 
-    if (!canvas) {
-      return;
-    }
+//     if (!canvas) {
+//       return;
+//     }
 
-    const smoke =
-      new PurpleSmoke(canvas, "SP");
+//     const smoke =
+//       new PurpleSmoke(canvas, "SP");
 
-    smoke.start();
+//     smoke.start();
 
-    return () => {
-      smoke.stop();
-    };
-  }, []);
+//     return () => {
+//       smoke.stop();
+//     };
+//   }, []);
 
-  return (
-    <div className="smoke-canvas-left">
-      <canvas
-        ref={canvasRef}
-      />
-    </div>
-  );
-}
+//   return (
+//     <div className="smoke-canvas-left">
+//       <canvas
+//         ref={canvasRef}
+//       />
+//     </div>
+//   );
+// }

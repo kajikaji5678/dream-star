@@ -8,45 +8,30 @@
 
 .result-card-wrapper {
     position: relative;
-    width: 256px;
-    height: 340px;
+    width: 400px;
+    height: 400px;
 }
 
 .result-card {
     width: 256px;
     animation: cardResultAppear 0.8s ease-out forwards;
     z-index: 10;
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 72px;
 }
 
 .smoke-canvas-right {
     position: absolute;
-    width: 300px;
-    height: 300px;
-    left: 50%;
-    bottom: -120px;
+    width: 400px;
+    height: 400px;
+    left: 0;
+    bottom: 0px;
     z-index: 0;
-    transform: translate(-20px, -40px);
     pointer-events: none;
 }
 
 .smoke-canvas-right canvas {
-    width: 100%;
-    height: 100%;
-}
-
-.smoke-canvas-left {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    left: 50%;
-    bottom: -120px;
-    z-index: 0;
-    transform: translate(-300px, -40px);
-    pointer-events: none;
-}
-
-.smoke-canvas-left canvas {
     width: 100%;
     height: 100%;
 }

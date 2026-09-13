@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Result.css"
-import { TestSmokeCanvasLeft, TestSmokeCanvasRight } from "@/components/test/TestSmoke";
+import { TestSmokeCanvasRight } from "@/components/test/TestSmoke";
 
 export default function Result() {
 
@@ -37,7 +37,7 @@ export default function Result() {
     <div className="result-screen flex flex-col">
       <div className="result-card-wrapper">
         <TestSmokeCanvasRight />
-        <TestSmokeCanvasLeft />
+        {/* <TestSmokeCanvasLeft /> */}
         <img src={testImage} className="result-card"></img>
       </div>
       <p className="result-text mt-5 text-4xl">ゲット!</p>

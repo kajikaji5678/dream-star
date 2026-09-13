@@ -56,11 +56,11 @@ export class PurpleSmokeParticle {
     //* 座標
     /// x座標はとりあえずまんなか付近から
     this.x =
-      this.canvas.width / 2 + (Math.random() - 0.5) * 120;
+      this.canvas.width / 2 + (Math.random() - 0.5) * 275;
 
     /// y座標はしたから25%の場所
     this.y =
-      this.canvas.height * 0.8;
+      this.canvas.height * 0.9;
 
     this.size =
       20 + Math.random() * 35;
@@ -70,9 +70,9 @@ export class PurpleSmokeParticle {
     this.vx =
       (Math.random() - 0.5) * 0.8;
 
-    /// -0.5 ~ 1.7
+    /// -1.0 ~ 2.2
     this.vy =
-      -1.0 - Math.random() * 1.2;
+      -1.5 - Math.random() * 1.2;
 
     //* 生存時間
     this.life = 0;
