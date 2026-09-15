@@ -1,7 +1,13 @@
 import { useEffect, useRef } from "react";
 import { PurpleSmoke } from "../effects/TestSmoke";
 
-export function TestSmokeCanvasRight() {
+type Rarity = "SP" | "R" | "DREAM" | "DR" | "DXR";
+
+type Props = {
+  rarity: Rarity;
+}
+
+export function TestSmokeCanvasRight({rarity}: Props) {
   const canvasRef =
     useRef<HTMLCanvasElement>(null);
 
@@ -14,14 +20,14 @@ export function TestSmokeCanvasRight() {
     }
 
     const smoke =
-      new PurpleSmoke(canvas, "SP");
+      new PurpleSmoke(canvas, rarity);
 
     smoke.start();
 
     return () => {
       smoke.stop();
     };
-  }, []);
+  }, [rarity]);
 
   return (
     <div className="smoke-canvas-right">
