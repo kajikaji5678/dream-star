@@ -1,7 +1,13 @@
 import { useEffect, useRef } from "react";
-// import { PurpleSmoke } from "../effects/TestSmoke";
+import { PurpleSmoke } from "../effects/TestSmoke";
 
-export function TestSmokeCanvas() {
+type Rarity = "SP" | "R" | "DREAM" | "DR" | "DXR";
+
+type Props = {
+  rarity: Rarity;
+}
+
+export function TestSmokeCanvasRight({rarity}: Props) {
   const canvasRef =
     useRef<HTMLCanvasElement>(null);
 
@@ -13,20 +19,52 @@ export function TestSmokeCanvas() {
       return;
     }
 
-    // const smoke =
-    //   new PurpleSmoke(canvas);
+    const smoke =
+      new PurpleSmoke(canvas, rarity);
 
-    // smoke.start();
+    smoke.start();
 
-    // return () => {
-    //   smoke.stop();
-    // };
-  }, []);
+    return () => {
+      smoke.stop();
+    };
+  }, [rarity]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 h-full w-full"
-    />
+    <div className="smoke-canvas-right">
+      <canvas
+        ref={canvasRef}
+      />
+    </div>
   );
 }
+
+// export function TestSmokeCanvasLeft() {
+//   const canvasRef =
+//     useRef<HTMLCanvasElement>(null);
+
+//   useEffect(() => {
+//     const canvas =
+//       canvasRef.current;
+
+//     if (!canvas) {
+//       return;
+//     }
+
+//     const smoke =
+//       new PurpleSmoke(canvas, "SP");
+
+//     smoke.start();
+
+//     return () => {
+//       smoke.stop();
+//     };
+//   }, []);
+
+//   return (
+//     <div className="smoke-canvas-left">
+//       <canvas
+//         ref={canvasRef}
+//       />
+//     </div>
+//   );
+// }

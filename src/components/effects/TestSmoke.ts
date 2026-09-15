@@ -56,11 +56,11 @@ export class PurpleSmokeParticle {
     //* 座標
     /// x座標はとりあえずまんなか付近から
     this.x =
-      this.canvas.width / 2 + (Math.random() - 0.5) * 80;
+      this.canvas.width / 2 + (Math.random() - 0.5) * 275;
 
     /// y座標はしたから25%の場所
     this.y =
-      this.canvas.height * 0.75;
+      this.canvas.height * 0.9;
 
     this.size =
       20 + Math.random() * 35;
@@ -70,17 +70,20 @@ export class PurpleSmokeParticle {
     this.vx =
       (Math.random() - 0.5) * 0.8;
 
-    /// -0.5 ~ 1.7
+    /// -1.0 ~ 2.2
     this.vy =
-      -0.5 - Math.random() * 1.2;
+      -1.5 - Math.random() * 1.2;
 
     //* 生存時間
     this.life = 0;
-    this.maxLife = 100 + Math.random() * 100;
+    this.maxLife = (100 + Math.random() * 100) / 2;
 
     //* 物体の回転
     this.rotation = Math.random() * Math.PI * 2;
     this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+
+    //* 透明度
+    this.alpha = 0.15 + Math.random() * 0.2
   }
 
   //* 1フレーム更新
@@ -154,5 +157,71 @@ export class PurpleSmokeParticle {
     ctx.arc(0, 0, this.size, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
+  }
+}
+
+export class PurpleSmoke {
+  private canvas: HTMLCanvasElement;
+  private rarity: Rarity;
+  private particles: PurpleSmokeParticle[] = [];
+  private animationId: number | null = null;
+
+  constructor(
+    canvas: HTMLCanvasElement,
+    rarity: Rarity,
+  ) {
+    this.canvas = canvas;
+    this.rarity = rarity;
+  }
+
+  //* Canvasを実際の表示サイズに合わせる関数
+  resize() {
+    console.log(
+      this.canvas.clientWidth,
+      this.canvas.clientHeight
+    );
+    this.canvas.width = this.canvas.clientWidth;
+    this.canvas.height = this.canvas.clientHeight;
+  }
+
+  //* 新しい煙を生み出す関数
+  spawn() {
+    for (let i = 0; i < 3; i++) {
+      this.particles.push(
+        new PurpleSmokeParticle(
+          this.canvas,
+          this.rarity
+        )
+      );
+    }
+  }
+
+  //~ 毎フレーム行う処理を全部まとめたもの
+  animate = () => {
+    const ctx = this.canvas.getContext("2d");
+    if (!ctx) return;
+    /// 前のフレームを透明にする
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    /// 新しい煙を作る
+    this.spawn();
+    /// 既存の煙をupdateもしくはdrawする(動かす)
+    this.particles = this.particles.filter((particle) => {
+      const alive = particle.update();
+      if (alive) particle.draw(ctx);
+      return alive
+    });
+    // 延々と繰り返す
+    this.animationId = requestAnimationFrame(this.animate);
+  }
+
+  start() {
+    this.resize();
+    this.animate();
+  }
+  stop() {
+    if (this.animationId !== null) {
+      cancelAnimationFrame(this.animationId);
+      this.animationId = null
+    }
   }
 }
