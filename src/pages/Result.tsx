@@ -9,7 +9,7 @@ export default function Result() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { type, card, cards } = location.state ?? {};
+  const {type, card, cards} = location.state ?? {};
   const isTenGacha = type === "ten";
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isReady, setIsReady] = useState(!isTenGacha);

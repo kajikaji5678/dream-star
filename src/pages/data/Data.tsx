@@ -34,22 +34,13 @@ const rarities: Rarity[] = [
 ]
 
 const rarityTotal: Record<Rarity, number> = {
-  C: 31,
+  C: 34,
   SP: 16,
   R: 9,
   DREAM: 10,
   DR: 9,
   GXR: 2
 }
-
-const rarityRate: Record<Rarity, number> = {
-  C: 65,
-  SP: 20,
-  R: 11.32,
-  DREAM: 3,
-  DR: 0.6,
-  GXR: 0.08,
-};
 
 export default function Data({ user }: User) {
 

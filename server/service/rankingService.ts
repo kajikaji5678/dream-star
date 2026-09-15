@@ -1,6 +1,5 @@
 import { prisma } from "../prisma.js";
 
-const TOTAL_CARDS = 80;
 export async function getCollectionRanking() {
   const userCards = await prisma.userCard.findMany({
     where: {
@@ -23,11 +22,12 @@ export async function getCollectionRanking() {
     userCardMap.get(userCard.userId)!.add(userCard.cardId);
   }
 
+  //! マジックナンバー
   const baseRanking = Array.from(userCardMap.entries())
     .map(([userId, cardIds]) => ({
       userId,
       ownedCount: cardIds.size,
-      completionRate: Math.min(Math.round((cardIds.size / TOTAL_CARDS) * 100), 100)
+      completionRate: Math.min(Math.round((cardIds.size / 80) * 100), 100)
     }))
     .sort((a, b) => {
       if (b.completionRate !== a.completionRate) {
