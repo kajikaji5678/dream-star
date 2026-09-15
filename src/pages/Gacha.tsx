@@ -21,9 +21,10 @@ export default function Gacha({ user }: Props) {
   const handleGacha = async () => {
     if (isGachaRunning) return;
     if (!user?.id) return;
+        const userId = import.meta.env.DEV ? "1450733147867185215" : user.id;
     setIsGachaRunning(true);
     try {
-      const card = await drawGacha(user?.id);
+      const card = await drawGacha(userId);
       navigate("/gacha/opening", { state: { type: "single", card } });
     } catch (error) {
       if (error instanceof Error) {
