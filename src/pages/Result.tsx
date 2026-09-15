@@ -17,7 +17,7 @@ export default function Result() {
     if (!isTenGacha) {
       const timer = setTimeout(() => {
         navigate("/");
-      }, 500000);
+      }, 4000);
       return () => clearTimeout(timer);
     }
 
@@ -38,9 +38,9 @@ export default function Result() {
       <div className="result-card-wrapper">
         <TestSmokeCanvasRight />
         {/* <TestSmokeCanvasLeft /> */}
-        <img src={testImage} className="result-card"></img>
+        <img src={displayCard.imageUrl} className="result-card" ></img>
       </div>
-      <p className="result-text mt-5 text-4xl">ゲット!</p>
+      <p className="result-text mt-5 text-4xl">{displayCard.name}ゲット!</p>
     </div>
   );
 } 
