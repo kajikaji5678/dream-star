@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { PurpleSmoke } from "../effects/TestSmoke";
 
-type Rarity = "SP" | "R" | "DREAM" | "DR" | "DXR";
+export type GachaRarity = "C" | "SP" | "R" | "DREAM" | "DR" | "GXR";
 
 type Props = {
-  rarity: Rarity;
+  rarity: GachaRarity;
 }
 
 export function TestSmokeCanvasRight({rarity}: Props) {

@@ -1,11 +1,12 @@
-type Rarity = "SP" | "R" | "DREAM" | "DR" | "DXR";
+import type { GachaRarity } from "../test/TestSmoke";
 
-const Colors: Record<Rarity, [number, number, number]> = {
+const Colors: Record<GachaRarity, [number, number, number]> = {
   SP: [50, 150, 255],
   R: [180, 80, 255],
   DREAM: [255, 220, 50],
   DR: [255, 80, 150],
-  DXR: [255, 255, 255]
+  GXR: [255, 255, 255],
+  C: [160, 160, 160],
 }
 
 export class PurpleSmokeParticle {
@@ -26,9 +27,9 @@ export class PurpleSmokeParticle {
   rotation: number;
   rotationSpeed: number;
 
-  private rarity: Rarity;
+  private rarity: GachaRarity;
 
-  constructor(canvas: HTMLCanvasElement, rarity: Rarity) {
+  constructor(canvas: HTMLCanvasElement, rarity: GachaRarity) {
     this.canvas = canvas;
 
     this.x = 0;
@@ -118,7 +119,7 @@ export class PurpleSmokeParticle {
 
     const [r, g, b] = Colors[this.rarity];
 
-    if (this.rarity === "DXR") {
+    if (this.rarity === "GXR") {
       // DXRだけカラフルな煙
       gradient.addColorStop(
         0,
@@ -162,13 +163,13 @@ export class PurpleSmokeParticle {
 
 export class PurpleSmoke {
   private canvas: HTMLCanvasElement;
-  private rarity: Rarity;
+  private rarity: GachaRarity;
   private particles: PurpleSmokeParticle[] = [];
   private animationId: number | null = null;
 
   constructor(
     canvas: HTMLCanvasElement,
-    rarity: Rarity,
+    rarity: GachaRarity,
   ) {
     this.canvas = canvas;
     this.rarity = rarity;

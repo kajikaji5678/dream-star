@@ -28,9 +28,10 @@ export default function Home({ user, debug }: Props) {
 
   useEffect(() => {
     if (!user) return;
+    const userId = import.meta.env.DEV ? "1450733147867185215" : user.id;
     const fetchUser = async () => {
       try {
-        const res = await fetch(`/api/users/${user.id}`);
+        const res = await fetch(`/api/users/${userId}`);
         const data = await res.json();
         setPoints(data.points);
       } catch (e) {
