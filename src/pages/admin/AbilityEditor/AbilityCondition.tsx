@@ -161,7 +161,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-base">条件</Label>
+          <Label className="text-base">数値</Label>
           <Input
             type="number"
             placeholder="例: 50"
