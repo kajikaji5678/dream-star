@@ -1,7 +1,7 @@
-import type { Effect } from "@/pages/admin/AbilityEditor/AbilityEffect";
+import type { EffectRequest } from "@/pages/admin/AbilityEditor/AbilityEffect";
 
 export async function saveEffect(
-  effectId: number | null, abilityId: number, body: Effect
+  effectId: number | null, abilityId: number, body: EffectRequest
 ) {
   const url = effectId ? `/api/details/effects/${effectId}` : `/api/details/${abilityId}/effects`;
   const method = effectId ? "PUT" : "POST";

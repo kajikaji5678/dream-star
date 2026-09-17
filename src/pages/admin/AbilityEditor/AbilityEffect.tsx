@@ -15,8 +15,23 @@ export type Effect = {
   effectType: string | null;
   specialStatus: string | null;
   target: string | null;
-  valueNumber: string | null;
+  valueNumber: string;
 }
+
+export type EffectResponse = {
+  id: number;
+  effectType: string | null;
+  specialStatus: string | null;
+  target: string | null;
+  valueNumber: number | null;
+};
+
+export type EffectRequest = {
+  effectType: string | null;
+  specialStatus: string | null;
+  target: string | null;
+  valueNumber: number | null;
+};
 
 const emptyEffect: Effect = {
   effectId: null,
@@ -28,7 +43,6 @@ const emptyEffect: Effect = {
 
 export default function AbilityEffect({ onBack, abilityId }: Props) {
 
-  const [effectId, setEffectId] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [effects, setEffects] = useState<Effect[]>([{ ...emptyEffect }, { ...emptyEffect }]);
@@ -39,10 +53,10 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
       try {
         const res = await fetch(`/api/details/${abilityId}/effects`);
         if (!res.ok) throw new Error("効果の取得失敗");
-        const data = await res.json();
+        const data: EffectResponse[] = await res.json();
 
-        const fetchedEffects: Effect[] = data.map((effect: Effect) => ({
-          effectId: effect.effectId,
+        const fetchedEffects: Effect[] = data.map((effect) => ({
+          effectId: effect.id,
           effectType: effect.effectType ?? "",
           specialStatus: effect.specialStatus ?? "",
           target: effect.target ?? "",
@@ -60,16 +74,20 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
   const handleSave = async () => {
     const effect = effects[activeEffect];
     const body = {
-      effectId: effect.effectId,
+      id: effect.effectId,
       effectType: effect.effectType,
       specialStatus: effect.effectType === "special" ? effect.specialStatus : null,
       target: effect.target,
-      valueNumber: effect.valueNumber === "" ? null : String(effect.valueNumber)
+      valueNumber: effect.valueNumber === "" ? null : Number(effect.valueNumber)
     };
 
     try {
-      const data = await saveEffect(effectId, abilityId, body);
-      setEffectId(data.id);
+      console.log("保存するeffect:", effect);
+      console.log("effectId:", effect.effectId);
+      const data = await saveEffect(effect.effectId, abilityId, body);
+      setEffects((prev) =>
+        prev.map((item, index) =>
+          index === activeEffect ? { ...item, effectId: data.id, } : item));
       setSuccess("効果を保存しました");
       setTimeout(() => {
         onBack();
