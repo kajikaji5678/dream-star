@@ -6,7 +6,7 @@ import Result from "./pages/gacha/Result";
 import Admin from "./pages/admin/Admin";
 import CardEdit from "./pages/admin/CardEdit";
 import CardAdd from "./pages/admin/CardAdd";
-import UserCardList from "./pages/UserCardList";
+import UserCardList from "./pages/user/UserCardList";
 import Loading from "./pages/Loading";
 import useDiscord from "./hooks/useDiscord";
 import TenGachaCard from "./components/TenGacha";

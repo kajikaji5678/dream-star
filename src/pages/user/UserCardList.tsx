@@ -1,5 +1,5 @@
-import Layout from "../layouts/Layout";
-import CardList from "../components/CardList";
+import Layout from "../../layouts/Layout";
+import CardList from "../../components/CardList";
 
 type Props = {
   user?: {
