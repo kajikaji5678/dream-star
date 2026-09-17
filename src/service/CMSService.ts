@@ -1,13 +1,7 @@
-type EffectBody = {
-  abilityId: number;
-  effectType: string;
-  specialStatus: string | null;
-  target: string;
-  valueNumber: number | null;
-};
+import type { Effect } from "@/pages/admin/AbilityEditor/AbilityEffect";
 
 export async function saveEffect(
-  effectId: number | null, abilityId: number, body: EffectBody
+  effectId: number | null, abilityId: number, body: Effect
 ) {
   const url = effectId ? `/api/details/effects/${effectId}` : `/api/details/${abilityId}/effects`;
   const method = effectId ? "PUT" : "POST";

@@ -12,31 +12,47 @@ type Props = {
   abilityId: number;
 }
 
+export type Effect = {
+  effectId: number | null;
+  effectType: string | null;
+  specialStatus: string | null;
+  target: string | null;
+  valueNumber: string | null;
+}
+
+const emptyEffect: Effect = {
+  effectId: null,
+  effectType: "",
+  specialStatus: "",
+  target: "",
+  valueNumber: "",
+}
+
 export default function AbilityEffect({ onBack, abilityId }: Props) {
 
   const [effectId, setEffectId] = useState<number | null>(null);
   const [isSpecialOpen, setIsSpecialOpen] = useState(false);
-  const [effectType, setEffectType] = useState("");
-  const [specialStatus, setSpecialStatus] = useState("");
-  const [target, setTarget] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [valueNumber, setValueNumber] = useState("");
+  const [effects, setEffects] = useState<Effect[]>([emptyEffect]);
+  const [activeEffect, setActiveEffect] = useState(0);
 
   useEffect(() => {
     async function fetchEffect() {
       try {
         const res = await fetch(`/api/details/${abilityId}/effects`);
         if (!res.ok) throw new Error("効果の取得失敗");
-        const effec = await res.json();
-        if (!effec) return;
-        const effect = effec[0]
-        setEffectId(effect.id);
-        setEffectType(effect.effectType ?? "");
-        setSpecialStatus(effect.specialStatus ?? "");
-        setIsSpecialOpen(effect.effectType === "special");
-        setTarget(effect.target ?? "");
-        setValueNumber(effect.valueNumber !== null ? String(effect.valueNumber) : "");
+        const data = await res.json();
+        if (!data || data.length === 0) return;
+
+        const effects: Effect[] = data.map((effect: Effect) => ({
+          effectId: effect.effectId,
+          effectType: effect.effectType ?? "",
+          specialStatus: effect.specialStatus ?? "",
+          target: effect.target ?? "",
+          valueNumber: effect.valueNumber !== null ? String(effect.valueNumber) : "",
+        }))
+        setEffects(effects);
       } catch (e) {
         if (e instanceof Error) setError(e.message);
       }
@@ -45,12 +61,13 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
   }, [abilityId])
 
   const handleSave = async () => {
+    const effect = effects[activeEffect];
     const body = {
-      abilityId,
-      effectType,
-      specialStatus: effectType === "special" ? specialStatus : null,
-      target,
-      valueNumber: valueNumber === "" ? null : Number(valueNumber)
+      effectId: effect.effectId,
+      effectType: effect.effectType,
+      specialStatus: effect.effectType === "special" ? effect.specialStatus : null,
+      target: effect.target,
+      valueNumber: effect.valueNumber === "" ? null : String(effect.valueNumber)
     };
 
     try {
@@ -63,6 +80,14 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
     } catch (e) {
       if (e instanceof Error) setError(e.message);
     }
+  }
+
+  const updateEffect = (key: keyof Effect, value: string) => {
+    setEffects(prev =>
+      prev.map((effect, index) =>
+        index === activeEffect ? { ...effect, [key]: value } : effect
+      )
+    )
   }
 
   return (
@@ -88,12 +113,8 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
         <div className="space-y-2">
           <Label className="text-base">効果の種類</Label>
           <Select
-            value={effectType}
-            onValueChange={(value) => {
-              setIsSpecialOpen(value === "special");
-              setEffectType(value ?? "");
-              if (value !== "special") setSpecialStatus("")
-            }}>
+            value={effects[activeEffect].effectType}
+            onValueChange={(value) => updateEffect("effectType", value ?? "")}>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="種類を選択"></SelectValue>
             </SelectTrigger>
@@ -107,6 +128,9 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
               <SelectItem value="special">
                 特殊状態
               </SelectItem>
+              <SelectItem value="draw">
+                ドロー
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -115,8 +139,8 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
           <div className="space-y-2">
             <Label className="text-base">特殊効果の内容を指定</Label>
             <Select
-              value={specialStatus}
-              onValueChange={(value) => setSpecialStatus(value ?? "")}
+              value={effects[activeEffect].specialStatus}
+              onValueChange={(value) => updateEffect("specialStatus", value ?? "")}
             >
               <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
                 <SelectValue placeholder="種類を選択"></SelectValue>
@@ -148,8 +172,8 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
         <div className="space-y-2">
           <Label className="text-base">効果対象</Label>
           <Select
-            value={target}
-            onValueChange={(value) => setTarget(value ?? "")}>
+            value={effects[activeEffect].target}
+            onValueChange={(value) => updateEffect("target", value ?? "")}>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="対象を選択します"></SelectValue>
             </SelectTrigger>
@@ -180,12 +204,12 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-base">数値</Label>
+          <Label className="text-base">数値(ダメージ・枚数など)</Label>
           <Input
             type="number"
             placeholder="例: 50"
-            value={valueNumber}
-            onChange={(e) => setValueNumber(e.target.value)}
+            value={effects[activeEffect].valueNumber ?? ""}
+            onChange={(e) => updateEffect("valueNumber", e.target.value)}
             className="border-[#1e1f22] bg-[#a4a4a5] text-whit"
           />
         </div>
