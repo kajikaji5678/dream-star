@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { SelectTrigger } from "@/components/ui/select"
+import { saveEffect } from "@/service/CMSService";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -53,35 +54,12 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
     };
 
     try {
-      let response;
-      if (effectId != null) {
-        response = await fetch(`/api/details/effects/${effectId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(body)
-        });
-      } else {
-        response = await fetch(`/api/details/${abilityId}/effects`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(body)
-        });
-      }
-      if (!response.ok) throw new Error("効果の保存失敗");
-
-      const data = await response.json();
+      const data = await saveEffect(effectId, abilityId, body);
       setEffectId(data.id);
       setSuccess("効果を保存しました");
-
-      if (response?.ok) {
-        setTimeout(() => {
-          onBack();
-        }, 2000)
-      }
+      setTimeout(() => {
+        onBack();
+      }, 2000)
     } catch (e) {
       if (e instanceof Error) setError(e.message);
     }
@@ -111,7 +89,11 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
           <Label className="text-base">効果の種類</Label>
           <Select
             value={effectType}
-            onValueChange={(value) => { setIsSpecialOpen(value === "special"); setEffectType(value ?? ""); if (value !== "special") setSpecialStatus("") }}>
+            onValueChange={(value) => {
+              setIsSpecialOpen(value === "special");
+              setEffectType(value ?? "");
+              if (value !== "special") setSpecialStatus("")
+            }}>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="種類を選択"></SelectValue>
             </SelectTrigger>
