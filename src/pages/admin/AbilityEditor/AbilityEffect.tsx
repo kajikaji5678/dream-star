@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { saveEffect } from "@/service/CMSService";
 import { useEffect, useState } from "react";
 import EffectForm from "./EffectForm";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type Props = {
   onBack: () => void;
@@ -30,7 +31,7 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
   const [effectId, setEffectId] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [effects, setEffects] = useState<Effect[]>([emptyEffect]);
+  const [effects, setEffects] = useState<Effect[]>([{ ...emptyEffect }, { ...emptyEffect }]);
   const [activeEffect, setActiveEffect] = useState(0);
 
   useEffect(() => {
@@ -39,16 +40,16 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
         const res = await fetch(`/api/details/${abilityId}/effects`);
         if (!res.ok) throw new Error("効果の取得失敗");
         const data = await res.json();
-        if (!data || data.length === 0) return;
 
-        const effects: Effect[] = data.map((effect: Effect) => ({
+        const fetchedEffects: Effect[] = data.map((effect: Effect) => ({
           effectId: effect.effectId,
           effectType: effect.effectType ?? "",
           specialStatus: effect.specialStatus ?? "",
           target: effect.target ?? "",
           valueNumber: effect.valueNumber !== null ? String(effect.valueNumber) : "",
-        }))
-        setEffects(effects);
+        }));
+        while (fetchedEffects.length < 2) fetchedEffects.push({ ...emptyEffect });
+        setEffects(fetchedEffects);
       } catch (e) {
         if (e instanceof Error) setError(e.message);
       }
@@ -105,25 +106,52 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
         </p>
       )}
 
-      <CardContent className="mt-2 space-y-6">
-        <EffectForm
-          effect={effects[activeEffect]}
-          onChange={updateEffect}
-        />
-        <Button
-          variant="outline"
-          className="bg-blue-200 hover:bg-blue-400 text-black"
-          onClick={handleSave}
+      <CardContent className="mt-2">
+        <Tabs
+          value={String(activeEffect)}
+          onValueChange={(value) => setActiveEffect(Number(value))}
+          className="mt-2 flex flex-col"
         >
-          条件を保存する
-        </Button>
-        <Button
-          variant="outline"
-          className="ml-2 bg-blue-200 hover:bg-blue-400 text-black"
-          onClick={onBack}
-        >
-          保存せずに戻る
-        </Button>
+          <TabsList className="p-1 mt-2 bg-gray-300">
+            {effects.map((_, index) => (
+              <TabsTrigger
+                key={index}
+                value={String(index)}
+                className="[&[data-active]]:text-black [&[data-active]]:bg-gray-100"
+              >
+                効果 {index + 1}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {effects.map((effect, index) => (
+            <TabsContent
+              key={index}
+              value={String(index)}
+              className="mt-4 space-y-6"
+            >
+              <EffectForm
+                effect={effect}
+                onChange={updateEffect}
+              />
+            </TabsContent>
+          ))}
+        </Tabs>
+        <div className="mt-6">
+          <Button
+            variant="outline"
+            className="bg-blue-200 hover:bg-blue-400 text-black"
+            onClick={handleSave}
+          >
+            条件を保存する
+          </Button>
+          <Button
+            variant="outline"
+            className="ml-2 bg-blue-200 hover:bg-blue-400 text-black"
+            onClick={onBack}
+          >
+            保存せずに戻る
+          </Button>
+        </div>
       </CardContent>
     </Card>
   )
