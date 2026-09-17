@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../layouts/Layout";
+import Layout from "../../layouts/Layout";
 import "./GachaOpening.css";
 import { useLocation } from "react-router-dom";
-import SingleGachaCard from "../components/SingleGacha";
-import TenGachaCard from "../components/TenGacha";
+import SingleGachaCard from "../../components/SingleGacha";
+import TenGachaCard from "../../components/TenGacha";
 
 export default function GachaOpening() {
   const [phase, setPhase] = useState<"pack" | "slide" | "card" | "cut" | "gather">("pack");

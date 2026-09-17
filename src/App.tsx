@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Gacha from "./pages/Gacha";
-import GachaOpening from "./pages/GachaOpening";
-import Result from "./pages/Result";
-import Admin from "./pages/Admin";
+import Gacha from "./pages/gacha/Gacha";
+import GachaOpening from "./pages/gacha/GachaOpening";
+import Result from "./pages/gacha/Result";
+import Admin from "./pages/admin/Admin";
 import CardEdit from "./pages/admin/CardEdit";
 import CardAdd from "./pages/admin/CardAdd";
 import UserCardList from "./pages/UserCardList";

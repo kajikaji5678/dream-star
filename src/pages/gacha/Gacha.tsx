@@ -1,7 +1,7 @@
-import Layout from "../layouts/Layout"
+import Layout from "../../layouts/Layout"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { drawGacha, drawTenGacha } from "../service/gachaService";
+import { drawGacha, drawTenGacha } from "../../service/gachaService";
 
 type Props = {
   user?: {

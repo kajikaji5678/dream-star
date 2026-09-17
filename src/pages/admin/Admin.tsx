@@ -1,6 +1,6 @@
-import Layout from "../layouts/Layout";
+import Layout from "../../layouts/Layout";
 import { useNavigate } from "react-router-dom";
-import CardList from "../components/CardList";
+import CardList from "../../components/CardList";
 
 const Admin_id = [
   "1450733147867185215",
