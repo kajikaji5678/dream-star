@@ -112,6 +112,10 @@ model AbilityEffect {
   // duration    String?
   valueNumber   Int?
 
+  // 9月16日追加
+  position String?
+  coinResult String?
+
   ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)
 }
 

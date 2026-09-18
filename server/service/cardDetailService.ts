@@ -79,6 +79,9 @@ export async function getAbilityEffects(abilityId: number) {
     where: {
       abilityId,
     },
+    orderBy: {
+      id: "asc"
+    }
   });
 }
 
