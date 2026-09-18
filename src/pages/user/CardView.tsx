@@ -34,7 +34,7 @@ export default function CardView() {
           className="card-wrapper"
         >
           <img
-            src={testCard}
+            src={card.imageUrl}
             className="detail-card"
           />
           <div className="card-shine" />
