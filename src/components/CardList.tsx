@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import type { Card } from "../types/card";
 import { useCardFilter } from "@/context/useCardfilter";
 
@@ -8,6 +7,7 @@ import { useCardFilter } from "@/context/useCardfilter";
 type Props = {
   editable?: boolean;
   endpoint: string;
+  onView?: (id: number) => void;
 }
 
 type CardWithAmout = Card & {
@@ -35,8 +35,7 @@ const rarityOrder: Record<Rarity, number> = {
   GXR: 6
 }
 
-export default function CardList({ editable = false, endpoint }: Props) {
-  const navigate = useNavigate();
+export default function CardList({ editable = false, endpoint, onView }: Props) {
   const [cards, setCards] = useState<CardWithAmout[]>([]);
 
   const { sort, rarity } = useCardFilter();
@@ -88,7 +87,7 @@ export default function CardList({ editable = false, endpoint }: Props) {
           rounded-xl bg-sky-300 py-1 px-2 w-min absolute bottom-1 right-1
           transition-all duration-300
           hover:scale-105
-          hover; ring-2
+          hover:ring-2
           hover:ring-offset-2">
             <p>view</p>
           </div>
@@ -101,7 +100,7 @@ export default function CardList({ editable = false, endpoint }: Props) {
           {editable && (
             <button
               className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-              onClick={() => navigate(`/admin/cards/${card.id}`)}
+              onClick={() => onView?.(card.id)}
             >
               編集する
             </button>

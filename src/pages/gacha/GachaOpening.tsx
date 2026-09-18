@@ -77,7 +77,7 @@ export default function GachaOpening() {
         {JSON.stringify(card, null, 2)}
       </pre> */}
       {(phase === "pack" || phase === "slide") && (
-        <div className={`h-screen pack-screen ${phase === "slide" ? "slide" : ""}`}>
+        <div className={`h-screen page-screen ${phase === "slide" ? "slide" : ""}`}>
           <Layout>
             <div className="flex h-full items-center justify-center text-4xl font-bold">
               Opening...
