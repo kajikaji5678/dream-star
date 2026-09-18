@@ -12,7 +12,7 @@ export default function UpdateTicker() {
           ease: "linear",
           repeat: Infinity
         }}>
-          v1.1.4 音量調節を追加しました。
+          v1.1.6 カードを3Dでタップして動かすポケポケチックなUIを追加
       </motion.div>
     </div>
   )
