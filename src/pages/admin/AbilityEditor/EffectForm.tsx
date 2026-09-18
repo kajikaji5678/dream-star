@@ -71,6 +71,47 @@ export default function EffectForm({ effect, onChange }: Props) {
       )}
 
       <div className="space-y-2">
+        <Label className="text-base">コインチェック</Label>
+        <Select
+          value={effect.coinResult}
+          onValueChange={(value) => onChange("coinResult", value ?? "")}>
+          <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
+            <SelectValue placeholder="ありかなしか選択します"></SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="on">
+              あり
+            </SelectItem>
+            <SelectItem value="off">
+              なし
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <Label className="text-base">ポジション</Label>
+        <Select
+          value={effect.position}
+          onValueChange={(value) => onChange("position", value ?? "")}>
+          <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
+            <SelectValue placeholder="移動するか選択します"></SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="front">
+              前衛
+            </SelectItem>
+            <SelectItem value="back">
+              後衛
+            </SelectItem>
+            <SelectItem value="off">
+              そのまま
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
         <Label className="text-base">効果対象</Label>
         <Select
           value={effect.target}
@@ -105,7 +146,7 @@ export default function EffectForm({ effect, onChange }: Props) {
       </div>
 
       <div className="space-y-2">
-        <Label className="text-base">数値(ダメージ・枚数など)</Label>
+        <Label className="text-base">数値(ダメージ・枚数・期間など)</Label>
         <Input
           type="number"
           placeholder="例: 50"

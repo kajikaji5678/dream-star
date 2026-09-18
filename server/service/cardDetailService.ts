@@ -11,6 +11,8 @@ type EffectData = {
   specialStatus: string;
   target?: string;
   valueNumber?: null | number;
+  position?: string | null;
+  coinResult?: string | null;
 }
 
 type AbilityData = {
@@ -96,6 +98,8 @@ export async function createAbilityEffect(
       specialStatus: data.specialStatus,
       target: data.target,
       valueNumber: data.valueNumber,
+      coinResult: data.coinResult,
+      position: data.position,
     },
   });
 }
@@ -113,6 +117,8 @@ export async function updateAbilityEffect(
       specialStatus: data.specialStatus,
       target: data.target,
       valueNumber: data.valueNumber,
+      coinResult: data.coinResult,
+      position: data.position,
     },
   });
 }
@@ -133,7 +139,7 @@ export async function deleteCardAbility(abilityId: number) {
   })
 }
 
-export async function updateCardAbility(abilityId: number, name:string, description: string) {
+export async function updateCardAbility(abilityId: number, name: string, description: string) {
   return await prisma.cardAbility.update({
     where: {
       id: abilityId

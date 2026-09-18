@@ -50,7 +50,6 @@ export async function submitCard(
     imageUrl: uploadData.imageUrl
   }
 
-  console.log(reqBody);
 
   const res = await fetch(`${API_URL}/api/cards`, {
     method: "POST",
