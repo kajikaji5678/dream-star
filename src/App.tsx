@@ -13,6 +13,7 @@ import TenGachaCard from "./components/TenGacha";
 import LoginBonus from "./pages/LoginBonus";
 import Data from "./pages/data/Data";
 import { BgmProvider } from "./pages/contexts/BgmProvider";
+import CardView from "./pages/user/CardView";
 
 console.log("App.tsx Start");
 
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="/admin/cards/:id" element={<CardEdit />} />
             <Route path="/admin/cards/add" element={<CardAdd />} />
             <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
+            <Route path="/cards/:id/details" element={<CardView />} />
             <Route path="/test1" element={<TenGachaCard />} />
             <Route path="/data" element={<Data user={user ?? undefined} />} />
           </Routes>

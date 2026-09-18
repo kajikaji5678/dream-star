@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Card } from "../types/card";
 import { useCardFilter } from "@/context/useCardfilter";
+import { useNavigate } from "react-router-dom";
 
 // 一般ユーザーと管理者も一覧画面は同じコンポーネントを使用するため
 // 初期値falseで管理者ページでtrueにさせる
@@ -37,7 +38,7 @@ const rarityOrder: Record<Rarity, number> = {
 
 export default function CardList({ editable = false, endpoint, onView }: Props) {
   const [cards, setCards] = useState<CardWithAmout[]>([]);
-
+  const navigate = useNavigate();
   const { sort, rarity } = useCardFilter();
 
   const sortedCards = [...cards].sort((a, b) => {
@@ -88,7 +89,8 @@ export default function CardList({ editable = false, endpoint, onView }: Props) 
           transition-all duration-300
           hover:scale-105
           hover:ring-2
-          hover:ring-offset-2">
+          hover:ring-offset-2"
+          onClick={() => onView?.(card.id)}>
             <p>view</p>
           </div>
           {card.amount !== undefined && (
@@ -100,7 +102,7 @@ export default function CardList({ editable = false, endpoint, onView }: Props) 
           {editable && (
             <button
               className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-              onClick={() => onView?.(card.id)}
+              onClick={() => navigate(`/admin/cards/${card.id}`)}
             >
               編集する
             </button>

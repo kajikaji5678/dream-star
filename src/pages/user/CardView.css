@@ -1,0 +1,25 @@
+@keyframes detailCardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(150px) rotateY(180deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateY(0deg);
+    }
+}
+
+.detail-card {
+    width: 256px;
+    animation: detailCardAppear 0.8s ease-out forwards;
+    z-index: 10;
+    bottom: 0;
+}
+
+@media (min-width: 900px) {
+    .detail-card {
+        width: 384px;
+        margin-top: 32px;
+    }
+}
