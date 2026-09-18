@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../layouts/Layout";
+import Layout from "../../layouts/Layout";
 import "./GachaOpening.css";
 import { useLocation } from "react-router-dom";
-import SingleGachaCard from "../components/SingleGacha";
-import TenGachaCard from "../components/TenGacha";
+import SingleGachaCard from "../../components/SingleGacha";
+import TenGachaCard from "../../components/TenGacha";
 
 export default function GachaOpening() {
   const [phase, setPhase] = useState<"pack" | "slide" | "card" | "cut" | "gather">("pack");
@@ -77,7 +77,7 @@ export default function GachaOpening() {
         {JSON.stringify(card, null, 2)}
       </pre> */}
       {(phase === "pack" || phase === "slide") && (
-        <div className={`h-screen pack-screen ${phase === "slide" ? "slide" : ""}`}>
+        <div className={`h-screen page-screen ${phase === "slide" ? "slide" : ""}`}>
           <Layout>
             <div className="flex h-full items-center justify-center text-4xl font-bold">
               Opening...

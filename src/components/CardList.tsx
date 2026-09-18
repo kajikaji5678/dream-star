@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import type { Card } from "../types/card";
 import { useCardFilter } from "@/context/useCardfilter";
+import { useNavigate } from "react-router-dom";
 
 // 一般ユーザーと管理者も一覧画面は同じコンポーネントを使用するため
 // 初期値falseで管理者ページでtrueにさせる
 type Props = {
   editable?: boolean;
   endpoint: string;
+  onView?: (id: number) => void;
 }
 
 type CardWithAmout = Card & {
@@ -35,10 +36,9 @@ const rarityOrder: Record<Rarity, number> = {
   GXR: 6
 }
 
-export default function CardList({ editable = false, endpoint }: Props) {
-  const navigate = useNavigate();
+export default function CardList({ editable = false, endpoint, onView }: Props) {
   const [cards, setCards] = useState<CardWithAmout[]>([]);
-
+  const navigate = useNavigate();
   const { sort, rarity } = useCardFilter();
 
   const sortedCards = [...cards].sort((a, b) => {
@@ -69,7 +69,7 @@ export default function CardList({ editable = false, endpoint }: Props) {
       {sortedCards.map((card) => (
         <div
           key={card.id}
-          className={`rounded-lg border-2 bg-black/20 p-4 text-white ${rarityStyle[card.rarity as Rarity]}`}
+          className={`rounded-lg relative border-2 bg-black/20 p-4 text-white ${rarityStyle[card.rarity as Rarity]}`}
         >
           {card.isNew && (
             <span className="rounded bg-red-500 px-2 py-1 text-sm font-bold">
@@ -84,8 +84,17 @@ export default function CardList({ editable = false, endpoint }: Props) {
           <p className="mt-3 text-center text-lg font-semibold">
             {card.name}
           </p>
+          <div className="
+          rounded-xl bg-sky-300 py-1 px-2 w-min absolute bottom-1 right-1
+          transition-all duration-300
+          hover:scale-105
+          hover:ring-2
+          hover:ring-offset-2"
+          onClick={() => onView?.(card.id)}>
+            <p>view</p>
+          </div>
           {card.amount !== undefined && (
-            <p className="mt-3 text-center text-lg font-semibold">
+            <p className="mt-2 text-center text-sm mb-6 font-semibold">
               所持枚数 ×{card.amount}
             </p>
           )}

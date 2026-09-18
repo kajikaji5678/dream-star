@@ -1,8 +1,8 @@
-.pack-screen {
+.page-screen {
     transform: translateY(0);
 }
 
-.pack-screen.slide {
+.page-screen.slide {
     transform: translateY(100%);
     transition: transform 0.7s ease-in-out;
 }

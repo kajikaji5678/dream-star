@@ -1,6 +1,8 @@
 import { CardFilterProvider } from "@/context/CardFilterProvider";
 import Header from "../components/Header"
 import Sidebar from "../components/sidebar"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   children?: React.ReactNode;
@@ -9,6 +11,15 @@ type Props = {
 }
 
 export default function Layout({ children, ticket, animateSidebar }: Props) {
+
+  const [isLeaving, setIsLeaving] = useState(false);
+  const navigate = useNavigate();
+  const handleClick = (id: number) => {
+    setIsLeaving(true);
+    setTimeout(() => {
+      navigate(`/cards/${id}/details`);
+    }, 500);
+  }
   return (
     <>
       <CardFilterProvider>

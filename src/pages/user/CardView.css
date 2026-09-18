@@ -1,0 +1,66 @@
+@keyframes detailCardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(150px) rotateY(180deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateY(0deg);
+    }
+}
+
+.detail-card {
+    width: 256px;
+    animation: detailCardAppear 0.8s ease-out forwards;
+    z-index: 10;
+    bottom: 0;
+}
+
+@media (min-width: 900px) {
+    .detail-card {
+        width: 384px;
+        margin-top: 32px;
+    }
+}
+
+.card-wrapper {
+    position: relative;
+    width: 256px;
+}
+
+@media (min-width: 900px) {
+    .card-wrapper {
+        width: 384px;
+    }
+}
+
+.card-shine {
+    position: absolute;
+    inset: 0;
+    width: 120%;
+    height: 120%;
+    background: linear-gradient(120deg,
+            transparent 0%,
+            transparent 30%,
+            rgba(255, 255, 255, 0.5) 50%,
+            transparent 70%,
+            transparent 100%);
+
+    pointer-events: none;
+    animation: cardShine 2.5s ease-in-out infinite;
+}
+
+@keyframes cardShine {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+
+    33.33% {
+        transform: translate(50%, 50%);
+    }
+
+    100% {
+        transform: translate(50%, 50%);
+    }
+}

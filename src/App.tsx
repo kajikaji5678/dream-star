@@ -1,18 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Gacha from "./pages/Gacha";
-import GachaOpening from "./pages/GachaOpening";
-import Result from "./pages/Result";
-import Admin from "./pages/Admin";
+import Gacha from "./pages/gacha/Gacha";
+import GachaOpening from "./pages/gacha/GachaOpening";
+import Result from "./pages/gacha/Result";
+import Admin from "./pages/admin/Admin";
 import CardEdit from "./pages/admin/CardEdit";
 import CardAdd from "./pages/admin/CardAdd";
-import UserCardList from "./pages/UserCardList";
+import UserCardList from "./pages/user/UserCardList";
 import Loading from "./pages/Loading";
 import useDiscord from "./hooks/useDiscord";
 import TenGachaCard from "./components/TenGacha";
 import LoginBonus from "./pages/LoginBonus";
 import Data from "./pages/data/Data";
 import { BgmProvider } from "./pages/contexts/BgmProvider";
+import CardView from "./pages/user/CardView";
 
 console.log("App.tsx Start");
 
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="/admin/cards/:id" element={<CardEdit />} />
             <Route path="/admin/cards/add" element={<CardAdd />} />
             <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
+            <Route path="/cards/:id/details" element={<CardView />} />
             <Route path="/test1" element={<TenGachaCard />} />
             <Route path="/data" element={<Data user={user ?? undefined} />} />
           </Routes>
