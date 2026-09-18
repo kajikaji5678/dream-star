@@ -35,7 +35,6 @@ export async function createCard(
   req: Request,
   res: Response
 ) {
-  console.log("req.body:", req.body);
   try {
     const { name, imageUrl, rarity, hp, attack, escapePoint, category, consumePoint } = req.body;
     if (!name?.trim()) return res.status(400).json({ error: "400: カード名は必須" });

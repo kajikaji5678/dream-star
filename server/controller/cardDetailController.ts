@@ -139,6 +139,8 @@ export async function createEffect(
       specialStatus,
       target,
       valueNumber,
+      position,
+      coinResult
     } = req.body;
 
     const effect = await createAbilityEffect(
@@ -148,6 +150,8 @@ export async function createEffect(
         specialStatus,
         target,
         valueNumber,
+        position,
+        coinResult
       }
     );
 
@@ -171,6 +175,8 @@ export async function updateEffect(
       specialStatus,
       target,
       valueNumber,
+      position,
+      coinResult
     } = req.body;
 
     const effect = await updateAbilityEffect(
@@ -180,6 +186,8 @@ export async function updateEffect(
         specialStatus,
         target,
         valueNumber,
+        position,
+        coinResult
       }
     );
 

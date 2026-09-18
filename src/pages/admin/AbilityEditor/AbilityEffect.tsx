@@ -16,6 +16,8 @@ export type Effect = {
   specialStatus: string | null;
   target: string | null;
   valueNumber: string;
+  coinResult: string | null;
+  position: string | null;
 }
 
 export type EffectResponse = {
@@ -24,6 +26,8 @@ export type EffectResponse = {
   specialStatus: string | null;
   target: string | null;
   valueNumber: number | null;
+  coinResult: string;
+  position: string;
 };
 
 export type EffectRequest = {
@@ -31,6 +35,8 @@ export type EffectRequest = {
   specialStatus: string | null;
   target: string | null;
   valueNumber: number | null;
+  coinResult: string | null;
+  position: string | null;
 };
 
 const emptyEffect: Effect = {
@@ -39,6 +45,8 @@ const emptyEffect: Effect = {
   specialStatus: "",
   target: "",
   valueNumber: "",
+  coinResult: "",
+  position: "",
 }
 
 export default function AbilityEffect({ onBack, abilityId }: Props) {
@@ -61,6 +69,8 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
           specialStatus: effect.specialStatus ?? "",
           target: effect.target ?? "",
           valueNumber: effect.valueNumber !== null ? String(effect.valueNumber) : "",
+          coinResult: effect.coinResult ?? "",
+          position: effect.position ?? "",
         }));
         while (fetchedEffects.length < 2) fetchedEffects.push({ ...emptyEffect });
         setEffects(fetchedEffects);
@@ -78,12 +88,12 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
       effectType: effect.effectType,
       specialStatus: effect.effectType === "special" ? effect.specialStatus : null,
       target: effect.target,
-      valueNumber: effect.valueNumber === "" ? null : Number(effect.valueNumber)
+      valueNumber: effect.valueNumber === "" ? null : Number(effect.valueNumber),
+      coinResult: effect.coinResult,
+      position: effect.position,
     };
 
     try {
-      console.log("保存するeffect:", effect);
-      console.log("effectId:", effect.effectId);
       const data = await saveEffect(effect.effectId, abilityId, body);
       setEffects((prev) =>
         prev.map((item, index) =>
@@ -117,14 +127,13 @@ export default function AbilityEffect({ onBack, abilityId }: Props) {
         </p>
       )}
 
-      {/* 成功 */}
       {success && (
         <p className="text-sm text-green-400">
           {success}
         </p>
       )}
 
-      <CardContent className="mt-2">
+      <CardContent className="mt-2 overflow-y-auto">
         <Tabs
           value={String(activeEffect)}
           onValueChange={(value) => setActiveEffect(Number(value))}
