@@ -14,6 +14,7 @@ import LoginBonus from "./pages/LoginBonus";
 import Data from "./pages/data/Data";
 import { BgmProvider } from "./pages/contexts/BgmProvider";
 import CardView from "./pages/user/CardView";
+import BattleForm from "./pages/battles/BattleForm";
 
 console.log("App.tsx Start");
 
@@ -51,6 +52,7 @@ export default function App() {
             <Route path="/cards/:id/details" element={<CardView />} />
             <Route path="/test1" element={<TenGachaCard />} />
             <Route path="/data" element={<Data user={user ?? undefined} />} />
+            <Route path="/battle" element={<BattleForm />} />
           </Routes>
         </BrowserRouter>
       </BgmProvider>
