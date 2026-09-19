@@ -3,8 +3,8 @@ import { BgmContext } from "./BgmContext";
 
 
 
-const MAX = 0.25;
-const DEFAULT = 25;
+const MAX = 0.3;
+const DEFAULT = 30;
 
 export function BgmProvider({ children }: { children: React.ReactNode }) {
   const bgmRef = useRef<HTMLAudioElement | null>(null);
@@ -13,7 +13,17 @@ export function BgmProvider({ children }: { children: React.ReactNode }) {
   //* BGM作成
   useEffect(() => {
     // 開始時
-    const bgm = new Audio("/audio/21-theme-pop.mp3");
+    const bgmlist = [
+      "/audio/21-theme-jpop.mp3",
+      "/audio/21-theme-glowly.mp3",
+      "/audio/21-theme-mellow.mp3",
+      "/audio/21-theme-pop.mp3",
+      "/audio/21-theme-chill.mp3"
+    ];
+
+    const randomBgm = bgmlist[Math.floor(Math.random() * bgmlist.length)];
+    const bgm = new Audio(randomBgm);
+
     bgm.loop = true;
     bgm.volume = (DEFAULT / 100) * MAX;
     bgmRef.current = bgm;
