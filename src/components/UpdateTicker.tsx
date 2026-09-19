@@ -12,7 +12,7 @@ export default function UpdateTicker() {
           ease: "linear",
           repeat: Infinity
         }}>
-          v1.1.6 カードを3Dでタップして動かすポケポケチックなUIを追加
+          v1.1.65 bgmを追加してシャッフルしてます
       </motion.div>
     </div>
   )
