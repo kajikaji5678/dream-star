@@ -1,0 +1,132 @@
+.dev-history {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px 20px;
+    background: #111827;
+    border-radius: 16px;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.dev-history-title {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #374151;
+}
+
+.dev-history-title span {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.dev-history-title small {
+    display: block;
+    margin-top: 6px;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+/* タイムライン */
+.dev-timeline {
+    position: relative;
+}
+
+/* 縦線 */
+.dev-timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 110px;
+    width: 2px;
+    background: #374151;
+}
+
+/* 1項目 */
+.dev-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 90px 40px 1fr;
+    gap: 0;
+    min-height: 100px;
+}
+
+/* 日付 */
+.dev-date {
+    padding-top: 20px;
+    text-align: right;
+    padding-right: 15px;
+    color: #9ca3af;
+    font-size: 12px;
+    font-family: monospace;
+}
+
+/* ドット */
+.dev-dot {
+    position: relative;
+    z-index: 2;
+    width: 12px;
+    height: 12px;
+    margin-top: 22px;
+    margin-left: 14px;
+    border-radius: 50%;
+    background: #111827;
+    border: 3px solid #8b5cf6;
+    box-sizing: border-box;
+}
+
+/* カード */
+.dev-card {
+    margin: 8px 0 20px 10px;
+    padding: 16px 18px;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    background: #1f2937;
+    transition: 0.2s ease;
+}
+
+.dev-card:hover {
+    transform: translateX(5px);
+    border-color: #8b5cf6;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* バージョン */
+.dev-version {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: #312e81;
+    color: #c4b5fd;
+    font-size: 12px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+/* 内容 */
+.dev-content {
+    background: transparent;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* メジャーアップデート */
+.dev-major .dev-dot {
+    width: 16px;
+    height: 16px;
+    margin-left: 12px;
+    margin-top: 20px;
+    border-color: #f59e0b;
+}
+
+.dev-major .dev-card {
+    border-color: #4b5563;
+}
+
+.dev-major .dev-version {
+    background: #78350f;
+    color: #fcd34d;
+}
