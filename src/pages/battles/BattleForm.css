@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
     perspective: 1250px;
+    position: relative;
 }
 
 .battle-mat {
@@ -97,4 +98,22 @@
 
 .opponent {
     transform: rotateX(180deg);
+}
+
+.my-hand {
+    position: absolute;
+    bottom: 20px;
+    left: 30%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: flex-end;
+    width: 300px;
+    height: 150px;
+}
+
+.my-hand-card {
+    position: absolute;
+    width: 100px;
+    height: 140px;
+    transition: left 0.3s ease;
 }
