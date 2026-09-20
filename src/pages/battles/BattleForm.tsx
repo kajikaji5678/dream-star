@@ -3,7 +3,28 @@ import { useEffect, useState } from "react";
 
 export default function BattleForm() {
 
-  const [hand, setHand] = useState([1, 2, 3, 4, 5]);
+  const sampleCards = [
+    {
+      id: 1,
+      image: "/menuCardImages/21-DR.png"
+    },
+    {
+      id: 2,
+      image: "/menuCardImages/Dr.srone.png"
+    },
+    {
+      id: 3,
+      image: "/menuCardImages/kano-DR.jpg"
+    },
+    {
+      id: 4,
+      image: "/menuCardImages/GXR.png"
+    },
+  ]
+
+  const [hand, setHand] = useState(sampleCards);
+
+  const selectedCard = hand[hand.length - 1];
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -87,8 +108,8 @@ export default function BattleForm() {
             {hand.map((card, index) => (
               <img
                 className="my-hand-card"
-                key={card}
-                src="/menuCardImages/Dr.srone.png"
+                key={card.id}
+                src={card.image}
                 style={{
                   zIndex: index,
                   left: `${index * 25}px`,
@@ -96,6 +117,11 @@ export default function BattleForm() {
               />
             ))}
           </div>
+        </div>
+        <div className="selected-card">
+          <img
+            src={selectedCard.image}
+          />
         </div>
       </div>
     </>

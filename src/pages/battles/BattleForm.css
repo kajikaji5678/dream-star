@@ -88,6 +88,13 @@
         width: 128px;
         height: 180px;
     }
+
+    .my-hand-card {
+        position: absolute;
+        width: 190px;
+        height: 266px;
+        transition: left 0.3s ease;
+    }
 }
 
 .battle-sub {
@@ -103,7 +110,7 @@
 .my-hand {
     position: absolute;
     bottom: 20px;
-    left: 30%;
+    left: 20%;
     transform: translateX(-50%);
     display: flex;
     align-items: flex-end;
@@ -113,7 +120,33 @@
 
 .my-hand-card {
     position: absolute;
-    width: 100px;
-    height: 140px;
+    width: 128px;
+    height: 180px;
     transition: left 0.3s ease;
+}
+
+.selected-card {
+    position: absolute;
+    right: 24px;
+    top: 20%;
+    transform: rotateY(-15deg);
+}
+
+.selected-card img {
+    width: 256px;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 8px;
+    
+    animation: float-card 2.5s ease-in-out infinite;
+}
+
+@keyframes float-card {
+    0%,
+    100% {
+        transform: translateY(0%) rotateY(-15deg);
+    }
+    50% {
+        transform: translateY(calc(0% - 12px)) rotateY(-12deg);
+    }
 }
