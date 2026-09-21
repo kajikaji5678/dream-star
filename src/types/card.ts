@@ -30,6 +30,7 @@ export type Condition = {
   activationTiming: string | null;
   target: string | null;
   valueNumber: number | null;
+  consumePoint: number | null;
 };
 
 export type Ability = {
