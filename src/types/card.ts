@@ -31,6 +31,7 @@ export type Condition = {
   target: string | null;
   valueNumber: number | null;
   consumePoint: number | null;
+  conditionField: string | null;
 };
 
 export type Ability = {

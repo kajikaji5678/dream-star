@@ -18,6 +18,8 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
   const [activationTiming, setActivationTimig] = useState("");
   const [target, setTarget] = useState("");
   const [valueNumber, setValueNumber] = useState("");
+  const [conditionField, setConditionField] = useState("");
+  const [consumePoint, setConsumePoint] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
@@ -47,7 +49,9 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
       const body = {
         activationTiming,
         target,
-        valueNumber: valueNumber === "" ? null : Number(valueNumber)
+        valueNumber: valueNumber === "" ? null : Number(valueNumber),
+        conditionField,
+        consumePoint,
       };
 
       let response;
@@ -170,7 +174,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
           </p>
           <Select
             value={target}
-            onValueChange={(value) => setTarget(value ?? "")}>
+            onValueChange={(value) => setConditionField(value ?? "")}>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="種類を選択します"></SelectValue>
             </SelectTrigger>
@@ -198,6 +202,17 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
             placeholder="半角必須"
             value={valueNumber}
             onChange={(e) => setValueNumber(e.target.value)}
+            className="border-[#1e1f22] bg-[#a4a4a5] text-whit"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">使用消費ポイント</Label>
+          <Input
+            type="consumePoint"
+            placeholder="半角必須"
+            value={valueNumber}
+            onChange={(e) => setConsumePoint(e.target.value)}
             className="border-[#1e1f22] bg-[#a4a4a5] text-whit"
           />
         </div>
