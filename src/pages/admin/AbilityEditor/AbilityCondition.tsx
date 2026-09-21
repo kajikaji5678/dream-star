@@ -96,7 +96,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         <p className="text-green-400"> {success} </p>
       )}
 
-      <CardContent className="mt-2 space-y-6">
+      <CardContent className="mt-2 space-y-6 overflow-y-auto">
         <div className="space-y-2">
           <Label className="text-base">発動タイミング</Label>
           <Select
@@ -127,7 +127,10 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-base">判定対象</Label>
+          <Label className="text-base">条件の対象</Label>
+          <p className="text-sm font-semibold text-gray-400">
+            例: "自分がダメージを受けた時"なら"self"となる
+          </p>
           <Select
             value={target}
             onValueChange={(value) => setTarget(value ?? "")}>
@@ -161,10 +164,13 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-base">数値</Label>
+          <Label className="text-base">数値条件</Label>
+          <p className="text-sm font-semibold text-gray-400">
+            例: "自分のHPが50以上"という条件なら"50"
+          </p>
           <Input
             type="number"
-            placeholder="例: 50"
+            placeholder="半角必須"
             value={valueNumber}
             onChange={(e) => setValueNumber(e.target.value)}
             className="border-[#1e1f22] bg-[#a4a4a5] text-whit"

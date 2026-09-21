@@ -92,9 +92,11 @@ model AbilityCondition {
 
   // type        String
   activationTiming String?
-  consumePoint     Int?
   target           String?
+  conditionField   String?
   valueNumber      Int?
+
+  consumePoint Int?
 
   ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)
 }
