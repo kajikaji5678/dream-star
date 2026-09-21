@@ -129,7 +129,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         <div className="space-y-2">
           <Label className="text-base">条件の対象</Label>
           <p className="text-sm font-semibold text-gray-400">
-            例: "自分がダメージを受けた時"なら"self"となる
+            例: "自分がダメージを受けた時"という条件があるなら"self"とする
           </p>
           <Select
             value={target}
@@ -164,9 +164,34 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-base">数値条件</Label>
+          <Label className="text-base">条件の種類</Label>
           <p className="text-sm font-semibold text-gray-400">
-            例: "自分のHPが50以上"という条件なら"50"
+            例: "ダメージを30以上受けたなら"という条件があるなら"ダメージ(damage)"を選択する
+          </p>
+          <Select
+            value={target}
+            onValueChange={(value) => setTarget(value ?? "")}>
+            <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
+              <SelectValue placeholder="種類を選択します"></SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="hp">
+                HP
+              </SelectItem>
+              <SelectItem value="damage">
+                ダメージ
+              </SelectItem>
+              <SelectItem value="hand">
+                手札
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">条件の数値</Label>
+          <p className="text-sm font-semibold text-gray-400">
+            例1: "自分のHPが50未満"という条件があるなら"50&gt;"とする<br />例2: "手札に2枚以上"という条件があるなら"2&lt;"とする
           </p>
           <Input
             type="number"
