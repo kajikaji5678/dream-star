@@ -28,7 +28,6 @@ export async function createCard(data: {
   attack: number;
   escapePoint: number;
   category: string;
-  consumePoint: number;
 }) {
   return prisma.card.create({
     data,

@@ -59,10 +59,7 @@ export default function CardEdit() {
           escapePoint: data.escapePoint,
           category: data.category,
           consumePoint: data.consumePoint,
-          supportType: data.supportType
         });
-
-        console.log(data);
         setPreviewUrl(`${API_URL}${data.imageUrl}`);
         setAbilities(data.abilities ?? []);
       } catch (e) {
@@ -178,8 +175,6 @@ export default function CardEdit() {
       }
     }
   }
-
-  console.log(abilities);
 
   return (
     <Layout>
