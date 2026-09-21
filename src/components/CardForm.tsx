@@ -21,7 +21,6 @@ const cardInfo: CardInfo[] = [
   { label: "HP", key: "hp" },
   { label: "技で相手に与えるダメージ", key: "attack" },
   { label: "逃げ消費ポイント", key: "escapePoint" },
-  { label: "使用消費ポイント", key: "consumePoint" },
 ];
 
 export default function CardForm({

@@ -92,9 +92,11 @@ model AbilityCondition {
 
   // type        String
   activationTiming String?
-  // value            String?
   target           String?
-  valueNumber      Int?
+  conditionField   String?
+  valueNumber      String?
+
+  consumePoint Int?
 
   ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)
 }
@@ -113,7 +115,7 @@ model AbilityEffect {
   valueNumber   Int?
 
   // 9月16日追加
-  position String?
+  position   String?
   coinResult String?
 
   ability CardAbility @relation(fields: [abilityId], references: [id], onDelete: Cascade)

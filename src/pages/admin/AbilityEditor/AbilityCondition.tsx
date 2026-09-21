@@ -18,6 +18,8 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
   const [activationTiming, setActivationTimig] = useState("");
   const [target, setTarget] = useState("");
   const [valueNumber, setValueNumber] = useState("");
+  const [conditionField, setConditionField] = useState("");
+  const [consumePoint, setConsumePoint] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
@@ -32,6 +34,8 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         setActivationTimig(condition.activationTiming ?? "");
         setTarget(condition.target ?? "");
         setValueNumber(condition.valueNumber !== null ? String(condition.valueNumber) : "");
+        setConditionField(condition.conditionField ?? "");
+        setConsumePoint(condition.consumePoint !== null ? String(condition.consumePoint) : "");
       } catch (e) {
         if (e instanceof Error) setError(e.message);
       }
@@ -47,7 +51,9 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
       const body = {
         activationTiming,
         target,
-        valueNumber: valueNumber === "" ? null : Number(valueNumber)
+        valueNumber,
+        conditionField,
+        consumePoint: consumePoint === "" ? null : Number(consumePoint),
       };
 
       let response;
@@ -96,7 +102,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         <p className="text-green-400"> {success} </p>
       )}
 
-      <CardContent className="mt-2 space-y-6">
+      <CardContent className="mt-2 space-y-6 overflow-y-auto">
         <div className="space-y-2">
           <Label className="text-base">発動タイミング</Label>
           <Select
@@ -127,7 +133,10 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-base">判定対象</Label>
+          <Label className="text-base">条件の対象</Label>
+          <p className="text-sm font-semibold text-gray-400">
+            例: "自分がダメージを受けた時"という条件があるなら"self"とする
+          </p>
           <Select
             value={target}
             onValueChange={(value) => setTarget(value ?? "")}>
@@ -161,12 +170,51 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-base">数値</Label>
+          <Label className="text-base">条件の種類</Label>
+          <p className="text-sm font-semibold text-gray-400">
+            例: "ダメージを30以上受けたなら"という条件があるなら"ダメージ(damage)"を選択する
+          </p>
+          <Select
+            value={conditionField}
+            onValueChange={(value) => setConditionField(value ?? "")}>
+            <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
+              <SelectValue placeholder="種類を選択します"></SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="hp">
+                HP
+              </SelectItem>
+              <SelectItem value="damage">
+                ダメージ
+              </SelectItem>
+              <SelectItem value="hand">
+                手札
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">条件の数値</Label>
+          <p className="text-sm font-semibold text-gray-400">
+            例1: "自分のHPが50未満"という条件があるなら"50&gt;"とする<br />例2: "手札に2枚以上"という条件があるなら"2&lt;"とする
+          </p>
           <Input
-            type="number"
-            placeholder="例: 50"
+            type="text"
+            placeholder="半角必須"
             value={valueNumber}
             onChange={(e) => setValueNumber(e.target.value)}
+            className="border-[#1e1f22] bg-[#a4a4a5] text-whit"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-base">使用消費ポイント</Label>
+          <Input
+            type="number"
+            placeholder="半角必須"
+            value={consumePoint}
+            onChange={(e) => setConsumePoint(e.target.value)}
             className="border-[#1e1f22] bg-[#a4a4a5] text-whit"
           />
         </div>
