@@ -3,7 +3,9 @@ import { prisma } from "../prisma.js";
 type ConditionDate = {
   activationTiming?: string;
   target?: string;
-  valueNumber?: number | null;
+  valueNumber?: string;
+  consumePoint?: number | null;
+  conditionField?: string | null;
 }
 
 type EffectData = {
@@ -48,6 +50,8 @@ export async function createAbilityCondition(
       activationTiming: data.activationTiming,
       target: data.target,
       valueNumber: data.valueNumber,
+      conditionField: data.conditionField,
+      consumePoint: data.consumePoint,
     }
   });
 }
@@ -64,6 +68,8 @@ export async function updateAbilityCondition(
       activationTiming: data.activationTiming,
       target: data.target,
       valueNumber: data.valueNumber,
+      conditionField: data.conditionField,
+      consumePoint: data.consumePoint,
     }
   });
 }

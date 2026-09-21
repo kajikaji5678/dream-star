@@ -29,7 +29,7 @@ export type Condition = {
   abilityId: number;
   activationTiming: string | null;
   target: string | null;
-  valueNumber: number | null;
+  valueNumber: string | null;
   consumePoint: number | null;
   conditionField: string | null;
 };

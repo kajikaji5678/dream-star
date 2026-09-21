@@ -34,6 +34,8 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         setActivationTimig(condition.activationTiming ?? "");
         setTarget(condition.target ?? "");
         setValueNumber(condition.valueNumber !== null ? String(condition.valueNumber) : "");
+        setConditionField(condition.conditionField ?? "");
+        setConsumePoint(condition.consumePoint !== null ? String(condition.consumePoint) : "");
       } catch (e) {
         if (e instanceof Error) setError(e.message);
       }
@@ -49,9 +51,9 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
       const body = {
         activationTiming,
         target,
-        valueNumber: valueNumber === "" ? null : Number(valueNumber),
+        valueNumber,
         conditionField,
-        consumePoint,
+        consumePoint: consumePoint === "" ? null : Number(consumePoint),
       };
 
       let response;
@@ -173,7 +175,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
             例: "ダメージを30以上受けたなら"という条件があるなら"ダメージ(damage)"を選択する
           </p>
           <Select
-            value={target}
+            value={conditionField}
             onValueChange={(value) => setConditionField(value ?? "")}>
             <SelectTrigger className="border-[#1e1f22] bg-[#a4a4a5]">
               <SelectValue placeholder="種類を選択します"></SelectValue>
@@ -198,7 +200,7 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
             例1: "自分のHPが50未満"という条件があるなら"50&gt;"とする<br />例2: "手札に2枚以上"という条件があるなら"2&lt;"とする
           </p>
           <Input
-            type="number"
+            type="text"
             placeholder="半角必須"
             value={valueNumber}
             onChange={(e) => setValueNumber(e.target.value)}
@@ -209,9 +211,9 @@ export default function AbilityCondition({ onBack, abilityId }: Props) {
         <div className="space-y-2">
           <Label className="text-base">使用消費ポイント</Label>
           <Input
-            type="consumePoint"
+            type="number"
             placeholder="半角必須"
-            value={valueNumber}
+            value={consumePoint}
             onChange={(e) => setConsumePoint(e.target.value)}
             className="border-[#1e1f22] bg-[#a4a4a5] text-whit"
           />

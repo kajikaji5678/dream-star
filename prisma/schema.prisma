@@ -94,7 +94,7 @@ model AbilityCondition {
   activationTiming String?
   target           String?
   conditionField   String?
-  valueNumber      Int?
+  valueNumber      String?
 
   consumePoint Int?
 

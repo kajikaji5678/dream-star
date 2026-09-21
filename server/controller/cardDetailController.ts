@@ -83,13 +83,15 @@ export async function createCondition(req: Request, res: Response) {
 export async function updateCondition(req: Request, res: Response) {
   try {
     const conditionId = Number(req.params.conditionId);
-    const { activationTiming, target, valueNumber } = req.body;
+    const { activationTiming, target, valueNumber, consumePoint, conditionField } = req.body;
     const condition = await updateAbilityCondition(
       conditionId,
       {
         activationTiming,
         target,
-        valueNumber
+        valueNumber,
+        consumePoint,
+        conditionField,
       }
     );
     return res.status(200).json(condition);
