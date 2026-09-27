@@ -29,3 +29,9 @@ server/generated/prisma
 .vercel
 .env*
 .env
+
+# Python
+scripts/achievement-image/.venv/
+
+# Temporary image processing files
+scripts/achievement-image/input/
