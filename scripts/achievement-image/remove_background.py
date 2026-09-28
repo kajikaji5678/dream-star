@@ -37,6 +37,23 @@ def create_hidden_image(input_path: Path, output_path: Path) -> None:
         for x in range(width):
             alpha = person_pixels[x, y][3]
 
+            if alpha > 0:
+                result_pixels[x, y] = (0, 0, 0, alpha)
 
-if __name__ == "__main__":
-    create_hidden_image(input_path, output_path)
+    draw = ImageDraw.Draw(result)
+    width, height = result.size
+    font_size = int(height * 0.25)
+    font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", font_size)
+    text = "?"
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+    text_x = (width - text_width) / 2
+    text_y = (height - text_height) / 2
+
+    draw.text((text_x, text_y), text, fill="white", font=font)
+
+    result.save(output_path)
+    print(f"完成: {output_path}")
+
+create_hidden_image(input_path, output_path)
