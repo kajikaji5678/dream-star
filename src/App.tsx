@@ -15,6 +15,7 @@ import Data from "./pages/data/Data";
 import { BgmProvider } from "./pages/contexts/BgmProvider";
 import CardView from "./pages/user/CardView";
 import BattleForm from "./pages/battles/BattleForm";
+import Achievement from "./pages/achevement/Achievement";
 
 console.log("App.tsx Start");
 
@@ -25,13 +26,11 @@ export default function App() {
   const { user, loading, progress, msg } = useDiscord();
 
   if (loading) {
-    return (
-      <Loading progress={progress} msg={msg} />
-    )
+    return <Loading progress={progress} msg={msg} />;
   }
 
   if (!user) {
-    return <Home></Home>
+    return <Home></Home>;
   }
 
   return (
@@ -39,23 +38,39 @@ export default function App() {
       <BgmProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={import.meta.env.DEV ? <Admin user={user ?? undefined} /> : <LoginBonus user={user ?? undefined} />} />
+            <Route
+              path="/"
+              element={
+                import.meta.env.DEV ? (
+                  <Admin user={user ?? undefined} />
+                ) : (
+                  <LoginBonus user={user ?? undefined} />
+                )
+              }
+            />
             <Route path="/home" element={<Home user={user ?? undefined} />} />
-            <Route path="/loading" element={<Loading progress={progress} msg={msg} />} />
+            <Route
+              path="/loading"
+              element={<Loading progress={progress} msg={msg} />}
+            />
             <Route path="/gacha" element={<Gacha user={user ?? undefined} />} />
             <Route path="/gacha/opening" element={<GachaOpening />} />
             <Route path="/result" element={<Result />} />
             <Route path="/admin" element={<Admin user={user ?? undefined} />} />
             <Route path="/admin/cards/:id" element={<CardEdit />} />
             <Route path="/admin/cards/add" element={<CardAdd />} />
-            <Route path="/cardlist" element={<UserCardList user={user ?? undefined} />} />
+            <Route
+              path="/cardlist"
+              element={<UserCardList user={user ?? undefined} />}
+            />
             <Route path="/cards/:id/details" element={<CardView />} />
             <Route path="/test1" element={<TenGachaCard />} />
             <Route path="/data" element={<Data user={user ?? undefined} />} />
             <Route path="/battle" element={<BattleForm />} />
+            <Route path="/test2" element={<Achievement />} />
           </Routes>
         </BrowserRouter>
       </BgmProvider>
     </>
-  )
+  );
 }
