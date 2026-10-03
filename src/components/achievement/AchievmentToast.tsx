@@ -1,12 +1,15 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function AchievmentToast() {
-  const data = {
-    name: "実績ネーム",
-    description: "実績の詳細のテキストです",
-  };
+type AchievementToastProps = {
+  name: string;
+  description: string;
+};
 
+export default function AchievmentToast({
+  name,
+  description,
+}: AchievementToastProps) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -22,7 +25,7 @@ export default function AchievmentToast() {
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            className="fixed right-6 bottom-6 z-50 w-[360px] rounded-sm border bg-zinc-800backdrop-blur-md shadow-lg"
+            className="fixed right-6 bottom-6 z-50 w-[360px] rounded-sm border bg-zinc-800 backdrop-blur-md shadow-lg"
             initial={{ x: "100%", scale: 0.95, opacity: 0 }}
             animate={{ x: 0, scale: 1, opacity: 1 }}
             exit={{ x: "100%", scale: 1, opacity: 0 }}
@@ -41,11 +44,9 @@ export default function AchievmentToast() {
                   Achievement Unlocked!
                 </p>
                 <h3 className="mb-2 truncate text-lg font-bold text-black">
-                  {data.name}
+                  {name}
                 </h3>
-                <p className="truncate text-xs text-zinc-400">
-                  {data.description}
-                </p>
+                <p className="truncate text-xs text-zinc-400">{description}</p>
               </div>
             </div>
           </motion.div>

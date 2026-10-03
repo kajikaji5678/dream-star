@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
-import Layout from "../layouts/Layout"
+import Layout from "../layouts/Layout";
 import UpdateTicker from "../components/UpdateTicker";
 import { useLocation } from "react-router-dom";
 import { Volume2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { useBgm } from "./contexts/useBgm";
+import AchievmentToast from "@/components/achievement/AchievmentToast";
 
 type Props = {
   user?: {
-    id: string
-    username: string
-    avatar: string | null
+    id: string;
+    username: string;
+    avatar: string | null;
   };
   debug?: string[];
-}
+};
 
 export default function Home({ user, debug }: Props) {
-
   const { volume, setVolume } = useBgm();
 
   const location = useLocation();
+  const { unlockedAcievements } = location.state ?? {};
   const animateSidebar = location.state?.playSidebarAnimation === true;
 
   void debug;
@@ -40,7 +41,7 @@ export default function Home({ user, debug }: Props) {
     };
 
     fetchUser();
-  }, [user])
+  }, [user]);
 
   return (
     <>
@@ -49,7 +50,9 @@ export default function Home({ user, debug }: Props) {
           <section className="rounded-lg basis-1/5 px-6 py-4 bg-[#2b2d31]">
             <h2 className="text-xl font-bold">プレーヤー情報</h2>
             <div className="flex">
-              <div className="mt-4 font-bold">ユーザーネーム: {user?.username ?? "未ログイン"}</div>
+              <div className="mt-4 font-bold">
+                ユーザーネーム: {user?.username ?? "未ログイン"}
+              </div>
               <div className="ml-4 py-4 px-8 font-bold">DP: {points}</div>
             </div>
           </section>
@@ -76,6 +79,13 @@ export default function Home({ user, debug }: Props) {
           </section>
         </div>
       </Layout>
+      {unlockedAcievements?.map((achievement) => {
+        <AchievmentToast
+          key={achievement.id}
+          name={achievement.name}
+          description={achievement.description}
+        />;
+      })}
     </>
-  )
+  );
 }

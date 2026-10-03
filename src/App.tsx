@@ -15,7 +15,7 @@ import Data from "./pages/data/Data";
 import { BgmProvider } from "./pages/contexts/BgmProvider";
 import CardView from "./pages/user/CardView";
 import BattleForm from "./pages/battles/BattleForm";
-import Achievement from "./pages/achevement/Achievement";
+import Achievement from "./pages/achievement/Achievement";
 
 console.log("App.tsx Start");
 
