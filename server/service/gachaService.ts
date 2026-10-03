@@ -1,4 +1,5 @@
 import { prisma } from "../prisma.js";
+import { achievementService } from "./achievement/index.ts";
 
 export async function drawCard() {
   const cards = await prisma.card.findMany();
@@ -19,7 +20,7 @@ function getRandomRarity() {
 
   if (random <= 65) return "C";
   if (65 < random && random < 85) return "SP";
-  if (85 <= random && random < 96.32) return "R" ;
+  if (85 <= random && random < 96.32) return "R";
   if (96.32 <= random && random < 99.32) return "DREAM";
   if (99.32 <= random && random < 99.92) return "DR";
   if (99.92 <= random) return "GXR";
@@ -40,9 +41,9 @@ export async function saveUserCard(userId: string, cardId: number) {
       },
       data: {
         amount: {
-          increment: 1
-        }
-      }
+          increment: 1,
+        },
+      },
     });
 
     return;
@@ -58,19 +59,19 @@ export async function saveUserCard(userId: string, cardId: number) {
 }
 
 export async function consumePoint(userId: string, cost: number) {
-  const user = await prisma.user.findUnique({where: {id: userId}});
+  const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) throw new Error("ユーザーが存在しません");
-  if (user.points < cost) throw new Error ("ポイントが不足しています");
+  if (user.points < cost) throw new Error("ポイントが不足しています");
 
   await prisma.user.update({
     where: {
-      id: userId
+      id: userId,
     },
     data: {
       points: {
         decrement: cost,
       },
-    }
+    },
   });
 }
 
@@ -82,5 +83,6 @@ export async function drawTenGacha(userId: string) {
     await saveUserCard(userId, card.id);
     cards.push(card);
   }
+  await achievementService.checkAchievements(userId);
   return cards;
 }

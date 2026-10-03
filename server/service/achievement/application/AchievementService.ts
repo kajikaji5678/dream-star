@@ -1,27 +1,26 @@
-import { GachaCountCondition } from "../domain/GachaDountCondition.ts";
-import { AchievementRepository } from "../infrastructure/AchievementRepository.ts";
+import { GachaCountCondition } from "../domain/GachaCountCondition.js";
+import { AchievementRepository } from "../infrastructure/AchievementRepository.js";
 
 export class AchievementService {
-  private repository: AchievementRepository;
-  private gachaCountCondition: GachaCountCondition;
-
-  constructor() {
-    this.repository = new AchievementRepository();
-    this.gachaCountCondition = new GachaCountCondition(this.repository);
-  }
-
+  constructor(
+    private repository: AchievementRepository,
+    private gachaCountCondition: GachaCountCondition,
+  ) {}
   async checkAchievements(userId: string): Promise<void> {
     const achievements = await this.repository.findActiveAchievements();
 
+    // すでに解除していないかを実績の中から一つずつ確認
     for (const achievement of achievements) {
       const alreadyUnlocked = await this.repository.findUserAchievement(
         userId,
         achievement.id,
       );
-      if (alreadyUnlocked) return;
+      if (alreadyUnlocked) continue;
 
+      // 最初は未達成とする
       let isCompleted = false;
 
+      // 判定をインフラに繋げてDBを叩いてもらう
       switch (achievement.conditionType) {
         case "GACHA_COUNT":
           isCompleted = await this.gachaCountCondition.check(

@@ -1,4 +1,5 @@
-import { AchievementRepository } from "../infrastructure/AchievementRepository.ts";
+// ガチャ回数という条件のルール担当
+import { AchievementRepository } from "../infrastructure/AchievementRepository.js";
 
 export class GachaCountCondition {
   constructor(private repository: AchievementRepository) {}

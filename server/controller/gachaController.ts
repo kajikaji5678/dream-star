@@ -1,4 +1,10 @@
-import { consumePoint, drawCard, drawTenGacha, saveUserCard } from "../service/gachaService.js";
+import { achievementService } from "../service/achievement/index.ts";
+import {
+  consumePoint,
+  drawCard,
+  drawTenGacha,
+  saveUserCard,
+} from "../service/gachaService.js";
 import type { Request, Response } from "express";
 
 export const drawGacha = async (req: Request, res: Response) => {
@@ -7,12 +13,13 @@ export const drawGacha = async (req: Request, res: Response) => {
     await consumePoint(userId, 2);
     const card = await drawCard();
     await saveUserCard(userId, card.id);
+    await achievementService.checkAchievements(userId);
     res.json(card);
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "500エラー" });
   }
-}
+};
 
 export const drawTen = async (req: Request, res: Response) => {
   try {
@@ -23,4 +30,4 @@ export const drawTen = async (req: Request, res: Response) => {
     console.error(e);
     res.status(500).json({ message: "500エラー" });
   }
-}
+};
