@@ -1,4 +1,7 @@
-import { GachaCountCondition } from "../domain/GachaCountCondition.js";
+import {
+  GachaCountCondition,
+  type UnlockedAchievement,
+} from "../domain/GachaCountCondition.js";
 import { AchievementRepository } from "../infrastructure/AchievementRepository.js";
 
 export class AchievementService {
@@ -6,9 +9,10 @@ export class AchievementService {
     private repository: AchievementRepository,
     private gachaCountCondition: GachaCountCondition,
   ) {}
-  async checkAchievements(userId: string): Promise<void> {
+  async checkAchievements(userId: string): Promise<UnlockedAchievement[]> {
     const achievements = await this.repository.findActiveAchievements();
 
+    const unlockedAchievements: UnlockedAchievement[] = [];
     // すでに解除していないかを実績の中から一つずつ確認
     for (const achievement of achievements) {
       const alreadyUnlocked = await this.repository.findUserAchievement(
@@ -33,6 +37,15 @@ export class AchievementService {
       if (!isCompleted) continue;
 
       await this.repository.createUserAchievement(userId, achievement.id);
+
+      unlockedAchievements.push({
+        id: achievement.id,
+        key: achievement.key,
+        name: achievement.name,
+        descrption: achievement.description,
+      });
     }
+
+    return unlockedAchievements;
   }
 }

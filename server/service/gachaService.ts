@@ -83,6 +83,7 @@ export async function drawTenGacha(userId: string) {
     await saveUserCard(userId, card.id);
     cards.push(card);
   }
-  await achievementService.checkAchievements(userId);
-  return cards;
+  const unlockedAchievement =
+    await achievementService.checkAchievements(userId);
+  return { cards, unlockedAchievement };
 }

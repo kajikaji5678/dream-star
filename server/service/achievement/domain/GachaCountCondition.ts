@@ -10,3 +10,10 @@ export class GachaCountCondition {
     return gachaCount >= conditionValue;
   }
 }
+
+export type UnlockedAchievement = {
+  id: number;
+  key: string;
+  name: string;
+  descrption: string | null;
+};
