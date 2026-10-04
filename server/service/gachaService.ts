@@ -1,5 +1,5 @@
+import { eventEmitter } from "../events/eventEmitter.ts";
 import { prisma } from "../prisma.js";
-import { achievementService } from "./achievement/index.js";
 
 export async function drawCard() {
   const cards = await prisma.card.findMany();
@@ -83,7 +83,10 @@ export async function drawTenGacha(userId: string) {
     await saveUserCard(userId, card.id);
     cards.push(card);
   }
-  const unlockedAchievements =
-    await achievementService.checkAchievements(userId);
-  return { cards, unlockedAchievements };
+  eventEmitter.emit("gacha.completed", {
+    userId,
+    gachaType: "ten",
+    cards,
+  });
+  return { cards };
 }
