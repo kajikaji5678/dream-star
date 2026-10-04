@@ -5,16 +5,20 @@ type AchievementToastProps = {
   achievementKey: string;
   name: string;
   description: string;
+  onComplete: () => void;
 };
 
 export default function AchievmentToast({
   name,
   description,
   achievementKey,
+  onComplete,
 }: AchievementToastProps) {
   const [isVisible, setIsVisible] = useState(true);
   const achievementImages: Record<string, string> = {
-    gacha_count_100: "/scripts/achievement-image/output/hikakin_pink.png",
+    gacha_count_100: "/scripts/achievement-image/output/hikakin_bronze.png",
+    gacha_count_300: "/scripts/achievement-image/output/hikakin_sliver.png",
+    gacha_count_1000: "/scripts/achievement-image/output/hikakin_gold.png",
   };
 
   useEffect(() => {
@@ -22,15 +26,22 @@ export default function AchievmentToast({
       setIsVisible(false);
     }, 4000);
 
-    return () => clearTimeout(timer);
-  }, []);
+    const completeTimer = setTimeout(() => {
+      onComplete();
+    }, 4500);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(completeTimer);
+    };
+  }, [onComplete]);
 
   return (
     <>
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            className="fixed right-6 bottom-6 z-50 w-[360px] rounded-sm border bg-zinc-800 backdrop-blur-md shadow-lg"
+            className="fixed right-6 bottom-6 z-50 w-[360px] rounded-sm border bg-white backdrop-blur-md shadow-lg"
             initial={{ x: "100%", scale: 0.95, opacity: 0 }}
             animate={{ x: 0, scale: 1, opacity: 1 }}
             exit={{ x: "100%", scale: 1, opacity: 0 }}

@@ -6,12 +6,20 @@ async function main() {
   await prisma.achievement.createMany({
     data: [
       {
-        name: "ガチャの処女は破られた",
-        description: "ガチャを100回引く",
+        name: "ガチャシルバー",
+        description: "ガチャを300回引く",
         conditionType: "GACHA_COUNT",
-        conditionValue: 100,
+        conditionValue: 300,
         isActive: true,
-        key: "gacha_count_100",
+        key: "gacha_count_300",
+      },
+      {
+        name: "ガチャゴールデン",
+        description: "ガチャを1000回引く",
+        conditionType: "GACHA_COUNT",
+        conditionValue: 1000,
+        isActive: true,
+        key: "gacha_count_1000",
       },
     ],
   });

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Layout from "../layouts/Layout";
 import UpdateTicker from "../components/UpdateTicker";
 import { useLocation } from "react-router-dom";
@@ -20,9 +20,10 @@ export default function Home({ user, debug }: Props) {
   const { volume, setVolume } = useBgm();
 
   const location = useLocation();
-  console.log("HOME STATE:", location.state);
   const { unlockedAchievements } = location.state ?? {};
-  console.log("HOME ACHIEVEMENT:", unlockedAchievements);
+  const [achievementQueue, setAchievementQueue] = useState(
+    unlockedAchievements ?? [],
+  );
   const animateSidebar = location.state?.playSidebarAnimation === true;
 
   void debug;
@@ -44,6 +45,10 @@ export default function Home({ user, debug }: Props) {
 
     fetchUser();
   }, [user]);
+
+  const handleAchievementComplete = useCallback(() => {
+    setAchievementQueue((prev) => prev.slice(1));
+  }, []);
 
   return (
     <>
@@ -81,14 +86,15 @@ export default function Home({ user, debug }: Props) {
           </section>
         </div>
       </Layout>
-      {unlockedAchievements?.map((achievement) => (
+      {achievementQueue.length > 0 && (
         <AchievmentToast
-          key={achievement.id}
-          achievementKey={achievement.key}
-          name={achievement.name}
-          description={achievement.description}
+          key={achievementQueue[0].id}
+          achievementKey={achievementQueue[0].key}
+          name={achievementQueue[0].name}
+          description={achievementQueue[0].description}
+          onComplete={handleAchievementComplete}
         />
-      ))}
+      )}
     </>
   );
 }
