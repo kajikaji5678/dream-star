@@ -16,9 +16,9 @@ export default function AchievmentToast({
 }: AchievementToastProps) {
   const [isVisible, setIsVisible] = useState(true);
   const achievementImages: Record<string, string> = {
-    gacha_count_100: "/scripts/achievement-image/output/hikakin_bronze.png",
-    gacha_count_300: "/scripts/achievement-image/output/hikakin_sliver.png",
-    gacha_count_1000: "/scripts/achievement-image/output/hikakin_gold.png",
+    gacha_count_100: "/achievement-image/hikakin_bronze.png",
+    gacha_count_300: "/achievement-image/hikakin_sliver.png",
+    gacha_count_1000: "/achievement-image/hikakin_gold.png",
   };
 
   useEffect(() => {
