@@ -16,9 +16,9 @@
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
+    "erasableSyntaxOnly": false,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "nodenext"
   },
   "include": ["vite.config.ts", "server/**/*.ts"]
 }

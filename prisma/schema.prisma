@@ -26,8 +26,9 @@ model User {
   cards            UserCard[]
   loginBonusClaims LoginBonusClaim[]
 
-  loginStreak   Int       @default(0)
-  lastLoginDate DateTime?
+  loginStreak      Int               @default(0)
+  lastLoginDate    DateTime?
+  userAchievements UserAchievement[]
 }
 
 model Card {
@@ -128,4 +129,28 @@ model DGPRewardClaim {
   claimedAt DateTime @default(now())
 
   @@unique([userId, rewardKey])
+}
+
+model Achievement {
+  id               Int               @id @default(autoincrement())
+  key              String            @unique
+  name             String
+  description      String?
+  conditionType    String
+  conditionValue   Int?
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  userAchievements UserAchievement[]
+}
+
+model UserAchievement {
+  id            Int         @id @default(autoincrement())
+  userId        String
+  achievementId Int
+  unlockedAt    DateTime    @default(now())
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
 }
