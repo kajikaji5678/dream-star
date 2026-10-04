@@ -1,5 +1,5 @@
 import { prisma } from "../prisma.js";
-import { achievementService } from "./achievement/index.ts";
+import { achievementService } from "./achievement/index.js";
 
 export async function drawCard() {
   const cards = await prisma.card.findMany();

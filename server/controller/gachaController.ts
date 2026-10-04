@@ -1,4 +1,4 @@
-import { achievementService } from "../service/achievement/index.ts";
+import { achievementService } from "../service/achievement/index.js";
 import {
   consumePoint,
   drawCard,
