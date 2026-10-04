@@ -20,7 +20,9 @@ export default function Home({ user, debug }: Props) {
   const { volume, setVolume } = useBgm();
 
   const location = useLocation();
-  const { unlockedAcievements } = location.state ?? {};
+  console.log("HOME STATE:", location.state);
+  const { unlockedAchievements } = location.state ?? {};
+  console.log("HOME ACHIEVEMENT:", unlockedAchievements);
   const animateSidebar = location.state?.playSidebarAnimation === true;
 
   void debug;
@@ -79,13 +81,14 @@ export default function Home({ user, debug }: Props) {
           </section>
         </div>
       </Layout>
-      {unlockedAcievements?.map((achievement) => {
+      {unlockedAchievements?.map((achievement) => (
         <AchievmentToast
           key={achievement.id}
+          achievementKey={achievement.key}
           name={achievement.name}
           description={achievement.description}
-        />;
-      })}
+        />
+      ))}
     </>
   );
 }

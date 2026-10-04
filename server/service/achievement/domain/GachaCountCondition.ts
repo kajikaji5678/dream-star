@@ -15,5 +15,5 @@ export type UnlockedAchievement = {
   id: number;
   key: string;
   name: string;
-  descrption: string | null;
+  description: string | null;
 };

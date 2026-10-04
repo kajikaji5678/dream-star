@@ -42,7 +42,7 @@ export class AchievementService {
         id: achievement.id,
         key: achievement.key,
         name: achievement.name,
-        descrption: achievement.description,
+        description: achievement.description,
       });
     }
 

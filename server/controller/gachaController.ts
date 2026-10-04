@@ -13,9 +13,9 @@ export const drawGacha = async (req: Request, res: Response) => {
     await consumePoint(userId, 2);
     const card = await drawCard();
     await saveUserCard(userId, card.id);
-    const unlockedAchievement =
+    const unlockedAchievements =
       await achievementService.checkAchievements(userId);
-    res.json({ card, unlockedAchievement });
+    res.json({ card, unlockedAchievements });
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "500エラー" });

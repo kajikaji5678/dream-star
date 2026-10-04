@@ -24,8 +24,10 @@ export default function Gacha({ user }: Props) {
     const userId = import.meta.env.DEV ? "1450733147867185215" : user.id;
     setIsGachaRunning(true);
     try {
-      const card = await drawGacha(userId);
-      navigate("/gacha/opening", { state: { type: "single", card } });
+      const { card, unlockedAchievements } = await drawGacha(userId);
+      navigate("/gacha/opening", {
+        state: { type: "single", card, unlockedAchievements },
+      });
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -40,8 +42,10 @@ export default function Gacha({ user }: Props) {
     const userId = import.meta.env.DEV ? "1450733147867185215" : user.id;
     setIsGachaRunning(true);
     try {
-      const cards = await drawTenGacha(userId);
-      navigate("/gacha/opening/", { state: { type: "ten", cards } });
+      const { cards, unlockedAchievements } = await drawTenGacha(userId);
+      navigate("/gacha/opening/", {
+        state: { type: "ten", cards, unlockedAchievements },
+      });
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

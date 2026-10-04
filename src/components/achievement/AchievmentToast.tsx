@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 type AchievementToastProps = {
+  achievementKey: string;
   name: string;
   description: string;
 };
@@ -9,8 +10,12 @@ type AchievementToastProps = {
 export default function AchievmentToast({
   name,
   description,
+  achievementKey,
 }: AchievementToastProps) {
   const [isVisible, setIsVisible] = useState(true);
+  const achievementImages: Record<string, string> = {
+    gacha_count_100: "/scripts/achievement-image/output/hikakin_pink.png",
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,7 +40,7 @@ export default function AchievmentToast({
             <div className="flex items-center gap-4 p-4">
               <div className="flex h-20 w-20 shrink-0 items-center">
                 <img
-                  src="/scripts/achievement-image/output/seikin1_hidden.png"
+                  src={achievementImages[achievementKey]}
                   className="h-full w-full object-cover"
                 />
               </div>

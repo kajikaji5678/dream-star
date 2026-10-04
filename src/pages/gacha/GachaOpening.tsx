@@ -7,10 +7,12 @@ import SingleGachaCard from "../../components/SingleGacha";
 import TenGachaCard from "../../components/TenGacha";
 
 export default function GachaOpening() {
-  const [phase, setPhase] = useState<"pack" | "slide" | "card" | "cut" | "gather">("pack");
+  const [phase, setPhase] = useState<
+    "pack" | "slide" | "card" | "cut" | "gather"
+  >("pack");
   const navigate = useNavigate();
   const location = useLocation();
-  const { type, card, cards } = location.state ?? {};
+  const { type, card, cards, unlockedAchievements } = location.state ?? {};
   const isTenGacha = type === "ten";
 
   useEffect(() => {
@@ -35,9 +37,10 @@ export default function GachaOpening() {
         navigate("/result", {
           state: {
             type: "ten",
-            cards
-          }
-        })
+            cards,
+            unlockedAchievements,
+          },
+        });
       }, 6200);
 
       return () => {
@@ -46,7 +49,7 @@ export default function GachaOpening() {
         clearTimeout(gatherTimer);
         clearTimeout(cutTimer);
         clearTimeout(naviTimer);
-      }
+      };
     }
 
     const cutTimer = setTimeout(() => {
@@ -57,27 +60,29 @@ export default function GachaOpening() {
       navigate("/result", {
         state: {
           type: "single",
-          card
-        }
-      })
+          card,
+          unlockedAchievements,
+        },
+      });
     }, 4000);
 
     return () => {
       clearTimeout(slideTimer);
       clearTimeout(cardTimer);
-      clearTimeout(cutTimer)
+      clearTimeout(cutTimer);
       clearTimeout(naviTimer);
-    }
+    };
   }, [navigate, card, isTenGacha, cards]);
   return (
-
     <>
       {/* デバック用 */}
       {/* <pre className="fixed top-0 left-0 z-50 bg-black text-white p-4">
         {JSON.stringify(card, null, 2)}
       </pre> */}
       {(phase === "pack" || phase === "slide") && (
-        <div className={`h-screen page-screen ${phase === "slide" ? "slide" : ""}`}>
+        <div
+          className={`h-screen page-screen ${phase === "slide" ? "slide" : ""}`}
+        >
           <Layout>
             <div className="flex h-full items-center justify-center text-4xl font-bold">
               Opening...
@@ -85,17 +90,13 @@ export default function GachaOpening() {
           </Layout>
         </div>
       )}
-      {isTenGacha ? (
-        (phase === "card" || phase === "gather" || phase === "cut") && (
-          <TenGachaCard phase={phase} />
-        )
-      ) : (
-        (phase === "card" || phase === "cut") && (
-          <SingleGachaCard phase={phase} />
-        )
-      )}
+      {isTenGacha
+        ? (phase === "card" || phase === "gather" || phase === "cut") && (
+            <TenGachaCard phase={phase} />
+          )
+        : (phase === "card" || phase === "cut") && (
+            <SingleGachaCard phase={phase} />
+          )}
     </>
-
-
-  )
+  );
 }

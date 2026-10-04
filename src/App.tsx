@@ -15,7 +15,7 @@ import Data from "./pages/data/Data";
 import { BgmProvider } from "./pages/contexts/BgmProvider";
 import CardView from "./pages/user/CardView";
 import BattleForm from "./pages/battles/BattleForm";
-import Achievement from "./pages/achievement/Achievement";
+import Achievement from "./components/achievement/AchievmentToast";
 
 console.log("App.tsx Start");
 
@@ -67,7 +67,6 @@ export default function App() {
             <Route path="/test1" element={<TenGachaCard />} />
             <Route path="/data" element={<Data user={user ?? undefined} />} />
             <Route path="/battle" element={<BattleForm />} />
-            <Route path="/test2" element={<Achievement />} />
           </Routes>
         </BrowserRouter>
       </BgmProvider>

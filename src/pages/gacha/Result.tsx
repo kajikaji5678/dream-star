@@ -17,7 +17,7 @@ export default function Result() {
   useEffect(() => {
     if (!isTenGacha) {
       const timer = setTimeout(() => {
-        navigate("/", {
+        navigate("/home", {
           state: {
             unlockedAchievements,
           },
@@ -46,8 +46,10 @@ export default function Result() {
     if (!isTenGacha || !isReady) return;
     const timer = setTimeout(() => {
       if (currentIndex >= cards.length - 1) {
-        navigate("/", {
-          state: unlockedAchievements,
+        navigate("/home", {
+          state: {
+            unlockedAchievements,
+          },
         });
       } else {
         setCurrentIndex((prev) => prev + 1);
