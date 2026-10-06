@@ -1,2 +1,2 @@
-import { EventEmitter } from "node:stream";
+import { EventEmitter } from "node:events";
 export const eventEmitter = new EventEmitter();
