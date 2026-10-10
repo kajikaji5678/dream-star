@@ -77,9 +77,10 @@ export async function consumePoint(userId: string, cost: number) {
 
 export async function drawTenGacha(userId: string) {
   await consumePoint(userId, 20);
-  const cards = [];
+  const allCards = await prisma.card.findMany();
+  const cards: Card[] = [];
   for (let i = 0; i < 10; i++) {
-    const card = await drawCard();
+    const card = drawCard(allCards);
     await saveUserCard(userId, card.id);
     cards.push(card);
   }
