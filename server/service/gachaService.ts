@@ -1,8 +1,8 @@
 import { eventEmitter } from "../events/eventEmitter.ts";
+import type { Card } from "../generated/prisma/index.js";
 import { prisma } from "../prisma.js";
 
-export async function drawCard() {
-  const cards = await prisma.card.findMany();
+export function drawCard(cards: Card[]): Card {
   const rarity = getRandomRarity();
   const candidates = cards.filter((card) => card.rarity === rarity);
 
