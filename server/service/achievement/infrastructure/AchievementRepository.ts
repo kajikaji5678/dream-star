@@ -44,4 +44,17 @@ export class AchievementRepository {
 
     return result._sum.amount ?? 0;
   }
+
+  async getLoginStreak(userId: string): Promise<number> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        loginStreak: true,
+      },
+    });
+
+    return user?.loginStreak ?? 0;
+  }
 }

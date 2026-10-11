@@ -9,8 +9,8 @@ from io import BytesIO
 
 BASE_DIR = Path(__file__).resolve().parent
 
-input_path = BASE_DIR / "input" / "hikakin_pink.jpeg"
-output_path = BASE_DIR / "output" / "hikakin_pink.png"
+input_path = BASE_DIR / "input" / "hikakin_login.png"
+output_path = BASE_DIR / "output" / "hikakin_login_bronze.png"
 
 
 def create_bronze_image(input_path: Path, output_path: Path) -> None:

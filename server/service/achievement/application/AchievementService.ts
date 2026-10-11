@@ -2,12 +2,14 @@ import {
   GachaCountCondition,
   type UnlockedAchievement,
 } from "../domain/GachaCountCondition.js";
+import type { LoginStreakCondition } from "../domain/LoginStreakCondition.ts";
 import { AchievementRepository } from "../infrastructure/AchievementRepository.js";
 
 export class AchievementService {
   constructor(
     private repository: AchievementRepository,
     private gachaCountCondition: GachaCountCondition,
+    private loginStreakCondition: LoginStreakCondition,
   ) {}
   async checkAchievements(userId: string): Promise<UnlockedAchievement[]> {
     const achievements = await this.repository.findActiveAchievements();
@@ -28,6 +30,12 @@ export class AchievementService {
       switch (achievement.conditionType) {
         case "GACHA_COUNT":
           isCompleted = await this.gachaCountCondition.check(
+            userId,
+            achievement.conditionValue,
+          );
+          break;
+        case "GACHA_LOGIN":
+          isCompleted = await this.loginStreakCondition.check(
             userId,
             achievement.conditionValue,
           );

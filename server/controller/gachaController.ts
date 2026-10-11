@@ -6,12 +6,14 @@ import {
   saveUserCard,
 } from "../service/gachaService.js";
 import type { Request, Response } from "express";
+import { prisma } from "../prisma.js";
 
 export const drawGacha = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
     await consumePoint(userId, 2);
-    const card = await drawCard();
+    const allCards = await prisma.card.findMany();
+    const card = drawCard(allCards);
     await saveUserCard(userId, card.id);
     const unlockedAchievements =
       await achievementService.checkAchievements(userId);
