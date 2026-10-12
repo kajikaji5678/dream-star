@@ -1,4 +1,4 @@
-import { eventEmitter } from "../events/eventEmitter.ts";
+import { eventEmitter } from "../events/eventEmitter.js";
 import type { Card } from "../generated/prisma/index.js";
 import { prisma } from "../prisma.js";
 import { performance } from "node:perf_hooks";

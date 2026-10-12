@@ -1,5 +1,5 @@
 import app from "./app.js";
-import { registerGachaCompleteListener } from "./events/gacha/gachaCompletedListener.ts";
+import { registerGachaCompleteListener } from "./events/gacha/gachaCompletedListener.js";
 
 registerGachaCompleteListener();
 

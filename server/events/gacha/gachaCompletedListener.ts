@@ -1,5 +1,5 @@
-import { achievementService } from "../../service/achievement/index.ts";
-import { eventEmitter } from "../eventEmitter.ts";
+import { achievementService } from "../../service/achievement/index.js";
+import { eventEmitter } from "../eventEmitter.js";
 import type { GachaCompletedEvent } from "./type.ts";
 
 export function registerGachaCompleteListener() {

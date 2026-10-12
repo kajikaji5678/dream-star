@@ -1,6 +1,6 @@
 import { AchievementService } from "./application/AchievementService.js";
 import { GachaCountCondition } from "./domain/GachaCountCondition.js";
-import { LoginStreakCondition } from "./domain/LoginStreakCondition.ts";
+import { LoginStreakCondition } from "./domain/LoginStreakCondition.js";
 import { AchievementRepository } from "./infrastructure/AchievementRepository.js";
 
 const repositry = new AchievementRepository();
